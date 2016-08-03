@@ -6,6 +6,10 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity(name = "JF_products")
 public class Product implements BaseModel<Long> {
@@ -23,5 +27,9 @@ public class Product implements BaseModel<Long> {
     @Column(name = "price")
     @Getter @Setter
     private Integer price;
+
+    @OneToMany(mappedBy = "product", fetch = LAZY)
+    @Getter @Setter
+    private List<Purchase> purchases;
 
 }

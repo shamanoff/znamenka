@@ -21,8 +21,9 @@ import static javax.persistence.FetchType.EAGER;
 @NamedEntityGraph(
         name = "Training.Graph",
         attributeNodes = {
-            @NamedAttributeNode(value = "trainer"),
-                @NamedAttributeNode(value = "client")
+                @NamedAttributeNode(value = "trainer"),
+                @NamedAttributeNode(value = "client"),
+                @NamedAttributeNode(value = "purchase")
         }
 )
 public class Training implements BaseModel<Long> {
@@ -36,10 +37,6 @@ public class Training implements BaseModel<Long> {
     @Getter @Setter
     private Long trainingPlan;
 
-    @Column(name = "purchase_id")
-    @Getter @Setter
-    private Long purchaseId;
-
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "trainer_id")
     @Getter @Setter
@@ -49,4 +46,9 @@ public class Training implements BaseModel<Long> {
     @JoinColumn(name = "client_id")
     @Getter @Setter
     private Client client;
+
+    @ManyToOne(fetch = EAGER)
+    @JoinColumn(name = "purchase_id")
+    @Getter @Setter
+    private Purchase purchase;
 }

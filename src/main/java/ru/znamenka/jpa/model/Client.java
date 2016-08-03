@@ -36,4 +36,8 @@ public class Client implements BaseModel<Long> {
     @OneToMany(mappedBy = "client", fetch = LAZY)
     @Getter @Setter
     private List<Training> trainings;
+
+    @OneToMany(mappedBy = "client", fetch = LAZY)
+    @Getter @Setter
+    private List<Purchase> purchases;
 }

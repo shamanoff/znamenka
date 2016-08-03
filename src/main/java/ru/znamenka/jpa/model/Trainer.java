@@ -21,7 +21,7 @@ import static javax.persistence.FetchType.LAZY;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Entity(name = "jf_trainers")
+@Entity(name = "JF_TRAINERS")
 public class Trainer implements BaseModel<Long> {
 
     @Id
@@ -36,4 +36,9 @@ public class Trainer implements BaseModel<Long> {
     @OneToMany(mappedBy = "trainer", fetch = LAZY)
     @Getter @Setter
     private List<Training> trainings;
+
+    @OneToMany(mappedBy = "trainer", fetch = LAZY)
+    @Getter @Setter
+    private List<Purchase> purchases;
+
 }
