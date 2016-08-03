@@ -68,4 +68,19 @@ public final class Utils {
         return joinLists(asList(collections));
     }
 
+    /**
+     * todo добавить проверку на null
+     * @param param
+     * @return
+     */
+    public static String join(String... param) {
+        if (param.length == 0) return "";
+        StringBuilder sb = new StringBuilder();
+        for (String s : param) {
+            sb.append(s).append(" ");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
+    }
+
 }

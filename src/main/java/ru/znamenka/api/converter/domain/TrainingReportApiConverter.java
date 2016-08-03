@@ -1,8 +1,8 @@
-package ru.znamenka.api.converter.custom;
+package ru.znamenka.api.converter.domain;
 
 import org.springframework.stereotype.Component;
 import ru.znamenka.api.converter.ApiConverter;
-import ru.znamenka.api.custom.TrainingReportApi;
+import ru.znamenka.api.domain.TrainingReportApi;
 import ru.znamenka.jpa.model.Training;
 
 /**

@@ -1,4 +1,4 @@
-package ru.znamenka.api.custom;
+package ru.znamenka.api.domain;
 
 import lombok.Builder;
 import lombok.Getter;
