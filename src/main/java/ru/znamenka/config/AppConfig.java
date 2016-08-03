@@ -17,7 +17,13 @@ import ru.znamenka.util.locale.ExtResourceBundleSource;
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Configuration
-@Import({JpaConfig.class, GsonAutoConfiguration.class, BeanBucketConfig.class, WebConfig.class})
+@Import({
+    JpaConfig.class
+        , GsonAutoConfiguration.class
+        , BeanBucketConfig.class
+        , WebConfig.class
+        , CacheConfig.class
+})
 @ComponentScan("ru.znamenka.*")
 @EnableAutoConfiguration
 public class AppConfig {
