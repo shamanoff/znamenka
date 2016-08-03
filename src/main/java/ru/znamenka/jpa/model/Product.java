@@ -20,13 +20,13 @@ public class Product implements BaseModel<Long> {
     private Long id;
     @Column(name = "product_name")
     @Getter @Setter
-    private Long productName;
+    private String productName;
     @Column(name = "expire_days")
     @Getter @Setter
     private Integer expireDays;
     @Column(name = "price")
     @Getter @Setter
-    private Integer price;
+    private Double price;
 
     @OneToMany(mappedBy = "product", fetch = LAZY)
     @Getter @Setter
