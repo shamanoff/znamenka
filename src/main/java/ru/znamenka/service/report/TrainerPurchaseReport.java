@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ru.znamenka.jpa.model.Purchase;
+import ru.znamenka.jpa.model.Trainer;
 import ru.znamenka.jpa.repository.EntityRepository;
-import ru.znamenka.jpa.repository.ExecutorQueries;
+import ru.znamenka.jpa.repository.QueryFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,38 +22,82 @@ import static java.math.BigDecimal.ROUND_HALF_EVEN;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
+import static org.springframework.util.Assert.isTrue;
+import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QProduct.product;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
+import static ru.znamenka.jpa.model.QTraining.training;
 import static ru.znamenka.util.BDFactory.bd;
 
+/**
+ * todo разобраться с бизнес процессом
+ */
 @Service
 @Scope(SCOPE_PROTOTYPE)
 public class TrainerPurchaseReport {
 
+    /**
+     * Уникальный идентификатор пробной тренеровки в таблице JF_PRODUCTS
+     * ({@link ru.znamenka.jpa.model.Product#id}
+     */
     private static final Long testTrainingId = 1L;
-
+    /**
+     * Список уникальных идентификаторов тренеровок в таблице JF_PRODUCTS
+     * ({@link ru.znamenka.jpa.model.Product#id}
+     */
     private static final List<Long> trainingIds = asList(2L);
 
+    /**
+     * Репозиторий для доступа к данным
+     */
     private EntityRepository repo;
 
-    private ExecutorQueries executor;
+    /**
+     * Фабрика запросов
+     */
+    private QueryFactory executor;
 
+    /**
+     * Уникальный идентификатор тренера, для которого ведется расчет прибыли
+     * от продаж
+     */
     private final Long trainerId;
 
     private final LocalDate date;
 
-
+    /**
+     *<p>Конструктор, который создает экземляр класс для расчета
+     * прибыли от продаж заданного тренера за опреленный месяц.
+     * @param trainerId уникальный идентификатор тренера
+     * @param date месяц, за который необходимо посчитать прибыль
+     * @throws IllegalArgumentException если такого тренера не существует, либо дата равна {@literal null}
+     */
     public TrainerPurchaseReport(long trainerId, LocalDate date) {
+        notNull(date);
+        isTrue(repo.exists(Trainer.class, trainerId));
         this.trainerId = trainerId;
         this.date = date;
     }
 
     /**
      * Вычисляет прибыль тренера от продаж за выбранный месяц
+     * по формуле "сумма продаж * конверсия"
      *
      * @return сумма прибыли
      */
-    public double getProfitByTrainer() {
+    public double getProfit() {
+        Double sum = getSum();
+        if (sum == null) return 0.0;
+        val profit = bd(sum).multiply(getConversion());
+        return profit.doubleValue();
+    }
+
+    /**
+     * Создает и выполянет запрос для получения суммы
+     * от всех продаж тренера за месяц
+     * @return сумма прибыли
+     */
+    private Double getSum() {
         JPAQuery<Double> query = executor.getJpaQuery();
         query
                 .select(product.price.sum())
@@ -61,10 +106,7 @@ public class TrainerPurchaseReport {
                 .where(pTrainerId()
                         .and(pCurMonth())
                 );
-        Double sum = query.fetchOne();
-        if (sum == null) return 0.0;
-        val profit = bd(sum).multiply(getConversion());
-        return profit.doubleValue();
+        return query.fetchOne();
     }
 
 
@@ -98,8 +140,6 @@ public class TrainerPurchaseReport {
         List<Long> listClientId = purchases.stream().map(Purchase::getClientId).distinct().collect(toList());
         // из списка клиентов строим предикат, который для поиска покупкок обычных тренировок клиентов
         Predicate pClientWithTrainingPurchases = pTraining()
-                .and(pCurMonth())
-                .and(pTrainerId())
                 .and(purchase.client.id.in(listClientId));
         long countTrainings = repo.count(Purchase.class, pClientWithTrainingPurchases);
         long countTestTraining = purchases.size();
@@ -136,7 +176,7 @@ public class TrainerPurchaseReport {
      * @return предикат
      */
     private BooleanExpression pTestTraining() {
-        return purchase.product.id.eq(testTrainingId);
+        return training.purchase.product.id.eq(testTrainingId);
     }
 
     /**
@@ -158,14 +198,24 @@ public class TrainerPurchaseReport {
                 .and(purchase.purchaseDate.year().eq(date.getYear()));
     }
 
+    /**
+     * Сеттер для репозитория
+     * @param repo репозиторий
+     * @return ссылка на самого себя
+     */
     @Autowired
     public TrainerPurchaseReport repository(@Qualifier("facadeRepository") EntityRepository repo) {
         this.repo = repo;
         return this;
     }
 
+    /**
+     * Сеттер для исполнителя запросов
+     * @param executor исполнитель запросов
+     * @return ссылка на самого себя
+     */
     @Autowired
-    public TrainerPurchaseReport setExecutor(@Qualifier("mainExecutor") ExecutorQueries executor) {
+    public TrainerPurchaseReport setExecutor(@Qualifier("mainExecutor") QueryFactory executor) {
         this.executor = executor;
         return this;
     }

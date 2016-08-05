@@ -49,7 +49,7 @@ import static org.springframework.util.Assert.notNull;
  * 20.06.2016 - Евгений Уткин (Eugene Utkin)
  * <ul>
  *     <li>
- *      Теперь фасад реализует дополнительный интферфейс {@link ExecutorQueries},
+ *      Теперь фасад реализует дополнительный интферфейс {@link QueryFactory},
  *      который позволит выполнять свои запросы.
  *     </li>
  *     <li>Заменил имя переменной suffixNameBean на postfixNameBean (this#postfixNameBean)</li>
@@ -68,10 +68,10 @@ import static org.springframework.util.Assert.notNull;
  *         произвольно.
  *     </li>
  *     <li>
- *         Удалена реализация интерфейса {@link ExecutorQueries}.
+ *         Удалена реализация интерфейса {@link QueryFactory}.
  *         </br>
  *         Теперь реализация находится в отдельном
- *         классе {@link ExecutorQueriesImpl}. Данное решение принято в связи с тем, что сигнатуру методов
+ *         классе {@link QueryFactoryImpl}. Данное решение принято в связи с тем, что сигнатуру методов
  *         интерфейса, деклариющего метода для выполнения запросов удалось отвязать от использования Class'a
  *         в виде параметра.
  *         </br>

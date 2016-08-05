@@ -17,27 +17,21 @@ import static org.springframework.util.Assert.notNull;
 
 /**
  * <p>
- *     Реализация {@link ExecutorQueries}
- * </p>
+ * Реализация {@link QueryFactory}
+ * <p>
  * Создан 21.06.2016
- * <p>
- * Изменения:
- * <p>
- * 29.06.2016 - Евгений Уткин (Eugene Utkin)
- * <ul>
- *     <li>далил аннотацию {@link org.springframework.data.repository.NoRepositoryBean}</li>
- * </ul>
+ *
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Repository("mainExecutor")
-public class ExecutorQueriesImpl implements ExecutorQueries {
+public class QueryFactoryImpl implements QueryFactory {
 
     /**
      * Менеджер для упраления бизнес-моделями
      */
     private final EntityManager entityManager;
 
-    public ExecutorQueriesImpl(@Autowired EntityManager em) {
+    public QueryFactoryImpl(@Autowired EntityManager em) {
         this.entityManager = em;
     }
 
@@ -53,24 +47,6 @@ public class ExecutorQueriesImpl implements ExecutorQueries {
      * {@inheritDoc}
      */
     @Override
-    public <T> T executeQueryOne(@NotNull JPAQuery<T> query) {
-        notNull(query);
-        return query.fetchOne();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <T> List<T> executeQueryList(@NotNull JPAQuery<T> query) {
-        notNull(query);
-        return query.fetch();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public <T> Page<T> executeQueryList(@NotNull JPAQuery<T> query, @Nullable Pageable pageable) {
         notNull(query);
         if (pageable != null) {
@@ -79,7 +55,7 @@ public class ExecutorQueriesImpl implements ExecutorQueries {
         long total = query.fetchCount();
         List<T> content;
         if (pageable == null || total > pageable.getOffset()) {
-            content = this.executeQueryList(query);
+            content = query.fetch();
         } else {
             content = emptyList();
         }

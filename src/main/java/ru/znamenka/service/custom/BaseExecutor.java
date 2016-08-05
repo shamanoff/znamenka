@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 import ru.znamenka.api.BaseApi;
-import ru.znamenka.jpa.repository.ExecutorQueries;
+import ru.znamenka.jpa.repository.QueryFactory;
 
 /**
  * <p>
@@ -29,7 +29,7 @@ public class BaseExecutor<S, T extends BaseApi> {
      */
     @Autowired
     @Qualifier("mainExecutor")
-    protected ExecutorQueries executor;
+    protected QueryFactory executor;
 
     /**
      * Конвертер в представление
