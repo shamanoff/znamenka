@@ -14,6 +14,7 @@ import ru.znamenka.jpa.model.Trainer;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.jpa.repository.QueryFactory;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -26,7 +27,6 @@ import static org.springframework.util.Assert.isTrue;
 import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QProduct.product;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
-import static ru.znamenka.jpa.model.QTraining.training;
 import static ru.znamenka.util.BDFactory.bd;
 
 /**
@@ -47,6 +47,8 @@ public class TrainerPurchaseReport {
      */
     private static final List<Long> trainingIds = asList(2L);
 
+    private static final int MOTH_OFFSET = 2;
+
     /**
      * Репозиторий для доступа к данным
      */
@@ -55,7 +57,7 @@ public class TrainerPurchaseReport {
     /**
      * Фабрика запросов
      */
-    private QueryFactory executor;
+    private QueryFactory queryFactory;
 
     /**
      * Уникальный идентификатор тренера, для которого ведется расчет прибыли
@@ -73,10 +75,20 @@ public class TrainerPurchaseReport {
      * @throws IllegalArgumentException если такого тренера не существует, либо дата равна {@literal null}
      */
     public TrainerPurchaseReport(long trainerId, LocalDate date) {
-        notNull(date);
-        isTrue(repo.exists(Trainer.class, trainerId));
+        notNull(date, "Date is required; it must not be null");
         this.trainerId = trainerId;
         this.date = date;
+    }
+
+    /**
+     * Проверяет, корректна ли прошла инициализация объекта,
+     * и существует ли тренер, прибыль которого необходимо расчитать
+     */
+    @PostConstruct
+    private void validate() {
+        notNull(repo, "Repository is required; it must not be null");
+        notNull(queryFactory, "Query Factory is required; it must not be null");
+        isTrue(repo.exists(Trainer.class, trainerId), "Trainer must be exists");
     }
 
     /**
@@ -98,7 +110,7 @@ public class TrainerPurchaseReport {
      * @return сумма прибыли
      */
     private Double getSum() {
-        JPAQuery<Double> query = executor.getJpaQuery();
+        JPAQuery<Double> query = queryFactory.getJpaQuery();
         query
                 .select(product.price.sum())
                 .from(purchase)
@@ -139,12 +151,15 @@ public class TrainerPurchaseReport {
         // получаем список id всех клиентов, которые приобрели пробные тренировки из списка покупок
         List<Long> listClientId = purchases.stream().map(Purchase::getClientId).distinct().collect(toList());
         // из списка клиентов строим предикат, который для поиска покупкок обычных тренировок клиентов
+        // в этом и двух следующих месяцев
         Predicate pClientWithTrainingPurchases = pTraining()
-                .and(purchase.client.id.in(listClientId));
+                .and(purchase.client.id.in(listClientId))
+                .and(pCurMonth(MOTH_OFFSET));
         long countTrainings = repo.count(Purchase.class, pClientWithTrainingPurchases);
         long countTestTraining = purchases.size();
         val d1 = bd(countTrainings);
         val d2 = bd(countTestTraining);
+
         return d1.divide(d2, ROUND_HALF_EVEN).doubleValue();
     }
 
@@ -176,7 +191,7 @@ public class TrainerPurchaseReport {
      * @return предикат
      */
     private BooleanExpression pTestTraining() {
-        return training.purchase.product.id.eq(testTrainingId);
+        return purchase.product.id.eq(testTrainingId);
     }
 
     /**
@@ -198,6 +213,11 @@ public class TrainerPurchaseReport {
                 .and(purchase.purchaseDate.year().eq(date.getYear()));
     }
 
+    private BooleanExpression pCurMonth(int offset) {
+        return purchase.purchaseDate.month().between(date.getMonthValue(), date.getMonthValue() + offset)
+                .and(purchase.purchaseDate.year().eq(date.getYear()));
+    }
+
     /**
      * Сеттер для репозитория
      * @param repo репозиторий
@@ -211,12 +231,12 @@ public class TrainerPurchaseReport {
 
     /**
      * Сеттер для исполнителя запросов
-     * @param executor исполнитель запросов
+     * @param queryFactory исполнитель запросов
      * @return ссылка на самого себя
      */
     @Autowired
-    public TrainerPurchaseReport setExecutor(@Qualifier("mainExecutor") QueryFactory executor) {
-        this.executor = executor;
+    public TrainerPurchaseReport queryFactory(@Qualifier("mainExecutor") QueryFactory queryFactory) {
+        this.queryFactory = queryFactory;
         return this;
     }
 
