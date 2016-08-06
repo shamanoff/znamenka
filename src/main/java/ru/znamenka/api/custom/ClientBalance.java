@@ -1,8 +1,10 @@
-package ru.znamenka.api.domain;
+package ru.znamenka.api.custom;
 
 import lombok.Getter;
 import lombok.Setter;
 import ru.znamenka.api.BaseApi;
+
+import java.sql.Date;
 
 /**
  * <p>
@@ -18,10 +20,24 @@ public class ClientBalance implements BaseApi {
 
     @Getter @Setter
     private Long id;
+
     @Getter @Setter
-    private String fname;
+    private String surname;
+
     @Getter @Setter
-    private String lname;
+    private Integer phone;
+
     @Getter @Setter
-    private Double balance = 10.0;
+    private String email;
+
+    @Getter @Setter
+    private Date birthDate;
+
+    @Getter @Setter
+    private String name;
+
+    @Getter @Setter
+    private Double balance;
+
+
 }

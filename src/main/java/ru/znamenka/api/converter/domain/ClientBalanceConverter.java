@@ -1,11 +1,12 @@
 package ru.znamenka.api.converter.domain;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.znamenka.api.converter.ApiConverter;
-import ru.znamenka.api.domain.ClientBalance;
+import ru.znamenka.api.custom.ClientBalance;
 import ru.znamenka.jpa.model.Client;
 
-import static ru.znamenka.util.Utils.join;
+import static org.springframework.util.Assert.notNull;
 
 /**
  * <p>
@@ -18,7 +19,9 @@ import static ru.znamenka.util.Utils.join;
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Component
+@Slf4j
 public class ClientBalanceConverter implements ApiConverter<Client, ClientBalance> {
+
 
     @Override
     public Class<Client> getEntityType() {
@@ -27,24 +30,27 @@ public class ClientBalanceConverter implements ApiConverter<Client, ClientBalanc
 
     @Override
     public Client convertTo(ClientBalance source) {
-        Client client = new Client();
-        client.setId(source.getId());
-        client.setName(join(source.getFname(), source.getLname()));
-        return client;
+        throw new UnsupportedOperationException();
     }
 
     /**
-     * todo рассмотреть различные кейсы насчет имени и баланса
      * @param client
      * @return
      */
     @Override
     public ClientBalance convert(Client client) {
-        ClientBalance clientB = new ClientBalance();
-        String[] name = client.getName().split(" ");
-        clientB.setFname(name[0]);
-        clientB.setLname(name[1]);
-        return clientB;
+        notNull(client);
+        ClientBalance cb = new ClientBalance();
+
+        cb.setId(client.getId());
+        cb.setName(client.getName());
+        cb.setSurname(client.getSurname());
+        cb.setEmail(client.getEmail());
+        cb.setBirthDate(client.getBirthDate());
+        cb.setPhone(client.getPhone());
+        return cb;
+
+
     }
 
     @Override

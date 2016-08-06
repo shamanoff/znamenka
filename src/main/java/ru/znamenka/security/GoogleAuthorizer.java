@@ -8,6 +8,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.calendar.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +31,7 @@ public class GoogleAuthorizer {
 
 
     public Calendar getCalendar() throws IOException {
-        Resource resource = ctx.getResource("My Project-a7d59802127c.json");
+        Resource resource = new ClassPathResource("My Project-a7d59802127c.json");
         String appName = ctx.getApplicationName();
 
         GoogleCredential credential = GoogleCredential.fromStream(resource.getInputStream()).createScoped(singleton(CALENDAR));
