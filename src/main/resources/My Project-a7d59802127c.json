@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "regal-eon-138823",
+  "private_key_id": "a7d59802127c970c036fb9622d7a146f752bff27",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCL2ZDrsQCtZT7Q\nkaYBHZXetxwnGvn6GgBP0WWVoflcXBEsj2BpySHiPu4p0wGq72y63eV9lEZ4e6tI\nQEezJlYfsnQGZ1AoSHgvL1ztbq8L8XZywjAeDUSY1D6tDdEVLP5mVa75+9QTat3O\nCZJx+SXSd3mhsVtL0rRXlJ5PuNQPxQQpLfRLL42aJuNUsdQCzk88rQZPYx/JGL/S\nB5uyxa4VUlpSk0V8CN6Utt0aDrC2OO+K2tIxFfAjnvdqsm+LLGIUdT0wqsXMhlFW\nRSb7SKqLyX/hknzECbxwft3UYT58KRN98F8Ie0LdDmFDy6DrgiNDZ3yJePGztO2u\nczpNDaK/AgMBAAECggEAYVrxJxKObSc5RkrObKJi7as9Pv/pm7E0HFyiQjuC80fo\ncMPTE3GAVBcJBzasR4nrgF7u3rA1KrS09VRCVbXPaLt7R+XuCE0C1Z48K9HMrBzJ\nH3SNuK313gqLIz+mGP68jxMA/2fPKEFR7Zf+SbdvHAguNWDZNHyXLQz59HevsNWf\nHmkeYmzGUPSKMKgDwrIGeuBHpDlhhDSNhzG8yPrDvFdjimnsBSJEwTeXI+qu9+ab\n2mriQnHA3pSsClZzJadoCIAq0bGMhBEdPEL0MENEnAdWeqh/nsP30XK0IEVrm6dj\nuKcmKNWB2wiHDWXWapEpiChlAX4VR1YUvJxncTWDGQKBgQD08BRgBAYRFDe/tJRV\n87kpq3Chqwzu0y1BuU2uE/s0gDfXUOwTk3mGgpQDBrAHCM7DLsZ0g9+UJIOOcqME\nyuWeLm9UMjFFS7vBr7wOELSJxqrZKISHBfjkApzuOCDU93qMXKkg1lw+q5hF29Lh\nfnsLiuZFRd8A51J4VhpygAPDVQKBgQCSKns83oMfCsH9l3NKf8pcEFvuSZ7GDXsf\nwy6V1DZNK024Yw+fZkngwF+TBhPsFS30iJ3+ZvFyRtfhnY3pzKViFDPB6xu4gUxf\n6fVuKohW7uxqulbxfNftfcmTE3yU8WeLQ+UAxo/U1lPfY5zFGicPI69OLkz6hp5U\nW8qR3kJ1wwKBgFVW+KJjhIGa27mtfylbW55LH1kUsdLcPR5zI7+NMq8eJVad2UMQ\n1PyqrktHnzk0NmYG/BpIgDOrbTLKekYHM22jnCJnwob0Vhyr0AfOhjiiwZAb7+Dj\nkc5PosHVSIsrFsWk20CXr1gejVV5u8XZPaHN6WElcQdtkWxgA6L1O1ppAoGAZ8Qc\n5WOadqkuexfP023RfXZnrU06mKPtaukn41paioJZlLNO3fzCKfqoXzoLXqjSjS2H\n7Jmsg1Jj5Fnz661LI8vvypVcgqnYTKdNg75SOFU6JbLQEnRs3r9UIUPOR/bxaV7z\n7o8IgTL/LDINk6gzXn4Y8EnSgHCdaooXz2KYj/0CgYB6suuLuiqki6HIjYK8bPbK\nsXsRw+1cgxA48y1btHb8oaCInksV1pQ86tOAb+GfN7ZtNj3cjtxcd1i/zZWHbbKy\nh/wxcO9vfwn43CZ259EnHQ/jonqqCBb2/r1UaKcKOdCScmc6Bk4kdBm7NiuRkGfX\nmJhsAmD95O8IQswXh28pTw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "regal-eon-138823@appspot.gserviceaccount.com",
+  "client_id": "108635587947819453260",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/regal-eon-138823%40appspot.gserviceaccount.com"
+}
