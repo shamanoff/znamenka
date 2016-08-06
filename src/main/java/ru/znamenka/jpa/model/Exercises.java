@@ -4,10 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name = "JF_exercises")
+@Deprecated
+//@Entity(name = "JF_exercises")
 public class Exercises implements BaseModel<Long> {
 
     @Id

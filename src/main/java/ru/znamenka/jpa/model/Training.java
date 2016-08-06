@@ -17,7 +17,7 @@ import static javax.persistence.FetchType.EAGER;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Entity(name = "JF_TRAININGS")
+@Entity(name = "JF_trainings")
 @NamedEntityGraph(
         name = "Training.Graph",
         attributeNodes = {

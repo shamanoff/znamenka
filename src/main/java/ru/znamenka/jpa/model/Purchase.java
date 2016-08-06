@@ -9,7 +9,7 @@ import java.util.List;
 
 import static javax.persistence.FetchType.*;
 
-@Entity(name = "JF_PURCHASE")
+@Entity(name = "JF_purchase")
 @NamedEntityGraph(
         name = "Purchase.Graph",
         attributeNodes = {
@@ -42,7 +42,7 @@ public class Purchase implements BaseModel<Long> {
     private Client client;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     @Getter @Setter
     private Product product;
 
@@ -54,6 +54,15 @@ public class Purchase implements BaseModel<Long> {
     @OneToMany(fetch = LAZY)
     @Getter @Setter
     private List<Training> trainings;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "discount_id")
+    @Getter @Setter
+    private Discount discount;
+
+    @OneToMany(mappedBy = "purchase",fetch = LAZY)
+    @Getter @Setter
+    private List<Payment> payments;
 
     public Long getClientId() {
         return getClient() == null ? null : getClient().getId();
