@@ -1,6 +1,7 @@
 package ru.znamenka.jpa.model;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -18,14 +19,19 @@ public class Product implements BaseModel<Long> {
     @Column(name = "product_id")
     @Getter @Setter
     private Long id;
-    @Column(name = "product_name")
+
+    @Column(name = "product_name", nullable = false)
     @Getter @Setter
+    @NonNull
     private String productName;
+
     @Column(name = "expire_days")
     @Getter @Setter
     private Integer expireDays;
-    @Column(name = "price")
+
+    @Column(name = "price", nullable = false)
     @Getter @Setter
+    @NonNull
     private Double price;
 
     @OneToMany(mappedBy = "product", fetch = LAZY)

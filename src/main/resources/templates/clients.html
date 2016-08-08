@@ -7,7 +7,6 @@
 
     <title>Bootstrap 3, from LayoutIt!</title>
 
-
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
 
@@ -55,8 +54,6 @@
                             </form>
                         </li>
                     </ul>
-
-
                 </div>
 
             </nav>
@@ -75,13 +72,19 @@
                         <th>Имя</th>
                         <th>Фамилия</th>
                         <th>Баланс</th>
+                        <th>Email</th>
+                        <th>Телефон</th>
+                        <th>Дата Рождения</th>
                     </tr>
                     </thead>
                     <tbody class="list">
                     <tr class="active" th:each="client: ${allClients}">
-                        <td class="name"  th:text="${client.fname}"></td>
-                        <td class="born" th:text="${client.lname}"></td>
-                        <td th:text="${client.balance}"></td>
+                        <td class="name" th:text="${client.name}"></td>
+                        <td class="surname" th:text="${client.surname}"></td>
+                        <td class="balanse" th:text="${client.balance}"></td>
+                        <td class="email" th:text="${client.email}"></td>
+                        <td class="phone" th:text="${client.phone}"></td>
+                        <td class="born" th:text="${client.birthDate}"></td>
                     </tr>
                     </tbody>
                 </table>

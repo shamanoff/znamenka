@@ -4,10 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name = "JF_duty_plan_type")
+/**
+ *
+ */
+@Deprecated
+//@Entity(name = "JF_duty_plan_type")
 public class DutyPlanType implements BaseModel<Long> {
 
     @Id

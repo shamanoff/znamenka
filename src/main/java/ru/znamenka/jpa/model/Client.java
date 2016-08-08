@@ -7,21 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.sql.Date;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
-/**
- * <p>
- * <p>
- * Создан 01.08.2016
- * <p>
- * Изменения:
- * <p>
- *
- * @author Евгений Уткин (Eugene Utkin)
- */
-@Entity(name = "jf_clients")
+@Entity(name = "JF_clients")
 public class Client implements BaseModel<Long> {
 
     @Id
@@ -29,7 +20,23 @@ public class Client implements BaseModel<Long> {
     @Getter @Setter
     private Long id;
 
-    @Column(name = "client_name")
+    @Column(name = "surname")
+    @Getter @Setter
+    private String surname;
+
+    @Column(name = "phone")
+    @Getter @Setter
+    private Integer phone;
+
+    @Getter @Setter
+    @Column(name = "email")
+    private String email;
+
+    @Getter @Setter
+    @Column(name = "birth_date")
+    private Date birthDate;
+
+    @Column(name = "name")
     @Getter @Setter
     private String name;
 
@@ -40,4 +47,5 @@ public class Client implements BaseModel<Long> {
     @OneToMany(mappedBy = "client", fetch = LAZY)
     @Getter @Setter
     private List<Purchase> purchases;
+
 }
