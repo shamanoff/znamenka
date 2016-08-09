@@ -4,6 +4,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -120,6 +121,7 @@ public class FacadeDomainRepository implements EntityRepository {
     /**
      * {@inheritDoc}
      */
+    @Cacheable("znamenka-cache")
     @Override
     public <T> List<T> findAll(Class<T> clazz) {
         notNull(clazz);

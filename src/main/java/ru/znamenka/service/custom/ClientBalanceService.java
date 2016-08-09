@@ -5,7 +5,7 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ru.znamenka.api.custom.ClientBalance;
+import ru.znamenka.api.page.ClientBalance;
 import ru.znamenka.jpa.model.Payment;
 import ru.znamenka.jpa.model.Purchase;
 import ru.znamenka.jpa.repository.EntityRepository;

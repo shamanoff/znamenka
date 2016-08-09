@@ -1,10 +1,10 @@
-package ru.znamenka.controller.view;
+package ru.znamenka.controller.page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.znamenka.api.custom.ClientBalance;
+import ru.znamenka.api.page.ClientBalance;
 import ru.znamenka.service.custom.ClientBalanceService;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public class ClientBalanceController {
     @Autowired
     private ClientBalanceService service;
 
-    @GetMapping("/")
+    @GetMapping("/balance")
     public String index(Model model) {
         List<ClientBalance> clients = service.getClients();
         model.addAttribute("allClients", clients);

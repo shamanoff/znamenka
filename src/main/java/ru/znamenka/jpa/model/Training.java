@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * <p>
@@ -29,6 +30,7 @@ import static javax.persistence.FetchType.EAGER;
 public class Training implements BaseModel<Long> {
 
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "training_id")
     @Getter @Setter
     private Long id;
