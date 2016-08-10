@@ -7,6 +7,10 @@ DROP TABLE IF EXISTS JF_purchase;
 DROP TABLE IF EXISTS JF_discounts;
 DROP INDEX IF EXISTS JF_purchase_fk3;
 DROP INDEX IF EXISTS JF_payments_fk0;
+DROP TABLE IF EXISTS JF_duty_plan_type;
+DROP TABLE IF EXISTS JF_duty_shedule;
+DROP TABLE IF EXISTS JF_training_plan;
+DROP TABLE IF EXISTS JF_exercises;
 
 
 CREATE TABLE JF_Trainers (
@@ -79,7 +83,9 @@ CREATE TABLE JF_trainings
   client_id     BIGINT       NOT NULL,
   trainer_id    BIGINT       NOT NULL,
   purchase_id   BIGINT,
-  CONSTRAINT JF_trainings_ibfk_1 FOREIGN KEY (client_id) REFERENCES JF_clients (client_id)
+  start         DATETIME     NOT NULL,
+  CONSTRAINT JF_trainings_ibfk_1 FOREIGN KEY (client_id) REFERENCES JF_clients (client_id),
+  CONSTRAINT JF_trainings_ibfk_2 FOREIGN KEY (purchase_id) REFERENCES JF_purchase (purchase_id)
 );
 
 CREATE TABLE JF_training_plan
