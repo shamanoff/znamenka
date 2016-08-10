@@ -7,7 +7,4 @@ $(document).ready(function () {
     $('#endTime').datetimepicker({
          defaultDate: '05/09/2016 5:00 PM'
     });
-    $( "#select-client" ).change(function() {
-        alert( "Handler for .change() called." );
-    });
 });

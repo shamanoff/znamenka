@@ -71,26 +71,23 @@
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                         <select id="select-client" name="state" class="form-control selectpicker">
                             <option value=" ">Выберите клиента</option>
-                            <option th:each="client: ${clients}" th:text="${client.name}">Alabama</option>
-
+                            <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">Alabama</option>
                         </select>
                     </div>
                 </div>
             </div>
 
             <!-- Select Basic -->
-
-
             <div class="form-group">
                 <label class="col-md-4 control-label">Абонемент</label>
                 <div class="col-md-4 selectContainer">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                        <select name="state" class="form-control selectpicker">
+                        <select id="select-abonement" name="state" class="form-control selectpicker">
                             <option value=" ">Выберите абонемент</option>
                             <option>Alabama</option>
-
                         </select>
+
                     </div>
                 </div>
             </div>
@@ -150,6 +147,38 @@
 
 <script src="js/shedule.js"></script>
 
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+
+    $(document).ready(function(){
+        $( "#select-client" ).change(function() {
+            var clientId = $( "#select-client" ).val();
+            $.ajax({
+                url : "/schedule/abonement",
+                type : "get",
+                data : {
+                    "clientId" : clientId
+                },
+                success : function(data) {
+                    $('#select-abonement').children('option').remove();
+                    $.each(data, function(key, value) {
+                        $('#select-abonement')
+                                .append($("<option></option>")
+                                        .attr("value",key)
+                                        .text(value));
+                    });
+                },
+                error : function() {
+                    console.log("There was an error");
+                }
+
+            });
+        });
+    });
+    /*]]>*/
+</script>
 
 </body>
 </html>
