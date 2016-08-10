@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.SpringDataWebConfiguration;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -14,7 +17,10 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import ru.znamenka.util.locale.ExtMessageSource;
 
+import java.nio.charset.Charset;
 import java.util.List;
+
+import static java.util.Collections.singletonList;
 
 /**
  * <p>
@@ -106,6 +112,15 @@ public class WebConfig extends SpringDataWebConfiguration {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(source);
         return bean;
+    }
+
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        FormHttpMessageConverter converter = new FormHttpMessageConverter();
+        MediaType mediaType = new MediaType("application","x-www-form-urlencoded", Charset.forName("UTF-8"));
+        converter.setSupportedMediaTypes(singletonList(mediaType));
+        converters.add(converter);
+        super.configureMessageConverters(converters);
     }
 
     @Override
