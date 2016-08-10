@@ -83,7 +83,7 @@ CREATE TABLE JF_trainings
   client_id     BIGINT       NOT NULL,
   trainer_id    BIGINT       NOT NULL,
   purchase_id   BIGINT,
-  start         DATETIME     NOT NULL,
+  start         DATETIME     ,
   CONSTRAINT JF_trainings_ibfk_1 FOREIGN KEY (client_id) REFERENCES JF_clients (client_id),
   CONSTRAINT JF_trainings_ibfk_2 FOREIGN KEY (purchase_id) REFERENCES JF_purchase (purchase_id)
 );

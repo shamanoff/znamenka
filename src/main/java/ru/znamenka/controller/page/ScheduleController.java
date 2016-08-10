@@ -2,11 +2,15 @@ package ru.znamenka.controller.page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.znamenka.api.domain.TrainingApi;
 import ru.znamenka.api.page.shedule.ScheduleClientApi;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.service.page.schedule.ClientAbonementService;
@@ -15,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class ScheduleController {
@@ -37,4 +42,10 @@ public class ScheduleController {
         return ok(abonements);
     }
 
+    @RequestMapping(path="/schedule/bookTraining",method = POST,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity bookTraining(@RequestBody TrainingApi trainingApi){
+        service.save(TrainingApi.class , trainingApi);
+        return  ok().build();
+
+    }
 }

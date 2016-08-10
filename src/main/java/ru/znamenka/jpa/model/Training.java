@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import java.security.Timestamp;
+
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -38,6 +40,10 @@ public class Training implements BaseModel<Long> {
     @Column(name = "training_plan")
     @Getter @Setter
     private Long trainingPlan;
+
+    @Column(name = "start")
+    @Getter @Setter
+    private Timestamp start;
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "trainer_id")
