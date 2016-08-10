@@ -9,7 +9,6 @@ import ru.znamenka.jpa.repository.QueryFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static ru.znamenka.jpa.model.QProduct.product;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
@@ -26,7 +25,7 @@ public class ClientAbonementService {
                 .select(purchase.id, product.productName)
                 .from(purchase)
                 .leftJoin(purchase.product, product)
-                .where(purchase.client.id.eq(clientId).and(product.id.in(1,2,3)));
+                .where(purchase.client.id.eq(clientId).and(product.id.in(1,2,3)).and(product.expireDays.gt(0)));
         List<Tuple> tuples = query.fetch();
 
         Map<Long, String> abonements = new HashMap<>(tuples.size());
