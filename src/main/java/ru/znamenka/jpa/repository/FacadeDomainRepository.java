@@ -121,7 +121,7 @@ public class FacadeDomainRepository implements EntityRepository {
     /**
      * {@inheritDoc}
      */
-    @Cacheable("znamenka-cache")
+    //@Cacheable("znamenka-cache")
     @Override
     public <T> List<T> findAll(Class<T> clazz) {
         notNull(clazz);
