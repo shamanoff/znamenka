@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.SpringDataWebConfiguration;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.FormHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -15,12 +13,11 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
+import ru.znamenka.config.formatter.TimestampFormatter;
 import ru.znamenka.util.locale.ExtMessageSource;
 
-import java.nio.charset.Charset;
 import java.util.List;
-
-import static java.util.Collections.singletonList;
 
 /**
  * <p>
@@ -114,18 +111,20 @@ public class WebConfig extends SpringDataWebConfiguration {
         return bean;
     }
 
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        FormHttpMessageConverter converter = new FormHttpMessageConverter();
-        MediaType mediaType = new MediaType("application","x-www-form-urlencoded", Charset.forName("UTF-8"));
-        converter.setSupportedMediaTypes(singletonList(mediaType));
-        converters.add(converter);
-        super.configureMessageConverters(converters);
+    @Bean
+    public Java8TimeDialect java8TimeDialect() {
+        return new Java8TimeDialect();
     }
 
     @Override
     public Validator getValidator() {
         return validator();
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        super.addFormatters(registry);
+        registry.addFormatter(new TimestampFormatter());
     }
 
 }

@@ -8,8 +8,6 @@ import ru.znamenka.jpa.model.Purchase;
 import ru.znamenka.jpa.model.Trainer;
 import ru.znamenka.jpa.model.Training;
 
-import java.security.Timestamp;
-
 /**
  * Created by Сережа on 10.08.2016.
  */
@@ -30,18 +28,18 @@ public class TrainingApiConverter implements ApiConverter<Training,TrainingApi>{
     public Training convertTo(TrainingApi source) {
         Training training = new Training();
         Client client = new Client();
-        client.setId(source.getClient());
+        client.setId(source.getClientId());
         training.setClient(client);
 
         Trainer trainer= new Trainer();
-        //trainer.setId(source.getTrainer());
+        //trainerId.setId(source.getTrainerId());
         //// TODO: 10.08.2016 поменять тренера
 
         trainer.setId(1L);
         training.setTrainer(trainer);
 
         Purchase purchase = new Purchase();
-        purchase.setId(source.getPurchase());
+        purchase.setId(source.getPurchaseId());
         training.setPurchase(purchase);
 
         training.setStart(source.getStart());

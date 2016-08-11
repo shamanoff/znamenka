@@ -7,9 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.znamenka.api.domain.TrainingApi;
 import ru.znamenka.api.page.shedule.ScheduleClientApi;
 import ru.znamenka.jpa.repository.EntityRepository;
@@ -34,6 +35,7 @@ public class ScheduleController {
     public String getSchedulePage(Model model) {
         List<ScheduleClientApi> list = service.findAll(ScheduleClientApi.class);
         model.addAttribute("clients", list);
+        model.addAttribute("training", new TrainingApi());
         return "schedule";
     }
     @GetMapping("/schedule/abonement")
@@ -42,10 +44,11 @@ public class ScheduleController {
         return ok(abonements);
     }
 
-    @RequestMapping(path="/schedule/bookTraining",method = POST,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity bookTraining(@RequestBody TrainingApi trainingApi){
+    @RequestMapping(path="/schedule/book",method = POST,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8")
+    public RedirectView bookTraining(@ModelAttribute("training") TrainingApi trainingApi, Model model){
         service.save(TrainingApi.class , trainingApi);
-        return  ok().build();
+        model.addAttribute("training", trainingApi);
+        return  new RedirectView("/schedule/");
 
     }
 }

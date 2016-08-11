@@ -3,17 +3,8 @@ package ru.znamenka.api.domain;
 import lombok.Getter;
 import lombok.Setter;
 import ru.znamenka.api.BaseApi;
-import ru.znamenka.jpa.model.BaseModel;
-import ru.znamenka.jpa.model.Client;
-import ru.znamenka.jpa.model.Purchase;
-import ru.znamenka.jpa.model.Trainer;
 
-import javax.persistence.*;
-
-import java.security.Timestamp;
-
-import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.GenerationType.IDENTITY;
+import java.sql.Timestamp;
 
 /**
  * <p>
@@ -31,19 +22,19 @@ public class TrainingApi implements BaseApi {
 
 
     @Getter @Setter
-    private Long Id;
+    private Long id;
 
     @Getter @Setter
-    private Long trainer;
+    private Long trainerId;
 
     @Getter @Setter
     private Timestamp start;
 
 
     @Getter @Setter
-    private Long client;
+    private Long clientId;
 
 
     @Getter @Setter
-    private Long purchase;
+    private Long purchaseId;
 }

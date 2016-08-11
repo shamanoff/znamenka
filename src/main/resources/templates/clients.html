@@ -78,13 +78,13 @@
                     </tr>
                     </thead>
                     <tbody class="list">
-                    <tr class="active" th:each="client: ${allClients}">
-                        <td class="name" th:text="${client.name}"></td>
-                        <td class="surname" th:text="${client.surname}"></td>
-                        <td class="balanse" th:text="${client.balance}"></td>
-                        <td class="email" th:text="${client.email}"></td>
-                        <td class="phone" th:text="${client.phone}"></td>
-                        <td class="born" th:text="${client.birthDate}"></td>
+                    <tr class="active" th:each="clientId: ${allClients}">
+                        <td class="name" th:text="${clientId.name}"></td>
+                        <td class="surname" th:text="${clientId.surname}"></td>
+                        <td class="balanse" th:text="${clientId.balance}"></td>
+                        <td class="email" th:text="${clientId.email}"></td>
+                        <td class="phone" th:text="${clientId.phone}"></td>
+                        <td class="born" th:text="${clientId.birthDate}"></td>
                     </tr>
                     </tbody>
                 </table>

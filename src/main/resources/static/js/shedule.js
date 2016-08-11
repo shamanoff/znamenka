@@ -1,10 +1,8 @@
 $(document).ready(function () {
-    
+
     $('#startTime').datetimepicker({
-          defaultDate: '05/09/2016 8:00 AM'
+        defaultDate: '05/09/2016 08:00:00',
+        format: 'DD/MM/YYYY HH:mm:ss'
     });
-    
-    $('#endTime').datetimepicker({
-         defaultDate: '05/09/2016 5:00 PM'
-    });
+
 });

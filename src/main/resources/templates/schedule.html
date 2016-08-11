@@ -18,7 +18,8 @@
 
 <div class="container">
 
-    <form class="well form-horizontal" action="/schedule/bookTraining" method="post" id="contact_form">
+    <form class="well form-horizontal" action="#" th:action="@{/schedule/book}" th:object="${training}" method="post" id="contact_form">
+
         <fieldset>
 
             <!-- Form Name -->
@@ -49,18 +50,13 @@
                         <li>
                             <a href="#">Отчет за смену</a>
                         </li>
-
-
                     </ul>
-
-
                 </div>
 
                 </nav>
             </legend>
 
             <!-- Collapse item-->
-
 
             <!-- Select Basic -->
 
@@ -69,9 +65,9 @@
                 <div class="col-md-4 selectContainer">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                        <select id="select-client" name="state" class="form-control selectpicker">
+                        <select th:field="*{clientId}" id="select-client" name="state" class="form-control selectpicker">
                             <option value=" ">Выберите клиента</option>
-                            <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}">Alabama</option>
+                            <option th:each="clientId: ${clients}" th:value="${clientId.id}" th:text="${clientId.name}">Alabama</option>
                         </select>
                     </div>
                 </div>
@@ -83,9 +79,9 @@
                 <div class="col-md-4 selectContainer">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                        <select id="select-abonement" name="state" class="form-control selectpicker">
+                        <select th:field="*{purchaseId}" id="select-abonement" name="state" class="form-control selectpicker">
                             <option value=" ">Выберите абонемент</option>
-                            <option>Alabama</option>
+                            <option value="-1">Alabama</option>
                         </select>
 
                     </div>
@@ -101,7 +97,7 @@
                         <div class='input-group date' id='startTime'>
                        <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
-                    </span> <input type='text' class="form-control"/>
+                    </span> <input  th:field="*{start}" type='text' class="form-control"/>
 
                         </div>
                     </div>
@@ -145,7 +141,7 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.15.35/js/bootstrap-datetimepicker.min.js'></script>
 
-<script src="js/shedule.js"></script>
+<script src="../js/shedule.js"></script>
 
 <script th:inline="javascript">
 
