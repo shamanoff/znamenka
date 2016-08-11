@@ -39,6 +39,14 @@ public class ScheduleController {
         model.addAttribute("training", new TrainingApi());
         return "schedule";
     }
+
+    @GetMapping("/clients")
+    public String getClientPage(Model model) {
+        List<ScheduleClientApi> list = service.findAll(ScheduleClientApi.class);
+        model.addAttribute("clients", list);
+        return "clients";
+    }
+
     @GetMapping("/schedule/abonement")
     public ResponseEntity<Map<Long, String>> getAbonementsByClient(@RequestParam("clientId") Long clientId){
         Map<Long, String> abonements = abonementService.getAbonementByClient(clientId);
@@ -55,4 +63,9 @@ public class ScheduleController {
         return  new RedirectView("/schedule/");
 
     }
+
+    // TODO: 10.08.2016  сделать мапинг для метода поиска покупок по клиенту task 1.1
+
+    // TODO: 10.08.2016  сделать мапинг для метода поиска платежей по покупке task 2.1
+
 }

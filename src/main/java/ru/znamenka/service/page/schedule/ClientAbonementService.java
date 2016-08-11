@@ -30,6 +30,8 @@ import static ru.znamenka.jpa.model.QProduct.product;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
 import static ru.znamenka.util.Utils.googleTime;
 
+import static ru.znamenka.jpa.model.QPayment.payment;
+
 @Service
 public class ClientAbonementService {
 
@@ -92,4 +94,28 @@ public class ClientAbonementService {
 
        return calendar.events().insert(calendarId, event).execute();
     }
+
+    // TODO: 10.08.2016 сделать метод для поиска покупок по клиенту   task1
+//Кодил Сережа start
+    public Map<Long, Long> getPurchaseByClient(Long clientId) {
+        JPAQuery<Tuple> query = factory.getJpaQuery();
+        query
+                .select(payment.id, payment.paymentAmount,purchase.discount)
+                .from(purchase)
+                //.leftJoin(purchase.product, product)
+                .leftJoin(purchase.payments , payment)
+                .where(purchase.client.id.eq(clientId));
+        List<Tuple> tuples = query.fetch();
+
+        Map<Long, Long> payments = new HashMap<>(tuples.size());
+        for (Tuple tuple : tuples) {
+            payments.put(tuple.get(payment.id), tuple.get(payment.paymentAmount));
+        }
+        return payments;
+    }
+//Кодил Сережа end
+    // TODO: 10.08.2016 сделать метод для поиска платежей по покупке    task2
+
+
+
 }
