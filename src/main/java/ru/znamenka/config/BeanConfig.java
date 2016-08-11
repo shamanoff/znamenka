@@ -2,13 +2,14 @@ package ru.znamenka.config;
 
 import com.google.api.services.calendar.Calendar;
 import lombok.val;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
 import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import ru.znamenka.security.GoogleAuthorizer;
 import ru.znamenka.util.locale.ExtResourceBundleSource;
 
@@ -54,14 +55,6 @@ public class BeanConfig {
         return source;
     }
 
-    @Bean(initMethod = "load")
-    public PropertiesConfiguration configuration() throws ConfigurationException {
-        val config = new PropertiesConfiguration("constants.properties");
-        config.setReloadingStrategy(fileChangedStrategy());
-        config.setListDelimiter(',');
-
-        return config;
-    }
 
     @Bean
     public Calendar calendar(@Autowired GoogleAuthorizer authorizer) throws IOException {

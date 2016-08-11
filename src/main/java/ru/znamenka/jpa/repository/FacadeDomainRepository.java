@@ -136,14 +136,6 @@ public class FacadeDomainRepository implements EntityRepository {
         return repositoryBucket.get(clazz).findAll(sort);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public <T> T update(Class<T> clazz, T entity) {
-        notNull(clazz);
-        return (T) repositoryBucket.get(clazz).update(entity);
-    }
 
     /**
      * {@inheritDoc}

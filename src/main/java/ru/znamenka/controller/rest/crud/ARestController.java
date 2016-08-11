@@ -124,7 +124,8 @@ public abstract class ARestController<T extends BaseApi, ID extends Serializable
             consumes = {APPLICATION_JSON_VALUE, APPLICATION_XML_VALUE})
     public ResponseEntity update(@Valid @RequestBody T api, BindingResult bindingResult) {
         prepare(api, bindingResult);
-        return ResponseEntity.ok(service.update(getApiClass(), api));
+        //// TODO: 11.08.2016  
+        return ResponseEntity.ok(api);
     }
 
     /**

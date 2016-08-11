@@ -1,7 +1,12 @@
 package ru.znamenka.util;
 
+import com.google.api.client.util.DateTime;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -81,6 +86,21 @@ public final class Utils {
         }
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
+    }
+
+    public static DateTime googleTime(ZonedDateTime time) {
+        return new DateTime(time.toInstant().toEpochMilli(), time.getOffset().getTotalSeconds() / 60);
+    }
+
+    public static DateTime googleTime(Timestamp timestamp) {
+        ZonedDateTime time = ZonedDateTime.of(timestamp.toLocalDateTime(), ZoneOffset.UTC);
+        return googleTime(time);
+    }
+
+    public static ZonedDateTime javaTime(DateTime dateTime) {
+        return ZonedDateTime.ofInstant(
+                Instant.ofEpochMilli(dateTime.getValue()), ZoneOffset.ofHours(dateTime.getTimeZoneShift() / 60)
+        );
     }
 
 }

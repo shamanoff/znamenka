@@ -16,6 +16,7 @@ import ru.znamenka.api.page.shedule.ScheduleClientApi;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.service.page.schedule.ClientAbonementService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +46,11 @@ public class ScheduleController {
     }
 
     @RequestMapping(path="/schedule/book",method = POST,consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8")
-    public RedirectView bookTraining(@ModelAttribute("training") TrainingApi trainingApi, Model model){
+    public RedirectView bookTraining(@ModelAttribute("training") TrainingApi trainingApi, Model model) throws IOException {
         service.save(TrainingApi.class , trainingApi);
+        //// TODO: 11.08.2016  
+        trainingApi.setTrainerId(1L);
+        abonementService.postToCalendar(trainingApi);
         model.addAttribute("training", trainingApi);
         return  new RedirectView("/schedule/");
 

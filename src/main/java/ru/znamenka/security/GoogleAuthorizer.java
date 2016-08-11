@@ -31,7 +31,7 @@ public class GoogleAuthorizer {
 
 
     public Calendar getCalendar() throws IOException {
-        Resource resource = new ClassPathResource("Znamenka2-f7124695d156.json");
+        Resource resource = new ClassPathResource("Znamenka2-6e8e3cf47824.json");
         String appName = ctx.getApplicationName();
 
         GoogleCredential credential = GoogleCredential.fromStream(resource.getInputStream()).createScoped(singleton(CALENDAR));
