@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
     <title>Sale</title>
@@ -12,7 +12,7 @@
 <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
 <link rel='stylesheet prefetch' href='http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css'>
 
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/sale.css">
 
     
     
@@ -71,9 +71,9 @@
     <div class="col-md-4 selectContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-    <select name="state" class="form-control selectpicker" >
+    <select name="client" class="form-control selectpicker" >
       <option value=" " >Выберите клиента</option>
-      <option>Alabama</option>
+      <option></option>
    
     </select>
   </div>
@@ -87,9 +87,9 @@
     <div class="col-md-4 selectContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-    <select name="state" class="form-control selectpicker" >
+    <select name="product" class="form-control selectpicker" >
       <option value=" " >Выберите продукт</option>
-      <option>Alabama</option>
+     
    
     </select>
   </div>
@@ -103,9 +103,10 @@
     <div class="col-md-4 selectContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-    <select name="state" class="form-control selectpicker" >
-      <option value=" " ></option>
-      <option>Alabama</option>
+    <select name="saler" class="form-control selectpicker" >
+      <option>Выберите продавца</option>
+      <option></option>
+      
    
     </select>
   </div>
@@ -119,9 +120,9 @@
     <div class="col-md-4 selectContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-    <select name="state" class="form-control selectpicker" >
-      <option value=" " >Please select your state</option>
-      <option>Alabama</option>
+    <select name="discount" class="form-control selectpicker" >
+      <option value=" " >Выберите скидку</option>
+      <option></option>
    
     </select>
   </div>
@@ -130,18 +131,18 @@
   
   
 <!-- Success message -->
-<div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Thanks for contacting us, we will get back to you shortly.</div>
+<div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Успешно</div>
 
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label"></label>
   <div class="col-md-4">
-    <button type="submit" class="btn btn-warning" >Добавить покупку <span class="glyphicon glyphicon-send"></span></button>
+    <button type="submit" class="btn btn-primary" >Добавить покупку <span class="glyphicon glyphicon-send"></span></button>
   </div>
 </div>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
 
-<div class="container">
+
    <div class="row">
 
       <p></p>
@@ -167,7 +168,7 @@
                         <th class="hidden-xs">Продукт</th>
                         <th>Внесено</th>
                         <th>Осталось внести</th>
-                        <th align="center"><em class="fa fa-cog"></em></th>
+                        <th >Оплата</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -177,8 +178,24 @@
                         <td>10000</td>
                         <td>5000</td>
                         
-                        <td><button type="button" class="btn btn-sm btn-success btn-create"><em class="fa fa-dollar"></em></button></td>
+                        <td>
+                           <input ></input>
+                         
+                          <button type="button" class="btn btn-sm btn-success btn-create">
+                     Оплатить    
+                    <em class="fa fa-dollar "></em></button>
+                 </td>
+            
+              
+              
+              
+             
+              
                      </tr>
+           
+
+           
+           
                   </tbody>
                </table>
 
