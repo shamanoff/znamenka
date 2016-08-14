@@ -73,3 +73,5 @@ INSERT INTO JF_trainers (trainer_name) VALUES ('trainer2');
 
 INSERT INTO JF_trainings (training_id, training_plan, client_id, trainer_id, purchase_id) VALUES (1, 1, 1, 1, 1);
 INSERT INTO JF_trainings (training_id, training_plan, client_id, trainer_id, purchase_id) VALUES (2, 2, 2, 2, 2);
+
+INSERT INTO JF_user(username, password) VALUES ('trainer1', '064a4ac981e42b4503376d64db3032c73ba03c636fd2fe3b8e3104a7d04ac7642ca5cc6f6bc4658b');

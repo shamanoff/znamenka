@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS JF_duty_plan_type;
 DROP TABLE IF EXISTS JF_duty_shedule;
 DROP TABLE IF EXISTS JF_training_plan;
 DROP TABLE IF EXISTS JF_exercises;
+DROP TABLE IF EXISTS JF_user;
 
 
 CREATE TABLE JF_Trainers (
@@ -83,7 +84,7 @@ CREATE TABLE JF_trainings
   client_id     BIGINT       NOT NULL,
   trainer_id    BIGINT       NOT NULL,
   purchase_id   BIGINT,
-  start         DATETIME     ,
+  start         DATETIME ,
   CONSTRAINT JF_trainings_ibfk_1 FOREIGN KEY (client_id) REFERENCES JF_clients (client_id),
   CONSTRAINT JF_trainings_ibfk_2 FOREIGN KEY (purchase_id) REFERENCES JF_purchase (purchase_id)
 );
@@ -117,5 +118,11 @@ CREATE TABLE JF_duty_shedule
   datetime_start DATETIME    NOT NULL,
   datetime_end   DATETIME    NOT NULL,
   duty_plan_type TINYINT     NOT NULL
+);
+
+CREATE TABLE JF_user (
+
+  username VARCHAR(50) PRIMARY KEY NOT NULL,
+  password VARCHAR(150)            NOT NULL
 );
 
