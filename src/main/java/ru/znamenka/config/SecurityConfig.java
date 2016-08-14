@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
-                .formLogin().loginPage("login").successForwardUrl("/schedule");
+                .formLogin().loginPage("/login").successForwardUrl("/schedule");
     }
 
     @Override
