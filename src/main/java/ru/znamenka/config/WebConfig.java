@@ -11,7 +11,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import ru.znamenka.config.formatter.TimestampFormatter;
@@ -50,16 +49,6 @@ public class WebConfig extends SpringDataWebConfiguration {
         argumentResolvers.add(pageableResolverOne);
     }
 
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param registry
-     */
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-    }
 
     /**
      * {@inheritDoc}

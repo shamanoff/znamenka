@@ -2,16 +2,15 @@ package ru.znamenka.jpa.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "JF_user")
+import static javax.persistence.FetchType.EAGER;
+
+@Entity(name = "JF_users")
+@NamedEntityGraph(name = "user.graph", attributeNodes = @NamedAttributeNode("authorities"))
 public class User implements UserDetails {
 
     @Id
@@ -23,9 +22,14 @@ public class User implements UserDetails {
     @Getter @Setter
     private String password;
 
-    @Transient
+    @ManyToMany(fetch = EAGER)
+    @JoinTable(
+            name = "JF_user_roles",
+            joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    )
     @Getter @Setter
-    private List<GrantedAuthority> authorities;
+    private List<Role> authorities;
 
 
     @Override
