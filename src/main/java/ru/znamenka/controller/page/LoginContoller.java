@@ -12,8 +12,7 @@ import ru.znamenka.service.custom.ClientBalanceService;
 @Controller
 public class LoginContoller {
 
-    @Autowired
-    private ClientBalanceService service;
+
 
     @GetMapping("/login")
     public String index(Model model) {
