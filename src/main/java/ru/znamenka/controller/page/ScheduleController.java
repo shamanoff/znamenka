@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.znamenka.api.domain.TrainingApi;
 import ru.znamenka.api.page.shedule.ScheduleClientApi;
+import ru.znamenka.jpa.model.User;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.service.page.schedule.ClientAbonementService;
 
@@ -55,17 +57,21 @@ public class ScheduleController {
     }
 
     @RequestMapping(path = "/schedule/", method = POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8")
-    public ModelAndView bookTraining(@Valid TrainingApi trainingApi, BindingResult bindingResult) throws IOException {
+    public ModelAndView bookTraining(@Valid TrainingApi training, BindingResult bindingResult) throws IOException {
         if (!bindingResult.hasErrors()) {
-            service.save(TrainingApi.class, trainingApi);
-            trainingApi.setTrainerId(1L);
-            abonementService.postToCalendar(trainingApi);
+            training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
+            service.save(TrainingApi.class, training);
+            abonementService.postToCalendar(training);
         }
         ModelAndView mv = new ModelAndView("schedule");
-        mv.addObject("training", trainingApi);
+        mv.addObject("training", training);
         mv.addObject("clients", service.findAll(ScheduleClientApi.class));
         return mv;
+    }
 
+    private Long getTrainerIdIfExists() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getTrainerId();
     }
 
     // TODO: 10.08.2016  сделать мапинг для метода поиска покупок по клиенту task 1.1

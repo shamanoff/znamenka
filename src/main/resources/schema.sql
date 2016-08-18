@@ -131,7 +131,8 @@ CREATE TABLE JF_roles (
 
 CREATE TABLE JF_users (
   username VARCHAR(50) PRIMARY KEY NOT NULL,
-  password VARCHAR(150)            NOT NULL
+  password VARCHAR(150)            NOT NULL,
+  trainer_id BIGINT FOREIGN KEY REFERENCES JF_Trainers(trainer_id)
 );
 
 CREATE TABLE JF_user_roles (

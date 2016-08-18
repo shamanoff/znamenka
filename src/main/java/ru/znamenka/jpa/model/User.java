@@ -22,6 +22,10 @@ public class User implements UserDetails {
     @Getter @Setter
     private String password;
 
+    @Column(name = "trainer_id")
+    @Getter @Setter
+    private Long trainerId;
+
     @ManyToMany(fetch = EAGER)
     @JoinTable(
             name = "JF_user_roles",
