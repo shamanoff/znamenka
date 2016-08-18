@@ -18,7 +18,7 @@
 
 <div class="container">
 
-    <form class="well form-horizontal" action="#" th:action="@{/schedule/book}" th:object="${training}" method="post"
+    <form class="well form-horizontal" action="#" th:action="@{/schedule/}" th:object="${training}" method="post"
           id="contact_form">
 
         <fieldset>
@@ -68,7 +68,7 @@
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                         <select th:field="*{clientId}" id="select-client" name="state"
                                 class="form-control selectpicker">
-                            <option value=" ">Выберите клиента</option>
+                            <option value="">Выберите клиента</option>
                             <option th:each="clientId: ${clients}" th:value="${clientId.id}" th:text="${clientId.name}">
                                 Alabama
                             </option>
@@ -85,7 +85,7 @@
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                         <select th:field="*{purchaseId}" id="select-abonement" name="state"
                                 class="form-control selectpicker">
-                            <option value=" ">Выберите абонемент</option>
+                            <option value="">Выберите абонемент</option>
                             
                         </select>
 
