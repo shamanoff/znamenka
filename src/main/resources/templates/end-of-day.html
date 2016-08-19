@@ -16,7 +16,7 @@
 
 <div class="container">
 
-    <form class="well form-horizontal" action=" " method="post" id="contact_form">
+    <form class="well form-horizontal" action="#" th:action="@{/end-of-day/}" th:object="${trainingForm}" method="post" id="contact_form">
         <fieldset>
             <!-- Form Name -->
             <legend>
@@ -99,14 +99,18 @@
                                     <td th:text="${#dates.format(training.start, 'hh:mm')}"></td>
                                     <td>
                                         <div class="form-group">
-
+                                            <input type="hidden" th:attr="name='id'" th:value="${training.id}"/>
                                             <div class="col-md-12 inputGroupContainer">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i
                                                             class="glyphicon glyphicon-list"></i></span>
-                                                    <select name="phone" class="form-control selectpicker">
+                                                    <select th:field="*{statusId}" name="phone" class="form-control selectpicker">
                                                         <option value="">Выберите статус</option>
-                                                        <option th:each="status : ${statuses}" th:value="${status.id}" th:text="${status.name}"></option>
+                                                        <option
+                                                                th:each="status : ${statuses}"
+                                                                th:value="${status.id}"
+                                                                th:text="${status.name}">
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </div>
