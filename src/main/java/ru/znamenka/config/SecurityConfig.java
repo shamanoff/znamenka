@@ -27,9 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage("/login").successForwardUrl("/index")
                 .and()
-                .csrf().ignoringAntMatchers("/schedule/")
-                .and()
-                .formLogin().loginPage("/login").successForwardUrl("/schedule");
+                .csrf().ignoringAntMatchers("/schedule/");
     }
 
     @Override
