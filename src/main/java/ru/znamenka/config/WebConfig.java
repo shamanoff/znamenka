@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.SpringDataWebConfiguration;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -54,16 +56,6 @@ public class WebConfig extends SpringDataWebConfiguration {
      * @param registry
      */
     @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        //registry.addViewController("/login").setViewName("login");
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param registry
-     */
-    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         if (!registry.hasMappingForPattern("/webjars/**")) {
             registry.addResourceHandler("/webjars/**").addResourceLocations(
@@ -101,22 +93,22 @@ public class WebConfig extends SpringDataWebConfiguration {
         return new AcceptHeaderLocaleResolver();
     }
 
-//    @Bean(name = "validator")
-//    public LocalValidatorFactoryBean validator() {
-//        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-//        bean.setValidationMessageSource(source);
-//        return bean;
-//    }
+    @Bean(name = "validator")
+    public LocalValidatorFactoryBean validator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(source);
+        return bean;
+    }
 
     @Bean
     public Java8TimeDialect java8TimeDialect() {
         return new Java8TimeDialect();
     }
 
-//    @Override
-//    public Validator getValidator() {
-//        return validator();
-//    }
+    @Override
+    public Validator getValidator() {
+        return validator();
+    }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
