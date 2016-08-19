@@ -21,16 +21,18 @@ public class SaleService {
     @Autowired
     private QueryFactory factory;
 
-    private List<Tuple> getPaymentsByPurchase(Long purchaseId){
+  /*  private List<Tuple> getPaymentsByPurchase(Long purchaseId){
         JPAQuery<Tuple> query = factory.getJpaQuery();
         query
                 /// TODO: 11.08.2016 дописать селект
 
+                .select(purchaseId,product.productName,purchase.discount,1)
                 .from(purchase)
                 .leftJoin(purchase.product, product)
               ;
+                .where(purchase.id.eq(purchaseId).and(product.expireDays.gt(0)));
 
         return query.fetch();
     }
-
+*/
 }

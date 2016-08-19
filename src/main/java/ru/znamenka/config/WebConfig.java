@@ -54,6 +54,16 @@ public class WebConfig extends SpringDataWebConfiguration {
      * @param registry
      */
     @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        //registry.addViewController("/login").setViewName("login");
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param registry
+     */
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         if (!registry.hasMappingForPattern("/webjars/**")) {
             registry.addResourceHandler("/webjars/**").addResourceLocations(
