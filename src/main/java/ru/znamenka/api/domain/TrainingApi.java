@@ -30,8 +30,14 @@ public class TrainingApi implements BaseApi {
     private Long clientId;
 
     @Getter @Setter
+    private String clientName;
+
+    @Getter @Setter
     private Long purchaseId;
 
     @Getter @Setter
     private Long statusId;
+
+    @Getter @Setter
+    private String statusName;
 }

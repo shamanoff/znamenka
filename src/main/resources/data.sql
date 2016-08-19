@@ -138,8 +138,8 @@ INSERT INTO JF_training_status VALUES (2, 'Проведена');
 INSERT INTO JF_training_status VALUES (3, 'Отменена (без списания)');
 INSERT INTO JF_training_status VALUES (4, 'Отменена (с списанием)');
 
-INSERT INTO JF_trainings (training_id, training_plan, client_id, trainer_id, purchase_id, start, status) VALUES (1, 1, 1, 1, 1, CURRENT_DATE, 1);
-INSERT INTO JF_trainings (training_id, training_plan, client_id, trainer_id, purchase_id, start, status) VALUES (2, 2, 2, 2, 2, CURRENT_DATE, 1);
+INSERT INTO JF_trainings (training_id, training_plan, client_id, trainer_id, purchase_id, start, status_id) VALUES (1, 1, 1, 1, 1, CURRENT_DATE, 1);
+INSERT INTO JF_trainings (training_id, training_plan, client_id, trainer_id, purchase_id, start, status_id) VALUES (2, 2, 2, 2, 2, CURRENT_DATE, 1);
 
 INSERT INTO JF_users (username, password, trainer_id)
 VALUES ('trainer1', '064a4ac981e42b4503376d64db3032c73ba03c636fd2fe3b8e3104a7d04ac7642ca5cc6f6bc4658b', 1);

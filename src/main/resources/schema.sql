@@ -93,7 +93,7 @@ CREATE TABLE JF_trainings
   trainer_id    BIGINT       NOT NULL,
   purchase_id   BIGINT,
   start         DATETIME     NOT NULL,
-  status        BIGINT       NOT NULL FOREIGN KEY REFERENCES JF_training_status (status_id),
+  status_id        BIGINT       NOT NULL FOREIGN KEY REFERENCES JF_training_status (status_id),
   CONSTRAINT JF_trainings_ibfk_1 FOREIGN KEY (client_id) REFERENCES JF_clients (client_id),
   CONSTRAINT JF_trainings_ibfk_2 FOREIGN KEY (purchase_id) REFERENCES JF_purchase (purchase_id)
 );

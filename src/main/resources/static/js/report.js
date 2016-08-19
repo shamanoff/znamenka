@@ -1,18 +1,8 @@
 $(document).ready(function () {
     
    $('#startTime').datetimepicker({
-        defaultDate: '05/09/2016',
+        defaultDate: new Date(),
         format: 'DD/MM/YYYY'
-    });
-    
-  $('#startDuty').datetimepicker({
-        defaultDate: '05/09/2016',
-        format: 'HH:mm'
-    });
-  
-  $('#endDuty').datetimepicker({
-        defaultDate: '05/09/2016',
-        format: 'HH:mm'
     });
     
    $('#contact_form').bootstrapValidator({

@@ -62,25 +62,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="form-group">
-
-                <label class="col-md-4 control-label">Смена</label>
-
-                <div class='col-md-4'>
-                    <div class="input-group ">
-                        <div class='input-group date'>
-                       <span class="input-group-addon">
-                            <span> c </span>
-                        </span>
-                            <input type='text' class="form-control" id='startDuty'/>
-                            <span class="input-group-addon">
-                        <span> по </span>
-                    </span> <input type='text' class="form-control" id='endDuty'/>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- Success message -->
             <div class="alert alert-success" role="alert" id="success_message">Отчет отправлен. Спасибо</div>
             <!-- Error message -->
@@ -113,9 +94,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Имя+фамилия1</td>
-                                    <td>Время тренировки</td>
+                                <tr th:each="training: ${trainings}">
+                                    <td th:text="${training.clientName}"></td>
+                                    <td th:text="${#dates.format(training.start, 'hh:mm')}"></td>
                                     <td>
                                         <div class="form-group">
 
@@ -124,76 +105,8 @@
                                                     <span class="input-group-addon"><i
                                                             class="glyphicon glyphicon-list"></i></span>
                                                     <select name="phone" class="form-control selectpicker">
-                                                        <option value=" ">Выберите статус</option>
-                                                        <option>Проведена</option>
-                                                        <option></option>
-                                                        <option>Отменена (без списания)</option>
-                                                        <option>Отменена (с списанием)</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Имя+фамилия</td>
-                                    <td>Время тренировки</td>
-                                    <td>
-                                        <div class="form-group">
-
-                                            <div class="col-md-12 inputGroupContainer">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i
-                                                            class="glyphicon glyphicon-list"></i></span>
-                                                    <select name="phone" class="form-control selectpicker">
-                                                        <option value=" ">Выберите статус</option>
-                                                        <option>Проведена</option>
-                                                        <option></option>
-                                                        <option>Отменена (без списания)</option>
-                                                        <option>Отменена (с списанием)</option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Имя+фамилия</td>
-                                    <td>Время тренировки</td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-12 inputGroupContainer">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i
-                                                            class="glyphicon glyphicon-list"></i></span>
-                                                    <select name="phone" class="form-control selectpicker">
-                                                        <option value=" "></option>
-                                                        <option>1</option>
-                                                        <option></option>
-                                                        <option>Отменена (без списания)</option>
-                                                        <option>Отменена (с списанием)</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Имя+фамилия</td>
-                                    <td>Время тренировки</td>
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="col-md-12 inputGroupContainer">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i
-                                                            class="glyphicon glyphicon-list"></i></span>
-                                                    <select name="phone" class="form-control selectpicker">
-                                                        <option value=" ">Выберите статус</option>
-                                                        <option>Проведена</option>
-                                                        <option></option>
-                                                        <option>Отменена (без списания)</option>
-                                                        <option>Отменена (с списанием)</option>
+                                                        <option value="">Выберите статус</option>
+                                                        <option th:each="status : ${statuses}" th:value="${status.id}" th:text="${status.name}"></option>
                                                     </select>
                                                 </div>
                                             </div>
