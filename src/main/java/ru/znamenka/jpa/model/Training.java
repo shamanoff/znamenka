@@ -25,7 +25,8 @@ import static javax.persistence.GenerationType.IDENTITY;
         attributeNodes = {
                 @NamedAttributeNode(value = "trainer"),
                 @NamedAttributeNode(value = "client"),
-                @NamedAttributeNode(value = "purchase")
+                @NamedAttributeNode(value = "purchase"),
+                @NamedAttributeNode(value = "status")
         }
 )
 public class Training implements BaseModel<Long> {
@@ -58,4 +59,9 @@ public class Training implements BaseModel<Long> {
     @JoinColumn(name = "purchase_id")
     @Getter @Setter
     private Purchase purchase;
+
+    @ManyToOne(fetch = EAGER)
+    @JoinColumn(name = "status_id")
+    @Getter @Setter
+    private TrainingStatus status;
 }

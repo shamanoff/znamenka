@@ -7,19 +7,15 @@ import ru.znamenka.api.BaseApi;
 import java.sql.Timestamp;
 
 /**
- * <p>
+ * <p>Представление для бизнес-модели Тренировка
  * <p>
  * Создан 01.08.2016
- * <p>
- * Изменения:
  * <p>
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
 
 public class TrainingApi implements BaseApi {
-
-
 
     @Getter @Setter
     private Long id;
@@ -30,11 +26,12 @@ public class TrainingApi implements BaseApi {
     @Getter @Setter
     private Timestamp start;
 
-
     @Getter @Setter
     private Long clientId;
 
-
     @Getter @Setter
     private Long purchaseId;
+
+    @Getter @Setter
+    private Long statusId;
 }

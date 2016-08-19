@@ -59,6 +59,7 @@ public class ScheduleController {
     @RequestMapping(path = "/schedule/", method = POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8")
     public ModelAndView bookTraining(@Valid TrainingApi training, BindingResult bindingResult) throws IOException {
         if (!bindingResult.hasErrors()) {
+            training.setStatusId(1L);
             training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
             service.save(TrainingApi.class, training);
             abonementService.postToCalendar(training);
