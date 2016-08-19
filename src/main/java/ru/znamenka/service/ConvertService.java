@@ -100,20 +100,6 @@ public class ConvertService implements EntityRepository {
         return convertListToApi(converter, list);
     }
 
-    /**
-     * Декорирует метод фасада репозиториев
-     *
-     * @see EntityRepository#update(Class, Object)
-     */
-    @Override
-    public <T> T update(Class<T> clazz, T api) {
-        notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
-        BaseModel entity = converter.convertTo(api);
-        BaseModel updated = facade.update(eClass, entity);
-        return converter.convert(updated);
-    }
 
     /**
      * Декорирует метод фасада репозиториев

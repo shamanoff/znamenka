@@ -1,4 +1,4 @@
-package ru.znamenka.api.custom;
+package ru.znamenka.api.page;
 
 import lombok.Getter;
 import lombok.Setter;

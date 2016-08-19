@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * <p>
@@ -29,6 +31,7 @@ import static javax.persistence.FetchType.EAGER;
 public class Training implements BaseModel<Long> {
 
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "training_id")
     @Getter @Setter
     private Long id;
@@ -36,6 +39,10 @@ public class Training implements BaseModel<Long> {
     @Column(name = "training_plan")
     @Getter @Setter
     private Long trainingPlan;
+
+    @Column(name = "start")
+    @Getter @Setter
+    private Timestamp start;
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "trainer_id")

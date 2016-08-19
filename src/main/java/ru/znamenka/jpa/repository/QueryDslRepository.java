@@ -50,13 +50,5 @@ public interface QueryDslRepository<T, ID extends Serializable> extends JpaRepos
      */
     Class<T> getJavaType();
 
-    /**
-     * Метод для обновления бизнес-модели
-     * @param entity новая версия бизнес-модели
-     * @param <S> тип сущности
-     * @return обновленная сущность
-     * @throws javax.persistence.EntityNotFoundException
-     */
-    <S extends T>  S update(S entity);
 
 }

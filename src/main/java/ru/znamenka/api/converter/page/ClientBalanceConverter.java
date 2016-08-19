@@ -1,9 +1,9 @@
-package ru.znamenka.api.converter.domain;
+package ru.znamenka.api.converter.page;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.znamenka.api.converter.ApiConverter;
-import ru.znamenka.api.custom.ClientBalance;
+import ru.znamenka.api.page.ClientBalance;
 import ru.znamenka.jpa.model.Client;
 
 import static org.springframework.util.Assert.notNull;

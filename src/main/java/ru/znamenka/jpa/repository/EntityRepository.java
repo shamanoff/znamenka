@@ -73,14 +73,6 @@ public interface EntityRepository {
     <T> List<T> findAll(Class<T> clazz, Sort sort);
 
     /**
-     * Обновляет запись в базе
-     * @param clazz класс бизнес-модели
-     * @param entity обновленная бизнес модель
-     * @param <T> тип бизнес-модели
-     * @return обновленная бизнес-модель
-     */
-    <T>  T update(Class<T> clazz, T entity);
-    /**
      * @see PagingAndSortingRepository#findAll(Pageable)
      * @see Page
      * @param clazz    класс бизнес-модели

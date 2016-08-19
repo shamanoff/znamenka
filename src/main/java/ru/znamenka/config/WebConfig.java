@@ -5,13 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.SpringDataWebConfiguration;
-import org.springframework.validation.Validator;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
+import ru.znamenka.config.formatter.TimestampFormatter;
 import ru.znamenka.util.locale.ExtMessageSource;
 
 import java.util.List;
@@ -47,16 +47,6 @@ public class WebConfig extends SpringDataWebConfiguration {
         argumentResolvers.add(pageableResolverOne);
     }
 
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param registry
-     */
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-    }
 
     /**
      * {@inheritDoc}
@@ -101,16 +91,27 @@ public class WebConfig extends SpringDataWebConfiguration {
         return new AcceptHeaderLocaleResolver();
     }
 
-    @Bean(name = "validator")
-    public LocalValidatorFactoryBean validator() {
-        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-        bean.setValidationMessageSource(source);
-        return bean;
+//    @Bean(name = "validator")
+//    public LocalValidatorFactoryBean validator() {
+//        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+//        bean.setValidationMessageSource(source);
+//        return bean;
+//    }
+
+    @Bean
+    public Java8TimeDialect java8TimeDialect() {
+        return new Java8TimeDialect();
     }
 
+//    @Override
+//    public Validator getValidator() {
+//        return validator();
+//    }
+
     @Override
-    public Validator getValidator() {
-        return validator();
+    public void addFormatters(FormatterRegistry registry) {
+        super.addFormatters(registry);
+        registry.addFormatter(new TimestampFormatter());
     }
 
 }
