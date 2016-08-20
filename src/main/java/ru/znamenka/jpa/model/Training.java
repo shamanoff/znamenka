@@ -46,22 +46,38 @@ public class Training implements BaseModel<Long> {
     private Timestamp start;
 
     @ManyToOne(fetch = EAGER)
-    @JoinColumn(name = "trainer_id")
+    @JoinColumn(name = "trainer_id", updatable = false, insertable = false)
     @Getter @Setter
     private Trainer trainer;
 
+    @Column(name = "trainer_id")
+    @Getter @Setter
+    private Long trainerId;
+
     @ManyToOne(fetch = EAGER)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", updatable = false, insertable = false)
     @Getter @Setter
     private Client client;
 
+    @Column(name = "client_id")
+    @Getter @Setter
+    private Long clientId;
+
     @ManyToOne(fetch = EAGER)
-    @JoinColumn(name = "purchase_id")
+    @JoinColumn(name = "purchase_id", updatable = false, insertable = false)
     @Getter @Setter
     private Purchase purchase;
 
+    @Column(name = "purchase_id")
+    @Getter @Setter
+    private Long purchaseId;
+
     @ManyToOne(fetch = EAGER)
-    @JoinColumn(name = "status_id")
+    @JoinColumn(name = "status_id", updatable = false, insertable = false)
     @Getter @Setter
     private TrainingStatus status;
+
+    @Column(name = "status_id")
+    @Getter @Setter
+    private Long statusId;
 }

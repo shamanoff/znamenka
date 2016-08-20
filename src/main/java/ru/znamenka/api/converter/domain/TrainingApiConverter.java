@@ -24,23 +24,11 @@ public class TrainingApiConverter implements ApiConverter<Training,TrainingApi>{
     @Override
     public Training convertTo(TrainingApi source) {
         Training training = new Training();
-        Client client = new Client();
-        client.setId(source.getClientId());
-        training.setClient(client);
-
-        Trainer trainer= new Trainer();
-        trainer.setId(source.getTrainerId());
-        training.setTrainer(trainer);
-
-        Purchase purchase = new Purchase();
-        purchase.setId(source.getPurchaseId());
-        training.setPurchase(purchase);
-
+        training.setClientId(source.getClientId());
+        training.setTrainerId(source.getTrainerId());
+        training.setPurchaseId(source.getPurchaseId());
         training.setStart(source.getStart());
-
-        TrainingStatus status = new TrainingStatus();
-        status.setId(source.getStatusId());
-        training.setStatus(status);
+        training.setStatusId(source.getStatusId());
         return training;
     }
 
