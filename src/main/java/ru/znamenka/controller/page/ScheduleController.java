@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.znamenka.api.domain.TrainingApi;
-import ru.znamenka.api.page.shedule.ScheduleClientApi;
+import ru.znamenka.api.domain.ClientApi;
 import ru.znamenka.jpa.model.User;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.service.page.schedule.ClientAbonementService;
@@ -37,7 +37,7 @@ public class ScheduleController {
 
     @GetMapping("/schedule")
     public String getSchedulePage(Model model) {
-        List<ScheduleClientApi> list = service.findAll(ScheduleClientApi.class);
+        List<ClientApi> list = service.findAll(ClientApi.class);
         model.addAttribute("clients", list);
         model.addAttribute("training", new TrainingApi());
         return "schedule";
@@ -45,7 +45,7 @@ public class ScheduleController {
 
     @GetMapping("/clients")
     public String getClientPage(Model model) {
-        List<ScheduleClientApi> list = service.findAll(ScheduleClientApi.class);
+        List<ClientApi> list = service.findAll(ClientApi.class);
         model.addAttribute("clients", list);
         return "clients";
     }
@@ -66,7 +66,7 @@ public class ScheduleController {
         }
         ModelAndView mv = new ModelAndView("schedule");
         mv.addObject("training", training);
-        mv.addObject("clients", service.findAll(ScheduleClientApi.class));
+        mv.addObject("clients", service.findAll(ClientApi.class));
         return mv;
     }
 

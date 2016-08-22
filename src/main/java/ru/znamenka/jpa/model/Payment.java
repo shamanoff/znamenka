@@ -25,11 +25,11 @@ public class Payment implements BaseModel<Long> {
     private Timestamp paymentDate;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "purchase_id")
+    @JoinColumn(name = "purchase_id", insertable = false, updatable = false)
     @Getter @Setter
     private Purchase purchase;
 
-    private Long getPurchaseId() {
-        return purchase == null ? null : purchase.getId();
-    }
+    @Column(name = "purchase_id")
+    @Getter @Setter
+    private Long purchaseId;
 }

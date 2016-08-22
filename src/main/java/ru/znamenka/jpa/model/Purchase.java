@@ -37,43 +37,48 @@ public class Purchase implements BaseModel<Long> {
     private boolean expired;
 
     @ManyToOne(fetch = EAGER)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", insertable = false, updatable = false)
     @Getter @Setter
     private Client client;
 
+    @Column(name = "client_id")
+    @Getter @Setter
+    private Long clientId;
+
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
     @Getter @Setter
     private Product product;
 
+    @Column(name = "product_id", nullable = false)
+    @Getter @Setter
+    private Long productId;
+
     @ManyToOne(fetch = EAGER)
-    @JoinColumn(name = "trainer_id")
+    @JoinColumn(name = "trainer_id", insertable = false, updatable = false)
     @Getter @Setter
     private Trainer trainer;
+
+    @Column(name = "trainer_id")
+    @Getter @Setter
+    private Long trainerId;
 
     @OneToMany(fetch = LAZY)
     @Getter @Setter
     private List<Training> trainings;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "discount_id")
+    @JoinColumn(name = "discount_id", insertable = false, updatable = false)
     @Getter @Setter
     private Discount discount;
+
+    @Column(name = "discount_id")
+    @Getter @Setter
+    private Long discountId;
 
     @OneToMany(mappedBy = "purchase",fetch = LAZY)
     @Getter @Setter
     private List<Payment> payments;
 
-    public Long getClientId() {
-        return getClient() == null ? null : getClient().getId();
-    }
-
-    public Long getProductId() {
-       return getProduct() == null ? null : getProduct().getId();
-    }
-
-    public Long getTrainerId() {
-        return getTrainer() == null ? null : getTrainer().getId();
-    }
 
 }

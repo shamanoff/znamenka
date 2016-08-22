@@ -71,9 +71,8 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                         <select name="client" class="form-control selectpicker">
-                            <option value=" ">Выберите клиента</option>
-                            <option></option>
-
+                            <option value="">Выберите клиента</option>
+                            <option th:each="client: ${clients}" th:value="${client.id}" th:text="${client.name}"></option>
                         </select>
                     </div>
                 </div>
@@ -87,9 +86,8 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                         <select name="product" class="form-control selectpicker">
-                            <option value=" ">Выберите продукт</option>
-
-
+                            <option value="">Выберите продукт</option>
+                            <option th:each="product: ${products}" th:value="${product.id}" th:text="${product.name}"></option>
                         </select>
                     </div>
                 </div>
@@ -103,10 +101,8 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                         <select name="saler" class="form-control selectpicker">
-                            <option>Выберите продавца</option>
-                            <option></option>
-
-
+                            <option value="">Выберите продавца</option>
+                            <option th:each="trainer: ${trainers}" th:value="${trainer.id}" th:text="${trainer.name}"></option>
                         </select>
                     </div>
                 </div>
@@ -120,9 +116,8 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                         <select name="discount" class="form-control selectpicker">
-                            <option value=" ">Выберите скидку</option>
-                            <option></option>
-
+                            <option value="">Выберите скидку</option>
+                            <option th:each="discount: ${discounts}" th:value="${discount.id}" th:text="${discount.amount}"></option>
                         </select>
                     </div>
                 </div>
