@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.util.List;
 
 import static javax.persistence.FetchType.*;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity(name = "JF_purchase")
 @NamedEntityGraph(
@@ -20,6 +21,7 @@ import static javax.persistence.FetchType.*;
 public class Purchase implements BaseModel<Long> {
 
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "purchase_id")
     @Getter @Setter
     private Long id;

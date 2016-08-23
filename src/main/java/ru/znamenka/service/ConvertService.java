@@ -1,11 +1,8 @@
 package ru.znamenka.service;
 
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -36,7 +33,7 @@ import static org.springframework.util.Assert.notNull;
 @Service("convertService")
 @Slf4j
 @SuppressWarnings("unchecked")
-public class ConvertService implements EntityRepository {
+public class ConvertService implements IConvertService {
 
     /**
      * Декорируемый класс
@@ -51,23 +48,15 @@ public class ConvertService implements EntityRepository {
     private final Map<Class, ApiConverter> converterBucket;
 
     /**
-     * Контейнер бинов
-     */
-    @Autowired
-    private BeanFactory ctx;
-
-    /**
      * Создает новый конверт сервис на основе декорируемого класс и хранилища бинов-конвертеров
      *
      * @param facade          декорируемый класс
      * @param converterBucket хранилище бинов-конвертеров
      */
     @Autowired
-    public ConvertService(
-            @Qualifier("facadeRepository") EntityRepository facade
-            , @Qualifier("convertersBucket") Map<Class, ApiConverter> converterBucket
-    ) {
+    public ConvertService(EntityRepository facade, Map<Class, ApiConverter> converterBucket) {
         notEmpty(converterBucket);
+        notNull(facade);
         this.facade = facade;
         this.converterBucket = converterBucket;
     }
@@ -78,10 +67,10 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#findAll(Class)
      */
     @Override
-    public <T> List<T> findAll(Class<T> clazz) throws RuntimeException {
+    public <E extends BaseModel, A extends BaseApi> List<A> findAll(Class<A> clazz) {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         return convertListToApi(converter, facade.findAll(eClass));
 
     }
@@ -92,11 +81,11 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#findAll(Class, Sort)
      */
     @Override
-    public <T> List<T> findAll(Class<T> clazz, Sort sort) throws RuntimeException {
+    public <E extends BaseModel, A extends BaseApi> List<A> findAll(Class<A> clazz, Sort sort) {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
-        List<BaseModel> list = facade.findAll(eClass, sort);
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
+        List<E> list = facade.findAll(eClass, sort);
         return convertListToApi(converter, list);
     }
 
@@ -107,13 +96,12 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#findAll(Class, Pageable)
      */
     @Override
-    public <T> Page<T> findAll(Class<T> clazz, Pageable pageable) throws RuntimeException {
+    public <E extends BaseModel, A extends BaseApi> Page<A> findAll(Class<A> clazz, Pageable pageable) {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
-        Page<BaseModel> page = facade.findAll(eClass, pageable);
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
+        Page<E> page = facade.findAll(eClass, pageable);
         return page.map(converter);
-
     }
 
     /**
@@ -122,10 +110,10 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#count(Class)
      */
     @Override
-    public <T> long count(Class<T> clazz) throws RuntimeException {
+    public <E extends BaseModel, A extends BaseApi> long count(Class<A> clazz) {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         return facade.count(eClass);
     }
 
@@ -135,10 +123,11 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#delete(Class, Serializable)
      */
     @Override
-    public <T, ID extends Serializable> void delete(Class<T> clazz, ID id) throws RuntimeException {
+    public <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> void delete(Class<A> clazz, ID id) {
+
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         facade.delete(eClass, id);
 
     }
@@ -149,10 +138,10 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#deleteAll(Class)
      */
     @Override
-    public <T> void deleteAll(Class<T> clazz) throws RuntimeException {
+    public <E extends BaseModel, A extends BaseApi> void deleteAll(Class<A> clazz) {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         facade.deleteAll(eClass);
     }
 
@@ -172,10 +161,10 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#deleteAllInBatch(Class)
      */
     @Override
-    public <T> void deleteAllInBatch(Class<T> clazz) throws RuntimeException {
+    public <E extends BaseModel, A extends BaseApi> void deleteAllInBatch(Class<A> clazz) {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
 
         facade.deleteAllInBatch(eClass);
     }
@@ -186,26 +175,24 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#getOne(Class, Serializable)
      */
     @Override
-    public <T, ID extends Serializable> T getOne(Class<T> clazz, ID id) throws RuntimeException {
+    public <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> A getOne(Class<A> clazz, ID id) {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         return converter.convert(facade.getOne(eClass, id));
     }
 
     /**
      * Декорирует метод фасада репозиториев
      *
-     * @see EntityRepository#saveAndFlush(Class, Object)
      */
     @Override
-    public <T> T saveAndFlush(Class<T> clazz, T api) throws RuntimeException {
+    public <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> A saveAndFlush(Class<A> clazz, A api) throws RuntimeException {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
-        BaseModel entity = converter.convertTo(api);
-
-        BaseModel saved = facade.saveAndFlush(eClass, entity);
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
+        E entity = converter.convertTo(api);
+        E saved = facade.saveAndFlush(eClass, entity);
         return converter.convert(saved);
     }
 
@@ -215,13 +202,13 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#saveAndFlush(Class, List)
      */
     @Override
-    public <T> List<T> saveAndFlush(Class<T> clazz, List<T> apies) {
+    public <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> List<A> saveAndFlush(Class<A> clazz, List<A> apies) {
         notNull(clazz);
         if (apies.isEmpty()) return apies;
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
-        List<BaseModel> entities = convertListToEntity(converter, apies);
-        List<BaseModel> saved = facade.saveAndFlush(eClass, entities);
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
+        List<E> entities = convertListToEntity(converter, apies);
+        List<E> saved = facade.saveAndFlush(eClass, entities);
         return convertListToApi(converter, saved);
     }
 
@@ -231,29 +218,28 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#save(Class, List)
      */
     @Override
-    public <T> List<T> save(Class<T> clazz, List<T> apies) throws RuntimeException {
+    public <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> List<A> save(Class<A> clazz, List<A> apies) throws RuntimeException {
         notNull(clazz);
         if (apies.isEmpty()) return apies;
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
-        List<BaseModel> entities = convertListToEntity(converter, apies);
-        List<BaseModel> saved = facade.save(eClass, entities);
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
+        List<E> entities = convertListToEntity(converter, apies);
+        List<E> saved = facade.save(eClass, entities);
         return convertListToApi(converter, saved);
     }
 
     /**
      * Декорирует метод фасада репозиториев
      *
-     * @see EntityRepository#save(Class, Object)
      */
     @Override
-    public <T> T save(Class<T> clazz, T api) throws RuntimeException {
+    public <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> A save(Class<A> clazz, A api) throws RuntimeException {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
-        BaseModel entity = converter.convertTo(api);
-        BaseModel saved = facade.save(eClass, entity);
-        return converter.convert(saved);
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
+        E entity = converter.convertTo(api);
+        entity = facade.save(eClass, entity);
+        return converter.convert(entity);
     }
 
     /**
@@ -262,9 +248,9 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#findOne(Class, Serializable)
      */
     @Override
-    public <T, ID extends Serializable> T findOne(Class<T> clazz, ID id) {
+    public <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> A findOne(Class<A> clazz, ID id) {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
+        ApiConverter<BaseModel, A> converter = converterBucket.get(clazz);
         Class<BaseModel> eClass = converter.getEntityType();
         BaseModel entity = facade.findOne(eClass, id);
         return converter.convert(entity);
@@ -276,10 +262,10 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#findOne(Class, Predicate)
      */
     @Override
-    public <T> T findOne(Class<T> clazz, Predicate predicate) {
+    public <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> A findOne(Class<A> clazz, Predicate predicate) {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         return converter.convert(facade.findOne(eClass, predicate));
     }
 
@@ -289,10 +275,10 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#findAll(Class, Predicate)
      */
     @Override
-    public <T> List<T> findAll(Class<T> clazz, Predicate predicate) throws RuntimeException {
+    public <E extends BaseModel, A extends BaseApi> List<A> findAll(Class<A> clazz, Predicate predicate) throws RuntimeException {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         return convertListToApi(converter, facade.findAll(eClass, predicate));
     }
 
@@ -302,10 +288,10 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#findAll(Class, Predicate, Sort)
      */
     @Override
-    public <T> List<T> findAll(Class<T> clazz, Predicate predicate, Sort sort) throws RuntimeException {
+    public <E extends BaseModel, A extends BaseApi> List<A> findAll(Class<A> clazz, Predicate predicate, Sort sort) throws RuntimeException {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         return convertListToApi(converter, facade.findAll(eClass, predicate, sort));
     }
 
@@ -315,11 +301,11 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#findAll(Class, Predicate, Pageable)
      */
     @Override
-    public <T> Page<T> findAll(Class<T> clazz, Predicate predicate, Pageable pageable) throws RuntimeException {
+    public <E extends BaseModel, A extends BaseApi> Page<A> findAll(Class<A> clazz, Predicate predicate, Pageable pageable) throws RuntimeException {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
-        Page<BaseModel> page = facade.findAll(eClass, predicate, pageable);
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
+        Page<E> page = facade.findAll(eClass, predicate, pageable);
         return page.map(converter);
     }
 
@@ -329,10 +315,10 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#count(Class, Predicate)
      */
     @Override
-    public <T> long count(Class<T> clazz, Predicate predicate) throws RuntimeException {
+    public <E extends BaseModel, A extends BaseApi> long count(Class<A> clazz, Predicate predicate) throws RuntimeException {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         return facade.count(eClass, predicate);
 
     }
@@ -343,37 +329,11 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#exists(Class, Predicate)
      */
     @Override
-    public <T> boolean exists(Class<T> clazz, Predicate predicate) throws RuntimeException {
+    public <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> boolean exists(Class<A> clazz, Predicate predicate) throws RuntimeException {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         return facade.exists(eClass, predicate);
-    }
-
-    /**
-     * Декорирует метод фасада репозиториев
-     *
-     * @see EntityRepository#findAll(Class, OrderSpecifier[])
-     */
-    @Override
-    public <T> List<T> findAll(Class<T> clazz, OrderSpecifier[] orders) throws RuntimeException {
-        notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
-        return convertListToApi(converter, facade.findAll(eClass, orders));
-    }
-
-    /**
-     * Декорирует метод фасада репозиториев
-     *
-     * @see EntityRepository#findAll(Class, Predicate, OrderSpecifier[])
-     */
-    @Override
-    public <T> List<T> findAll(Class<T> clazz, Predicate predicate, OrderSpecifier[] orders) throws RuntimeException {
-        notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
-        return convertListToApi(converter, facade.findAll(eClass, predicate, orders));
     }
 
     /**
@@ -382,10 +342,10 @@ public class ConvertService implements EntityRepository {
      * @see EntityRepository#exists(Class, Serializable)
      */
     @Override
-    public <T, ID extends Serializable> boolean exists(Class<T> clazz, ID id) {
+    public <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> boolean exists(Class<A> clazz, ID id) {
         notNull(clazz);
-        ApiConverter<BaseModel, T> converter = converterBucket.get(clazz);
-        Class<BaseModel> eClass = converter.getEntityType();
+        ApiConverter<E, A> converter = converterBucket.get(clazz);
+        Class<E> eClass = converter.getEntityType();
         return facade.exists(eClass, id);
     }
 
@@ -395,10 +355,10 @@ public class ConvertService implements EntityRepository {
      * @param converter реализация конвертера
      * @param list      список моделей
      * @param <E>       тип модели
-     * @param <T>       тип представления
+     * @param <A>       тип представления
      * @return список представлений
      */
-    private <E extends BaseModel, T> List<T> convertListToApi(ApiConverter<E, T> converter, List<E> list) {
+    private <E extends BaseModel, A extends BaseApi> List<A> convertListToApi(ApiConverter<E, A> converter, List<E> list) {
         notNull(converter);
         notNull(list);
         return list.stream().map(converter::convert).collect(toList());
@@ -410,10 +370,10 @@ public class ConvertService implements EntityRepository {
      * @param converter реализация конвертера
      * @param list      список представлений
      * @param <E>       тип модели
-     * @param <T>       тип представления
+     * @param <A>       тип представления
      * @return список моделей
      */
-    private <E extends BaseModel, T> List<E> convertListToEntity(ApiConverter<E, T> converter, List<T> list) {
+    private <E extends BaseModel, A extends BaseApi> List<E> convertListToEntity(ApiConverter<E, A> converter, List<A> list) {
         notNull(converter);
         notNull(list);
         return list.stream().map(converter::convertTo).collect(toList());

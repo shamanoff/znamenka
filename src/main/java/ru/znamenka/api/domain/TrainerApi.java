@@ -2,6 +2,7 @@ package ru.znamenka.api.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import ru.znamenka.api.BaseApi;
 
 /**
  * <p>
@@ -14,7 +15,8 @@ import lombok.Getter;
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Builder
-public class TrainerApi {
+public class TrainerApi implements BaseApi {
+
     @Getter
     private final Long id;
 

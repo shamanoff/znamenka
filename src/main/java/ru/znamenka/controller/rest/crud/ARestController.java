@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.znamenka.api.BaseApi;
-import ru.znamenka.jpa.repository.EntityRepository;
+import ru.znamenka.service.IConvertService;
 import ru.znamenka.service.validation.RequestBodyValidator;
 
 import javax.validation.Valid;
@@ -49,7 +49,7 @@ public abstract class ARestController<T extends BaseApi, ID extends Serializable
      */
     @Autowired
     @Qualifier("dataService")
-    private EntityRepository service;
+    private IConvertService service;
 
     /**
      * {@inheritDoc}

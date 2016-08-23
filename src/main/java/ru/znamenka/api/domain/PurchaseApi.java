@@ -3,10 +3,8 @@ package ru.znamenka.api.domain;
 import lombok.Getter;
 import lombok.Setter;
 import ru.znamenka.api.BaseApi;
-import ru.znamenka.jpa.model.Payment;
 
 import java.sql.Date;
-import java.util.List;
 
 /**
  * <p>
@@ -18,8 +16,7 @@ import java.util.List;
  */
 public class PurchaseApi implements BaseApi {
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private Long id;
 
     @Getter @Setter
@@ -38,11 +35,12 @@ public class PurchaseApi implements BaseApi {
     private Long productId;
 
     @Getter @Setter
+    private String productName;
+
+    @Getter @Setter
     private Long trainerId;
 
     @Getter @Setter
     private Long discountId;
 
-    @Getter @Setter
-    private List<Payment> payments;
 }

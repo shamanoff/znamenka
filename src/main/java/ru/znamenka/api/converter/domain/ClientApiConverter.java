@@ -41,6 +41,7 @@ public class ClientApiConverter implements ApiConverter<Client, ClientApi> {
     public ClientApi convert(Client client) {
         return ClientApi
                 .builder()
+                .id(client.getId())
                 .name(StringUtils.join(asList(client.getName(),client.getSurname()) , " "))
                 .birthDate(client.getBirthDate())
                 .phone(client.getPhone())

@@ -9,6 +9,7 @@ import ru.znamenka.api.page.ClientBalance;
 import ru.znamenka.jpa.model.Payment;
 import ru.znamenka.jpa.model.Purchase;
 import ru.znamenka.jpa.repository.EntityRepository;
+import ru.znamenka.service.IConvertService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,12 +24,11 @@ import static ru.znamenka.util.BDFactory.bd;
 public class ClientBalanceService {
 
     @Autowired
-    @Qualifier("facadeRepository")
     private EntityRepository repo;
 
     @Autowired
     @Qualifier("dataService")
-    private EntityRepository service;
+    private IConvertService service;
 
     public List<ClientBalance> getClients() {
         List<ClientBalance> clientBalances = service.findAll(ClientBalance.class);

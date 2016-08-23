@@ -3,6 +3,7 @@ package ru.znamenka.api.converter.domain;
 import org.springframework.stereotype.Component;
 import ru.znamenka.api.converter.ApiConverter;
 import ru.znamenka.api.domain.PurchaseApi;
+import ru.znamenka.jpa.model.Product;
 import ru.znamenka.jpa.model.Purchase;
 
 /**
@@ -28,6 +29,7 @@ public class PurchaseApiConverter implements ApiConverter<Purchase, PurchaseApi>
         purchase.setClientId(source.getClientId());
         purchase.setDiscountId(source.getDiscountId());
         purchase.setTrainerId(source.getTrainerId());
+        purchase.setPurchaseDate(source.getPurchaseDate());
 
         return purchase;
     }
@@ -35,11 +37,14 @@ public class PurchaseApiConverter implements ApiConverter<Purchase, PurchaseApi>
     @Override
     public PurchaseApi convert(Purchase source) {
         PurchaseApi purchase = new PurchaseApi();
+        purchase.setId(source.getId());
         purchase.setProductId(source.getProductId());
         purchase.setClientId(source.getClientId());
         purchase.setDiscountId(source.getDiscountId());
         purchase.setTrainerId(source.getTrainerId());
-
+        purchase.setPurchaseDate(source.getPurchaseDate());
+        Product product = source.getProduct();
+        purchase.setProductName(product == null ? "" : product.getProductName());
         return purchase;
     }
 
