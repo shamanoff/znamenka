@@ -58,7 +58,7 @@ $(document).ready(function () {
     }
 
     clientSelector.change(function () {
-        var clientId = $("#select-client").val();
+        var clientId = clientSelector.val();
         if (clientId != '') {
             getPurchases(clientId)
         }
@@ -68,7 +68,7 @@ $(document).ready(function () {
 
 function getPurchases(clientId) {
     $.ajax({
-        url: "/purchases",
+        url: "/sale/purchases",
         type: "get",
         data: {
             "clientId": clientId

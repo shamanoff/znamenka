@@ -7,11 +7,13 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity(name = "JF_payments")
 public class Payment implements BaseModel<Long> {
 
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "payment_id")
     @Getter @Setter
     private Long id;

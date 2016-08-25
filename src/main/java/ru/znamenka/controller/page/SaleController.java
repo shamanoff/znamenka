@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.znamenka.api.domain.*;
 import ru.znamenka.api.page.sale.PaymentsApi;
 import ru.znamenka.service.IConvertService;
@@ -62,11 +63,12 @@ public class SaleController {
     }
 
     @RequestMapping(method = POST)
-    public void addPurchase(@Valid PurchaseApi purchase, BindingResult bindingResult) {
+    public RedirectView addPurchase(@Valid PurchaseApi purchase, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             purchase.setPurchaseDate(Date.valueOf(LocalDate.now()));
             service.save(PurchaseApi.class, purchase);
         }
+        return new RedirectView("redirect:sale");
     }
 
     @RequestMapping(method = GET, path = "/purchases")
@@ -77,8 +79,19 @@ public class SaleController {
             return mv;
         }
 
-        List<PaymentsApi> payments = service.findAll(PaymentsApi.class);
+        List<PaymentsApi> payments = saleService.getPurchasesByClients(clientId);
         mv.addObject("payments", payments);
+        mv.addObject("payment", new PaymentApi());
+        mv.addObject("clientId", clientId);
+        return mv;
+    }
+
+    @RequestMapping(method = POST, path = "/payment")
+    public ModelAndView addPayments(@Valid PaymentApi payment, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            service.save(PaymentApi.class, payment);
+        }
+        ModelAndView mv = new ModelAndView(new RedirectView("/sale"));
         return mv;
     }
 
