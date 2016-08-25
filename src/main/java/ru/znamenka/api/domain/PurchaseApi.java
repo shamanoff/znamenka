@@ -35,9 +35,6 @@ public class PurchaseApi implements BaseApi {
     private Long productId;
 
     @Getter @Setter
-    private String productName;
-
-    @Getter @Setter
     private Long trainerId;
 
     @Getter @Setter

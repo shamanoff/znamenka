@@ -1,13 +1,18 @@
 package ru.znamenka.service.page.sale;
 
 import com.querydsl.core.Tuple;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.znamenka.api.converter.page.sale.PaymentsApiConverter;
+import ru.znamenka.api.page.sale.PaymentsApi;
 import ru.znamenka.jpa.repository.QueryFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static ru.znamenka.jpa.model.QPayment.payment;
 import static ru.znamenka.jpa.model.QProduct.product;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
 
@@ -21,18 +26,32 @@ public class SaleService {
     @Autowired
     private QueryFactory factory;
 
-  /*  private List<Tuple> getPaymentsByPurchase(Long purchaseId){
+    @Autowired
+    private PaymentsApiConverter converter;
+
+    public List<PaymentsApi> getPurchasesByClients(Long clientId) {
         JPAQuery<Tuple> query = factory.getJpaQuery();
         query
-                /// TODO: 11.08.2016 дописать селект
-
-                .select(purchaseId,product.productName,purchase.discount,1)
+                .select(
+                        purchase.id,
+                        product.productName,
+                        JPAExpressions
+                                .select(payment.paymentAmount.sum())
+                                .from(payment)
+                                .where(payment.purchase.id.eq(purchase.id)),
+                        product.price.subtract(JPAExpressions
+                                .select(payment.paymentAmount.sum())
+                                .from(payment)
+                                .where(payment.purchase.id.eq(purchase.id)))
+                )
                 .from(purchase)
                 .leftJoin(purchase.product, product)
-              ;
-                .where(purchase.id.eq(purchaseId).and(product.expireDays.gt(0)));
-
-        return query.fetch();
+                .where(product.price.gt(JPAExpressions
+                        .select(payment.paymentAmount.sum())
+                        .from(payment)
+                        .where(payment.purchase.id.eq(purchase.id))).and(purchase.client.id.eq(clientId)))
+        ;
+        return query.fetch().stream().map(converter::convert).collect(Collectors.toList());
     }
-*/
+
 }
