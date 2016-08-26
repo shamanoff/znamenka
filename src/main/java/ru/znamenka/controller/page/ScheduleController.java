@@ -14,27 +14,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.znamenka.api.domain.ClientApi;
 import ru.znamenka.api.domain.TrainingApi;
+import ru.znamenka.api.page.schedule.SubscriptionApi;
 import ru.znamenka.jpa.model.User;
 import ru.znamenka.service.ApiStore;
-import ru.znamenka.service.page.schedule.ClientAbonementService;
+import ru.znamenka.service.page.schedule.SubscriptionPageService;
 
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
+import static java.util.Collections.emptyList;
+import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class ScheduleController {
 
-    @Autowired
-    @Qualifier("dataService")
-    private ApiStore service;
+    private final ApiStore service;
+
+    private final SubscriptionPageService pageService;
 
     @Autowired
-    private ClientAbonementService abonementService;
+    public ScheduleController(SubscriptionPageService pageService, @Qualifier("dataService") ApiStore service) {
+        this.pageService = pageService;
+        this.service = service;
+    }
 
     @GetMapping("/schedule")
     public String getSchedulePage(Model model) {
@@ -51,10 +56,13 @@ public class ScheduleController {
         return "clients";
     }
 
-    @GetMapping("/schedule/abonement")
-    public ResponseEntity<Map<Long, String>> getAbonementsByClient(@RequestParam("clientId") Long clientId) {
-        Map<Long, String> abonements = abonementService.getAbonementByClient(clientId);
-        return ok(abonements);
+    @GetMapping("/schedule/subscriptions")
+    public ResponseEntity<List<SubscriptionApi>> getSubscriptions(@RequestParam("clientId") Long clientId) {
+        if (clientId == null) {
+            return badRequest().body(emptyList());
+        }
+        List<SubscriptionApi> subscriptions = pageService.getSubscriptionByClientId(clientId);
+        return ok(subscriptions);
     }
 
     @RequestMapping(path = "/schedule/", method = POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8")
@@ -63,7 +71,7 @@ public class ScheduleController {
             training.setStatusId(1L);
             training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
             service.save(TrainingApi.class, training);
-            abonementService.postToCalendar(training);
+            pageService.postToCalendar(training);
         }
         ModelAndView mv = new ModelAndView("schedule");
         mv.addObject("training", training);

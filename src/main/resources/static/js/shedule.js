@@ -21,18 +21,18 @@ $(document).ready(function () {
 
 function getAbon(clientId) {
     $.ajax({
-        url: "/schedule/abonement",
+        url: "/schedule/subscriptions",
         type: "get",
         data: {
             "clientId": clientId
         },
         success: function (data) {
             $('#select-abonement').children('option').remove();
-            $.each(data, function (key, value) {
+            $.each(data, function (i, subscription) {
                 $('#select-abonement')
                     .append($("<option></option>")
-                        .attr("value", key)
-                        .text(value));
+                        .attr("value", subscription.purchaseId)
+                        .text(subscription.productName));
             });
         },
         error: function () {
