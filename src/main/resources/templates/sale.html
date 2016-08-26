@@ -18,12 +18,12 @@
 </head>
 
 <body>
-asdasdasdasdaasd
+
 <div class="container">
     <form class="well form-horizontal" action="#" th:action="@{/sale}" th:object="${purchase}" method="post"
           id="contact_form">
         <fieldset>
-            <!-- Form Name -->as
+            <!-- Form Name -->
             <legend>
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="navbar-header">
@@ -57,10 +57,11 @@ asdasdasdasdaasd
 
 
                     </div>
-                    <div th:fragment="header">a </div>
-                    asdasdasdasdasdasd
+
                 </nav>
             </legend>
+            <div th:include="header"> asd</div>
+
             <!-- Collapse item-->
             <!-- Select Basic -->
             <div class="form-group">
