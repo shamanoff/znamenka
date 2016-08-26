@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.znamenka.api.domain.*;
-import ru.znamenka.api.page.sale.PaymentsApi;
-import ru.znamenka.service.IConvertService;
-import ru.znamenka.service.page.sale.SaleService;
+import ru.znamenka.api.page.sale.ClientDebtApi;
+import ru.znamenka.service.ApiStore;
+import ru.znamenka.service.page.sale.SalePageService;
 
 import javax.validation.Valid;
 import java.sql.Date;
@@ -22,6 +22,7 @@ import static java.util.Collections.emptyList;
 import static org.springframework.util.Assert.notNull;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static ru.znamenka.api.domain.PurchaseApi.emptyPurchase;
 
 /**
  * <p>
@@ -35,30 +36,43 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/sale")
 public class SaleController {
 
-    private final IConvertService service;
+    /**
+     * Хранилище представлений
+     */
+    private final ApiStore apiStore;
 
-    @Autowired
-    private SaleService saleService;
+    /**
+     * Сервис для продаж
+     */
+    private final SalePageService saleService;
 
+    /**
+     * Конструктор, возвращающий экземпляр контроллера с
+     * необходимыми зависимостями
+     * @param apiStore хранилище представлений
+     * @param saleService сервис продаж
+     */
     @Autowired
-    public SaleController(@Qualifier("dataService") IConvertService service) {
-        notNull(service);
-        this.service = service;
+    public SaleController(@Qualifier("dataService") ApiStore apiStore, SalePageService saleService) {
+        notNull(apiStore);
+        notNull(saleService);
+        this.apiStore = apiStore;
+        this.saleService = saleService;
     }
 
     @RequestMapping(method = GET)
     public ModelAndView index() {
         ModelAndView mv = new ModelAndView("sale");
-        List<ClientApi> clients = service.findAll(ClientApi.class);
-        List<ProductApi> products = service.findAll(ProductApi.class);
-        List<TrainerApi> trainers = service.findAll(TrainerApi.class);
-        List<DiscountApi> discounts = service.findAll(DiscountApi.class);
+        List<ClientApi> clients = apiStore.findAll(ClientApi.class);
+        List<ProductApi> products = apiStore.findAll(ProductApi.class);
+        List<TrainerApi> trainers = apiStore.findAll(TrainerApi.class);
+        List<DiscountApi> discounts = apiStore.findAll(DiscountApi.class);
 
         mv.addObject("clients", clients);
         mv.addObject("products", products);
         mv.addObject("trainers", trainers);
         mv.addObject("discounts", discounts);
-        mv.addObject("purchase", new PurchaseApi());
+        mv.addObject("purchase", emptyPurchase());
         return mv;
     }
 
@@ -66,9 +80,9 @@ public class SaleController {
     public RedirectView addPurchase(@Valid PurchaseApi purchase, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             purchase.setPurchaseDate(Date.valueOf(LocalDate.now()));
-            service.save(PurchaseApi.class, purchase);
+            apiStore.save(PurchaseApi.class, purchase);
         }
-        return new RedirectView("redirect:sale");
+        return new RedirectView("/sale");
     }
 
     @RequestMapping(method = GET, path = "/purchases")
@@ -79,7 +93,7 @@ public class SaleController {
             return mv;
         }
 
-        List<PaymentsApi> payments = saleService.getPurchasesByClients(clientId);
+        List<ClientDebtApi> payments = saleService.getClientPayments(clientId);
         mv.addObject("payments", payments);
         mv.addObject("payment", new PaymentApi());
         mv.addObject("clientId", clientId);
@@ -89,7 +103,7 @@ public class SaleController {
     @RequestMapping(method = POST, path = "/payment")
     public ModelAndView addPayments(@Valid PaymentApi payment, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            service.save(PaymentApi.class, payment);
+            apiStore.save(PaymentApi.class, payment);
         }
         ModelAndView mv = new ModelAndView(new RedirectView("/sale"));
         return mv;

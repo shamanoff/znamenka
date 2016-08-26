@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.znamenka.api.domain.TrainingApi;
 import ru.znamenka.api.domain.TrainingStatusApi;
 import ru.znamenka.jpa.model.User;
-import ru.znamenka.service.IConvertService;
+import ru.znamenka.service.ApiStore;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,7 +34,7 @@ public class EndOfTheDayReportController {
 
     @Autowired
     @Qualifier("dataService")
-    private IConvertService service;
+    private ApiStore service;
 
     @PreAuthorize("hasRole('ROLE_TRAINER')")
     @RequestMapping(value = "/", method = GET)

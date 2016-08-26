@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.znamenka.api.domain.ClientApi;
 import ru.znamenka.api.domain.TrainingApi;
 import ru.znamenka.jpa.model.User;
-import ru.znamenka.service.IConvertService;
+import ru.znamenka.service.ApiStore;
 import ru.znamenka.service.page.schedule.ClientAbonementService;
 
 import javax.validation.Valid;
@@ -31,7 +31,7 @@ public class ScheduleController {
 
     @Autowired
     @Qualifier("dataService")
-    private IConvertService service;
+    private ApiStore service;
 
     @Autowired
     private ClientAbonementService abonementService;

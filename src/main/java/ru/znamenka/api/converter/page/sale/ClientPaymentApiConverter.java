@@ -3,26 +3,25 @@ package ru.znamenka.api.converter.page.sale;
 import com.querydsl.core.Tuple;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-import ru.znamenka.api.page.sale.PaymentsApi;
+import ru.znamenka.api.page.sale.ClientDebtApi;
 
 /**
  * <p>
- *
+ * <p>
  * Создан 11.08.2016
  * <p>
-
+ *
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Component
-public class PaymentsApiConverter implements Converter<Tuple,PaymentsApi> {
-
+public class ClientPaymentApiConverter implements Converter<Tuple, ClientDebtApi> {
 
     @Override
-    public PaymentsApi convert(Tuple tuple) {
-        return PaymentsApi
+    public ClientDebtApi convert(Tuple tuple) {
+        return ClientDebtApi
                 .builder()
                 .purchaseId(tuple.get(0, Long.class))
-                .productName(tuple.get(1, String.class))
+                .subscription(tuple.get(1, String.class))
                 .paid(tuple.get(2, Number.class).doubleValue())
                 .remain(tuple.get(3, Number.class).doubleValue())
                 .build();

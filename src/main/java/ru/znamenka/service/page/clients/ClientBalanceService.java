@@ -1,4 +1,4 @@
-package ru.znamenka.service.custom;
+package ru.znamenka.service.page.clients;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -9,7 +9,7 @@ import ru.znamenka.api.page.ClientBalance;
 import ru.znamenka.jpa.model.Payment;
 import ru.znamenka.jpa.model.Purchase;
 import ru.znamenka.jpa.repository.EntityRepository;
-import ru.znamenka.service.IConvertService;
+import ru.znamenka.service.ApiStore;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,7 +28,7 @@ public class ClientBalanceService {
 
     @Autowired
     @Qualifier("dataService")
-    private IConvertService service;
+    private ApiStore service;
 
     public List<ClientBalance> getClients() {
         List<ClientBalance> clientBalances = service.findAll(ClientBalance.class);

@@ -134,6 +134,8 @@ INSERT INTO JF_trainers (trainer_name) VALUES ('trainer1');
 INSERT INTO JF_trainers (trainer_name) VALUES ('trainer2');
 
 INSERT INTO JF_payments VALUES (1,100, CURRENT_DATE, 1);
+INSERT INTO JF_payments VALUES (2,50, CURRENT_DATE, 1);
+INSERT INTO JF_payments VALUES (3,50, CURRENT_DATE, 2);
 
 INSERT INTO JF_training_status VALUES (1, 'Запланирована');
 INSERT INTO JF_training_status VALUES (2, 'Проведена');

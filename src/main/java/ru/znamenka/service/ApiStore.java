@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-public interface IConvertService {
+public interface ApiStore {
 
     /**
      * @see CrudRepository#save(Object)

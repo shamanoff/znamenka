@@ -40,4 +40,8 @@ public class PurchaseApi implements BaseApi {
     @Getter @Setter
     private Long discountId;
 
+    public static PurchaseApi emptyPurchase() {
+        return new PurchaseApi();
+    }
+
 }

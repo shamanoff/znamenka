@@ -33,7 +33,7 @@ import static org.springframework.util.Assert.notNull;
 @Service("convertService")
 @Slf4j
 @SuppressWarnings("unchecked")
-public class ConvertService implements IConvertService {
+public class ConvertEntityService implements ApiStore {
 
     /**
      * Декорируемый класс
@@ -54,7 +54,7 @@ public class ConvertService implements IConvertService {
      * @param converterBucket хранилище бинов-конвертеров
      */
     @Autowired
-    public ConvertService(EntityRepository facade, Map<Class, ApiConverter> converterBucket) {
+    public ConvertEntityService(EntityRepository facade, Map<Class, ApiConverter> converterBucket) {
         notEmpty(converterBucket);
         notNull(facade);
         this.facade = facade;

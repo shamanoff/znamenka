@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.znamenka.api.page.ClientBalance;
-import ru.znamenka.service.custom.ClientBalanceService;
+import ru.znamenka.service.page.clients.ClientBalanceService;
 
 import java.util.List;
 
