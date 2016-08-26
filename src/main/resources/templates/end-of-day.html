@@ -13,42 +13,13 @@
 </head>
 
 <body>
-
+<div th:include="header"> </div>
 <div class="container" th:fragment="training-table" id="container">
 
     <form class="well form-horizontal" action="/end-of-day" method="post" id="contact_form">
         <fieldset>
-            <!-- Form Name -->
-            <legend>
-                <nav class="navbar navbar-default" role="navigation">
-                    <div class="navbar-header">
 
-                        <button type="button" class="navbar-toggle" data-toggle="collapse"
-                                data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
-                                class="icon-bar"></span><span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Znamenka CRM</a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li>
-                                <a href="#">Клиенты</a>
-                            </li>
-                            <li>
-                                <a href="#">Расписание</a>
-                            </li>
-                            <li>
-                                <a href="#">Продажи</a>
-                            </li>
-                            <li class="active">
-                                <a href="#">Отчет за смену</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </legend>
-            <!-- Collapse item-->
+
             <!-- Select Basic -->
             <div class="form-group">
                 <label class="col-md-4 control-label">Дата формирования отчета </label>
