@@ -2,7 +2,7 @@ $(document).ready(init(new Date()));
 
 function getTraining(date) {
     $.ajax({
-        url: "/end-of-day/",
+        url: "/end-of-day",
         type: "get",
         data: {
             "date": date.format('DD/MM/YYYY').toString()
@@ -43,7 +43,7 @@ function init(date) {
         }
     })
         .on('success.form.bv', function (e) {
-            $('#success_message').slideDown({opacity: "show"}, "slow") // Do something ...
+            $('#success_message').slideDown({opacity: "show"}, "slow");// Do something ...
             $('#contact_form').data('bootstrapValidator').resetForm();
 
             // Prevent form submission

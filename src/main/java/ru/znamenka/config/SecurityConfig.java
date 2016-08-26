@@ -15,7 +15,7 @@ import ru.znamenka.jpa.repository.UserDao;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .ignoringAntMatchers("/schedule/")
                 .ignoringAntMatchers("/end-of-day/")
+                .ignoringAntMatchers("/sale/*")
         ;
     }
 
