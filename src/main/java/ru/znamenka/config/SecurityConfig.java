@@ -31,8 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoringAntMatchers("/schedule/")
                 .ignoringAntMatchers("/end-of-day/")
                 .ignoringAntMatchers("/sale/*")
-        .and()
-        .logout().logoutUrl("/logout")
+                .and()
+                .logout().logoutUrl("/logout")
         ;
     }
 
