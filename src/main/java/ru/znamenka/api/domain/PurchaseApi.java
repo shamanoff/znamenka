@@ -20,13 +20,13 @@ public class PurchaseApi implements BaseApi {
     private Long id;
 
     @Getter @Setter
-    private Byte isProvided;
+    private Boolean isProvided;
 
     @Getter @Setter
     private Date purchaseDate;
 
     @Getter @Setter
-    private boolean expired;
+    private Boolean expired;
 
     @Getter @Setter
     private Long clientId;

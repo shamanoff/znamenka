@@ -46,7 +46,7 @@ public class SalePageService extends BaseExecutor<Tuple, ClientDebtApi> {
      */
     private JPAQuery<Tuple> initQuery(Long clientId) {
         Expression<Long> alreadyPaid = JPAExpressions
-                .select(payment.paymentAmount.sum())
+                .select(payment.paymentAmount.sum().coalesce(0L))
                 .from(payment)
                 .where(payment.purchase.id.eq(purchase.id));
 

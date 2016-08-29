@@ -28,7 +28,7 @@ public class Purchase implements BaseModel<Long> {
 
     @Column(name = "is_provided")
     @Getter @Setter
-    private Byte isProvided;
+    private Boolean isProvided;
 
     @Column(name = "purchase_date")
     @Getter @Setter
@@ -36,7 +36,7 @@ public class Purchase implements BaseModel<Long> {
 
     @Column(name = "expired")
     @Getter @Setter
-    private boolean expired;
+    private Boolean expired;
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "client_id", insertable = false, updatable = false)

@@ -101,12 +101,11 @@ public class SaleController {
     }
 
     @RequestMapping(method = POST, path = "/payment")
-    public ModelAndView addPayments(@Valid PaymentApi payment, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
+    public RedirectView addPayments(@Valid PaymentApi payment, Double remain, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors() && payment.getAmount() <= remain) {
             apiStore.save(PaymentApi.class, payment);
         }
-        ModelAndView mv = new ModelAndView(new RedirectView("/sale"));
-        return mv;
+        return new RedirectView("/sale");
     }
 
 
