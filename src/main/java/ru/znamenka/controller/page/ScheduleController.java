@@ -48,7 +48,7 @@ public class ScheduleController {
         model.addAttribute("training", new TrainingApi());
         return "schedule";
     }
-
+//// TODO: 06.09.2016 getpage???? 
     @GetMapping("/clients")
     public String getClientPage(Model model) {
         List<ClientApi> list = service.findAll(ClientApi.class);

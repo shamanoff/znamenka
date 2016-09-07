@@ -1,9 +1,13 @@
 package ru.znamenka.controller.page;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+import ru.znamenka.api.domain.ClientApi;
+import ru.znamenka.service.ApiStore;
 import ru.znamenka.service.page.clients.ClientBalanceService;
 
 /**
@@ -12,13 +16,19 @@ import ru.znamenka.service.page.clients.ClientBalanceService;
 @Controller
 public class ClientContoller {
 
+
+
     @Autowired
-    private ClientBalanceService service;
+    @Qualifier("dataService")
+    private ApiStore service;
 
     @GetMapping("/client")
-    public String index(Model model) {
+    public ModelAndView index(Model model) {
 
-        return "client";
+        ModelAndView mv = new ModelAndView("client2");
+        mv.addObject("clients", service.findAll(ClientApi.class));
+
+        return mv;
     }
 
 }
