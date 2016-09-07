@@ -29,10 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable()
-//                .ignoringAntMatchers("/schedule")
-//                .ignoringAntMatchers("/end-of-day")
-//                .ignoringAntMatchers("/sale/*")
-//                .and()
                 .logout().logoutUrl("/logout")
         ;
     }
