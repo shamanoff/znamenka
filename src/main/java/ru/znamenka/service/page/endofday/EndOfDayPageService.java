@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QTraining.training;
+import static ru.znamenka.util.Utils.fromLocalDate;
 
 /**
  * <p>
@@ -34,7 +35,7 @@ public class EndOfDayPageService {
 
     public List<TrainingApi> getTrainings(LocalDate date, Long trainerId) {
         Predicate predicate = training.status.id.eq(1L)
-                .and(training.start.dayOfYear().eq(date.getDayOfYear()))
+                .and(training.start.eq(fromLocalDate(date)))
                 .and(training.trainer.id.eq(trainerId));
         return apiStore.findAll(TrainingApi.class, predicate);
     }

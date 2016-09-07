@@ -4,9 +4,7 @@ import com.google.api.client.util.DateTime;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -101,6 +99,10 @@ public final class Utils {
         return ZonedDateTime.ofInstant(
                 Instant.ofEpochMilli(dateTime.getValue()), ZoneOffset.ofHours(dateTime.getTimeZoneShift() / 60)
         );
+    }
+
+    public static Timestamp fromLocalDate(LocalDate date) {
+        return Timestamp.valueOf(LocalDateTime.of(date, LocalTime.MIN));
     }
 
 }
