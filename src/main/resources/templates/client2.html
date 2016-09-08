@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head  th:replace="~{fragment/imports :: import_header(~{::title},~{::link}, ~{::script})}">
+<head  th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
     <link rel="stylesheet" th:href="@{css/client.css}"/>
-    <script th:src="@{js/client2.js}"></script>
+    <title>Клиенты</title>
 </head>
 <body>
+<th:block th:include="~{fragment/imports :: import_script(~{::script})}">
+    <script th:src="@{js/client2.js}"></script>
+</th:block>
 <div th:include="header"></div>
 <div class="container">
     <form class="well form-horizontal formCreate" action=" " method="post" id="contact_form">

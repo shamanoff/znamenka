@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="import_header(title, links, script)">
+<head th:fragment="import_header(title, links)">
     <meta charset="UTF-8"/>
+
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap-theme.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/Eonasdan-bootstrap-datetimepicker/4.17.37-1/css/bootstrap-datetimepicker.min.css}"/>
     <link rel="stylesheet" th:href="@{css/bootstrap-validator/0.5.0/bootstrapValidator.min.css}"/>
     <link rel="stylesheet" th:href="@{css/font-awesome/4.4.0/font-awesome.min.css}"/>
-    <link rel="stylesheet" th:href="@{css/header.css}" href="../../static/css/header.css"/>
+    <link rel="stylesheet" th:href="@{css/header.css}"/>
+    <th:block th:replace="${links}"/>
 
+    <title th:replace="${title}">The awesome application</title>
+</head>
+<body>
+<th:block th:fragment="import_script(script)">
     <script th:src="@{/webjars/jquery/2.2.2/jquery.min.js}"></script>
     <script th:src="@{js/modernizr.js/modernizr.js}"></script>
     <script th:src="@{/webjars/momentjs/2.14.1/min/moment-with-locales.min.js}"></script>
@@ -16,9 +22,7 @@
     <script th:src="@{/webjars/Eonasdan-bootstrap-datetimepicker/4.17.37-1/js/bootstrap-datetimepicker.min.js}"></script>
     <script th:src="@{js/bootstrap-validator/0.4.5/bootstrapvalidator.min.js}"></script>
 
-    <title th:replace="${title}">The awesome application</title>
-    <th:block th:replace="${links}"/>
-    <th:block th:replace="${script}" />
-
-</head>
+    <th:block th:replace="${script}"/>
+</th:block>
+</body>
 </html>

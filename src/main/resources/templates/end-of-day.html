@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragment/imports :: import_header(~{::title},~{::link}, ~{::script})}">
+<head th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
     <title>Отчет за смену</title>
     <link rel="stylesheet" th:href="@{css/report.css}"/>
-    <script th:src="@{js/end-of-day.js}"></script>
 </head>
 
 <body>
+<th:block th:include="~{fragment/imports :: import_script(~{::script})}">
+    <script th:src="@{js/end-of-day.js}"></script>
+</th:block>
 <div th:include="header"></div>
 <div class="container" th:fragment="training-table" id="container">
 
