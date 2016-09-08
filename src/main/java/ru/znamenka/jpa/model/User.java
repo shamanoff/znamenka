@@ -10,21 +10,31 @@ import java.util.List;
 import static javax.persistence.FetchType.EAGER;
 
 @Entity(name = "JF_users")
-@NamedEntityGraph(name = "user.graph", attributeNodes = @NamedAttributeNode("authorities"))
+@NamedEntityGraph(name = "user.graph",
+        attributeNodes = {
+                @NamedAttributeNode("authorities"),
+                @NamedAttributeNode("trainer")
+        })
 public class User implements UserDetails {
+
+    private static final long serialVersionUID = -8376436720803866112L;
 
     @Id
     @Column(name = "username", nullable = false, unique = true)
-    @Getter @Setter
+    @Getter
+    @Setter
     private String username;
 
     @Column(name = "password", nullable = false)
-    @Getter @Setter
+    @Getter
+    @Setter
     private String password;
 
-    @Column(name = "trainer_id")
-    @Getter @Setter
-    private Long trainerId;
+    @OneToOne(fetch = EAGER)
+    @JoinColumn(name = "trainer_id")
+    @Getter
+    @Setter
+    private Trainer trainer;
 
     @ManyToMany(fetch = EAGER)
     @JoinTable(
@@ -32,7 +42,8 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     )
-    @Getter @Setter
+    @Getter
+    @Setter
     private List<Role> authorities;
 
 

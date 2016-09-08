@@ -84,7 +84,7 @@ public class EndOfTheDayReportController {
 
     private Long getTrainerId() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getTrainerId();
+        return user.getTrainer().getId();
     }
 
 }
