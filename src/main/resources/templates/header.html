@@ -1,94 +1,68 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
->
-  <head>
-    <meta charset="UTF-8"/>
-    <title>Header</title>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="~{fragment/imports :: import_header(~{},~{::link}, ~{})}">
+    <link rel="stylesheet" th:href="@{css/header.css}"/>
+</head>
 
-      <!--<script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>-->
+<body>
+<div class="container">
 
-
-    <!--<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'/>-->
-<!--<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'/>-->
+    <form class="well form-horizontal" action=" " method="post" id="header">
 
 
-      <link rel="stylesheet" href="css/bootstrap/3.2.0/bootstrap-theme.min.css"/>
-      <link rel="stylesheet" href="css/bootstrap/3.3.6/bootstrap.min.css"/>
-      <link rel="stylesheet" href="css/bootstrap-datetimepicker/4.15.35/bootstrap-datetimepicker.min.css"/>
-      <link rel="stylesheet" href="css/bootstrap-validator/0.5.0/bootstrapValidator.min.css"/>
-      <link rel="stylesheet" href="css/font-awesome/4.4.0/font-awesome.min.css"/>
-        <link rel="stylesheet" href="css/header.css"/>
-
-
-    
-    
-  </head>
-
-  <body>
-  <div th:include="js"> </div>
-    <div class="container">
-
-  <form class="well form-horizontal" action=" " method="post" id="header">
-
-
-      <!-- Form Name -->
+        <!-- Form Name -->
 
         <nav class="navbar navbar-default" role="navigation">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-					</button> <a class="navbar-brand" href="#">Znamenka CRM</a>
-          </div>
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              <li>
-                <a href="/index">Рабочий стол</a>
-              </li>
-              <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Работа с клиентами
-        <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="/client">Заведение клиентов</a></li>
-                  <li><a href="/schedule">Запись на тренировку</a></li>
-                  <li><a href="/sale">Продажи</a></li>
-                </ul>
-              </li>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                        class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Znamenka CRM</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/index">Рабочий стол</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Работа с клиентами
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/client">Заведение клиентов</a></li>
+                            <li><a href="/schedule">Запись на тренировку</a></li>
+                            <li><a href="/sale">Продажи</a></li>
+                        </ul>
+                    </li>
 
-              <li>
-                <a href="/end-of-day">Отчет за смену</a>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a href="" class="dropdown-toggle" data-toggle="dropdown" sec:authentication="name">Владимир Путин  <span class="glyphicon glyphicon-user pull-right"></span></a>
-                <ul class="dropdown-menu">
-                    <!-- TODO добавить реализацию -->
-                  <!--<li><a href="#">Настройки   <span class="glyphicon glyphicon-cog pull-right"></span></a></li>-->
-                  <!--<li class="divider"></li>-->
-                  <!--<li><a href="#">Мои отчеты<span class="glyphicon glyphicon-stats pull-right"></span></a></li>-->
-                  <!--<li class="divider"></li>-->
-                  <!--<li><a href="#">Мои задачи <span class="badge pull-right"> 42 </span></a></li>-->
-                  <!--<li class="divider"></li>-->
-                  <li><a href="/logout">Выход<span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+                    <li>
+                        <a href="/end-of-day">Отчет за смену</a>
+                    </li>
                 </ul>
-              </li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" sec:authentication="name">Владимир
+                            Путин <span class="glyphicon glyphicon-user pull-right"></span></a>
+                        <ul class="dropdown-menu">
+                            <!-- TODO добавить реализацию -->
+                            <!--<li><a href="#">Настройки   <span class="glyphicon glyphicon-cog pull-right"></span></a></li>-->
+                            <!--<li class="divider"></li>-->
+                            <!--<li><a href="#">Мои отчеты<span class="glyphicon glyphicon-stats pull-right"></span></a></li>-->
+                            <!--<li class="divider"></li>-->
+                            <!--<li><a href="#">Мои задачи <span class="badge pull-right"> 42 </span></a></li>-->
+                            <!--<li class="divider"></li>-->
+                            <li><a href="/logout">Выход<span class="glyphicon glyphicon-log-out pull-right"></span></a>
+                            </li>
+                        </ul>
+                    </li>
 
-            </ul>
-          </div>
+                </ul>
+            </div>
         </nav>
 
 
-  </form>
+    </form>
 </div>
-
-<script src='js\jquery\2.2.2\jquery.min.js'></script>
-<script src='js\bootstrap\3.3.6\bootstrap.js'></script>
-
-
-
-    
-    
-  </body>
+</body>
 </html>

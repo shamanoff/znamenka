@@ -1,116 +1,82 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8"/>
-    <title>Workspace for download</title>
-    <!--&lt;!&ndash;<script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>&ndash;&gt;-->
+<head th:replace="~{fragment/imports :: import_header(~{::title},~{::link}, ~{})}">
+    <title>Рабочий стол</title>
+    <link rel="stylesheet" th:href="@{css/style.css}"/>
+</head>
 
-<!--&lt;!&ndash;<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'/>&ndash;&gt;-->
-<!--<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'/>-->
-    <link rel="stylesheet" href="css/bootstrap/3.2.0/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap/3.3.6/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-datetimepicker/4.15.35/bootstrap-datetimepicker.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-validator/0.5.0/bootstrapValidator.min.css"/>
-    <link rel="stylesheet" href="css/font-awesome/4.4.0/font-awesome.min.css"/>
-
-        <link rel="stylesheet" href="css/style.css"/>
-
-    
-    
-    
-  </head>
-
-  <body>
-  <div th:include="js"> </div>
-  <div th:include="header"> </div>
-  <div class="container">
+<body>
+<div th:include="header"></div>
+<div class="container">
     <div class="row">
-      <div class="col-md-6 top-buffer">
-        <form class="well form-horizontal" action=" " method="post" id="contact_form">
+        <div class="col-md-6 top-buffer">
+            <form class="well form-horizontal" action=" " method="post" id="contact_form">
 
-          <div class="panel panel-default panel-table">
-            <div class="panel-heading">
-              <div class="row">
-                <div class="col col-xs-6">
-                  <h3 class="panel-title">Расписание</h3>
+                <div class="panel panel-default panel-table">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col col-xs-6">
+                                <h3 class="panel-title">Расписание</h3>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=znamenka.ems%40gmail.com&amp;color=%2328754E&amp;ctz=Europe%2FMoscow"
+                                style="border-width:0" width="400" height="600" frameborder="0" scrolling="no"></iframe>
+
+
+                    </div>
+
                 </div>
 
-              </div>
-            </div>
-            <div class="panel-body">
-              <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=znamenka.ems%40gmail.com&amp;color=%2328754E&amp;ctz=Europe%2FMoscow" style="border-width:0" width="400" height="600" frameborder="0" scrolling="no"></iframe>
+
+            </form>
 
 
+        </div>
+        <div class="col-md-6 top-buffer">
+            <form class="well form-horizontal" action=" " method="post" id="contact_form">
 
 
-            </div>
+                <div class="panel panel-default panel-table">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col col-md-12">
+                                <h3 class="panel-title"> Заполнить отчет о закрытии смены</h3>
+                            </div>
 
-          </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-offset-1">
+                            <div class="row "><label> Срок: </label> 23:00 19.08.2016</div>
+                            <div class="row "><label> Описание: </label> Заполнить отчет на вкладке "Отчет о закрытии
+                                смены"
+                            </div>
+                            <!--</br>-->
+                            <button type="submit" class="btn btn-primary">Отметить, как выполненное <span
+                                    class="glyphicon glyphicon-send"></span></button>
+                        </div>
+                    </div>
 
-
-
-
-        </form>
-
-
-
-      </div>
-      <div class="col-md-6 top-buffer">
-        <form class="well form-horizontal" action=" " method="post" id="contact_form">
-
-
-
-
-          <div class="panel panel-default panel-table">
-            <div class="panel-heading">
-              <div class="row">
-                <div class="col col-md-12">
-                  <h3 class="panel-title"> Заполнить отчет о закрытии смены</h3>
                 </div>
 
-              </div>
-            </div>
-            <div class="panel-body">
-              <div class="col-md-offset-1">
-                <div class="row "><label > Срок: </label> 23:00 19.08.2016</div>
-                <div class="row "><label > Описание: </label> Заполнить отчет на вкладке "Отчет о закрытии смены"</div>
-                <!--</br>-->
-                <button type="submit" class="btn btn-primary" >Отметить, как выполненное <span class="glyphicon glyphicon-send"></span></button>
-              </div>
-            </div>
+            </form>
+        </div>
+        <!-- /.container -->
 
-          </div>
-
-        </form>
-      </div>
-      <!-- /.container -->
-
-      <div class='col-md-6'>
+        <div class='col-md-6'>
 
 
-
-      </div>
-      <!-- /.container -->
+        </div>
+        <!-- /.container -->
 
     </div>
 
-  </div>
-  <!-- /.container -->
+</div>
+<!-- /.container -->
 
 
-
-
-
-  <!--<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>-->
-<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js'></script>-->
-<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.15.35/js/bootstrap-datetimepicker.min.js'></script>-->
-<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.js'></script>-->
-<!--<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>-->
-
-        <script src="js/index.js"></script>
-
-    
-    
-    
-  </body>
+</body>
 </html>
