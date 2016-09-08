@@ -185,9 +185,6 @@
             <version>${thymeleaf-ext.version}</version>
         </dependency>
 
-
-
-
     </dependencies>
 
 	<build>
