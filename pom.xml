@@ -24,6 +24,8 @@
 		<java.version>1.8</java.version>
 		<querydsl.version>4.1.4</querydsl.version>
         <ehcache.version>2.10.2.2.21</ehcache.version>
+        <thymeleaf.version>3.0.0.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.0.1</thymeleaf-layout-dialect.version>
         <thymeleaf-ext.version>2.1.2.RELEASE</thymeleaf-ext.version>
 	</properties>
 
@@ -105,12 +107,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-java8time</artifactId>
-			<version>2.1.0.RELEASE</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<scope>runtime</scope>
@@ -170,13 +166,19 @@
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring4</artifactId>
-            <version>${thymeleaf-ext.version}</version>
+            <version>${thymeleaf.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity4</artifactId>
-            <version>${thymeleaf-ext.version}</version>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-java8time</artifactId>
+            <version>${thymeleaf.version}</version>
         </dependency>
 
         <dependency>
@@ -185,6 +187,29 @@
             <version>${thymeleaf-ext.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>Eonasdan-bootstrap-datetimepicker</artifactId>
+            <version>4.17.37-1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>momentjs</artifactId>
+            <version>2.14.1</version>
+        </dependency>
     </dependencies>
 
 	<build>
