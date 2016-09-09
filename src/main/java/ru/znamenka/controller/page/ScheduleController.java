@@ -81,7 +81,7 @@ public class ScheduleController {
 
     private Long getTrainerIdIfExists() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getTrainerId();
+        return user.getTrainer().getId();
     }
 
     // TODO: 10.08.2016  сделать мапинг для метода поиска покупок по клиенту task 1.1

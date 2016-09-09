@@ -89,69 +89,71 @@ INSERT INTO JF_products (product_name, expire_days, price) VALUES ('abon20', 60,
 INSERT INTO JF_products (product_name, expire_days, price) VALUES ('protein', 0, 250);
 INSERT INTO JF_products (product_name, expire_days, price) VALUES ('amino', 0, 200);
 
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 1, '2016-07-14', 1, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 1, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 1, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 1, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 1, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 1, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 1, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 1, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 1, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
-INSERT INTO JF_purchase (is_provided, client_id, purchase_date, product_id, trainer_id, expired, discount_id)
-VALUES (0, 2, '2016-07-14', 2, 1, 0, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 1, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
+INSERT INTO JF_purchase (client_id, purchase_date, product_id, trainer_id, discount_id)
+VALUES (1, '2016-07-14', 2, 1, NULL);
 
 INSERT INTO JF_trainers (trainer_name) VALUES ('trainer1');
 INSERT INTO JF_trainers (trainer_name) VALUES ('trainer2');
 
-INSERT INTO JF_payments VALUES (1,100, CURRENT_DATE, 1);
-INSERT INTO JF_payments VALUES (2,50, CURRENT_DATE, 1);
-INSERT INTO JF_payments VALUES (3,50, CURRENT_DATE, 2);
+INSERT INTO JF_payments VALUES (1, 100, CURRENT_DATE, 1);
+INSERT INTO JF_payments VALUES (2, 50, CURRENT_DATE, 1);
+INSERT INTO JF_payments VALUES (3, 50, CURRENT_DATE, 2);
 
 INSERT INTO JF_training_status VALUES (1, 'Запланирована');
 INSERT INTO JF_training_status VALUES (2, 'Проведена');
 INSERT INTO JF_training_status VALUES (3, 'Отменена (без списания)');
 INSERT INTO JF_training_status VALUES (4, 'Отменена (с списанием)');
 
-INSERT INTO JF_trainings (training_id, training_plan, client_id, trainer_id, purchase_id, start, status_id) VALUES (1, 1, 1, 1, 1, CURRENT_DATE, 1);
-INSERT INTO JF_trainings (training_id, training_plan, client_id, trainer_id, purchase_id, start, status_id) VALUES (2, 2, 2, 2, 2, CURRENT_DATE, 1);
+INSERT INTO JF_trainings (training_id, training_plan, client_id, trainer_id, purchase_id, start, status_id)
+VALUES (1, 1, 1, 1, 1, CURRENT_DATE, 1);
+INSERT INTO JF_trainings (training_id, training_plan, client_id, trainer_id, purchase_id, start, status_id)
+VALUES (2, 2, 2, 2, 2, CURRENT_DATE, 1);
 
 INSERT INTO JF_users (username, password, trainer_id)
 VALUES ('trainer1', '064a4ac981e42b4503376d64db3032c73ba03c636fd2fe3b8e3104a7d04ac7642ca5cc6f6bc4658b', 1);
 INSERT INTO JF_users (username, password, trainer_id)
-VALUES ('call1', '064a4ac981e42b4503376d64db3032c73ba03c636fd2fe3b8e3104a7d04ac7642ca5cc6f6bc4658b', null);
+VALUES ('call1', '064a4ac981e42b4503376d64db3032c73ba03c636fd2fe3b8e3104a7d04ac7642ca5cc6f6bc4658b', NULL);
 
-INSERT INTO JF_roles(role_name) VALUES ('ROLE_TRAINER');
-INSERT INTO JF_roles(role_name) VALUES ('ROLE_CALL');
+INSERT INTO JF_roles (role_name) VALUES ('ROLE_TRAINER');
+INSERT INTO JF_roles (role_name) VALUES ('ROLE_CALL');
 
 INSERT INTO Jf_user_roles VALUES ('trainer1', 1);
 INSERT INTO Jf_user_roles VALUES ('call1', 2);
