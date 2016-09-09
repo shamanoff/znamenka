@@ -9,7 +9,7 @@ import ru.znamenka.api.BaseApi;
 import java.sql.Date;
 
 public class ClientApi implements BaseApi {
-    
+
     @Getter @Setter
     private Long id;
     @Getter @Setter

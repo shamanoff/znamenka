@@ -24,7 +24,7 @@ $(document).ready(function() {
 
             // The url and method might be different in your application
             $.ajax({
-                url: 'https://jsonplaceholder.typicode.com/users/' + id,
+                url: '/client/' + id,
                 method: 'PUT',
                 data: $form.serialize()
             }).success(function(response) {
@@ -57,7 +57,7 @@ $(document).ready(function() {
             .find('[name="id"]').val("response.id").end();
 
         $.ajax({
-            url: 'https://jsonplaceholder.typicode.com/users/' + id,
+            url: '/client/' + id,
             method: 'GET'
         }).success(function(response) {
             // Populate the form fields with the data returned from server
@@ -65,7 +65,8 @@ $(document).ready(function() {
             //ДОБАВИТЬ ОБНУЛЕНИЕ ВСЕХ 4 ФОРМ НА ТАБАХ
             $('#aboutClient')
                 .find('[name="id"]').val(response.id).end()
-                .find('[name="name"]').val(response.name).end()
+                .find('[name="name"]').val(response.fname).end()
+                .find('[name="last_name"]').val(response.sname).end()
                 .find('[name="email"]').val(response.email).end()
             //.find('[name="website"]').val(response.website).end();
             console.log('[got data] ' + response.email)

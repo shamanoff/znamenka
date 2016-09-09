@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head  th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
+<head th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
     <link rel="stylesheet" th:href="@{css/client.css}"/>
     <title>Клиенты</title>
 </head>
@@ -10,7 +10,8 @@
 </th:block>
 <div th:include="header"></div>
 <div class="container">
-    <form class="well form-horizontal formCreate" action="#" th:action="@{/client}" method="post" th:object="${clientNew}">
+    <form class="well form-horizontal formCreate" action="#" th:action="@{/client}" method="post"
+          th:object="${clientNew}">
         <fieldset>
             <div class="panel-body">
                 <!-- Text input-->
@@ -215,24 +216,13 @@
 
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade in active">
-                            <form id="aboutClient" class="well form-horizontal" action=" " method="post">
+                            <form id="aboutClient" class="well form-horizontal" th:action="@{/client}" method="post">
                                 <fieldset>
                                     <div class="panel-group" id="panel-194688">
-
-
                                         <div id="panel-element-922199" class="panel-collapse">
                                             <div class="panel-body">
                                                 <!-- Text input-->
-                                                <div class="form-group">
-                                                    <label class="col-md-4 control-label">id</label>
-                                                    <div class="col-md-4 inputGroupContainer">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i
-                                                                    class="glyphicon glyphicon-user"></i></span>
-                                                            <input name="id" class="form-control" type="text"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <input name="id" class="form-control" type="hidden"/>
                                                 <!-- Text input-->
                                                 <div class="form-group">
                                                     <label class="col-md-4 control-label">Имя</label>
