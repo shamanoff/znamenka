@@ -1,28 +1,31 @@
 package ru.znamenka.api.domain;
 
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 import ru.znamenka.api.BaseApi;
 
 import java.sql.Date;
 
-@Builder
 public class ClientApi implements BaseApi {
-
-    @Getter
-    private final Long id;
-    @Getter
-    private final String name;
-    @Getter
-    private Integer phone;
-    @Getter
+    
+    @Getter @Setter
+    private Long id;
+    @Getter @Setter
+    private String name;
+    @Getter @Setter
+    @NotEmpty
+    private String fname;
+    @Getter @Setter
+    @NotEmpty
+    private String sname;
+    @Getter @Setter
+    private String phone;
+    @Getter @Setter
     private String email;
-    @Getter
+    @Getter @Setter
     private Date birthDate;
-
-
-
 
 
 }

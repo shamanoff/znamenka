@@ -3,19 +3,18 @@ package ru.znamenka.jpa.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity(name = "JF_clients")
 public class Client implements BaseModel<Long> {
 
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "client_id")
     @Getter @Setter
     private Long id;
