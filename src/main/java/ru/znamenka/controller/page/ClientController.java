@@ -40,7 +40,7 @@ public class ClientController {
     @GetMapping
     public ModelAndView index() {
 
-        ModelAndView mv = new ModelAndView("client2");
+        ModelAndView mv = new ModelAndView("client");
         mv.addObject("clientNew", new ClientApi());
         mv.addObject("clients", service.findAll(ClientApi.class));
         return mv;
