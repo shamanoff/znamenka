@@ -38,6 +38,7 @@ public class TrainingApiConverter implements ApiConverter<Training,TrainingApi>{
         api.setClientId(training.getClient().getId());
         api.setClientName(training.getClient().getName() + " " + training.getClient().getSurname());
         api.setTrainerId(training.getTrainer().getId());
+        api.setTrainerName(training.getTrainer().getName());
         api.setId(training.getId());
         api.setPurchaseId(training.getPurchase().getId());
         api.setStatusId(training.getStatus().getId());
