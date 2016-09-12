@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.znamenka.api.domain.ClientApi;
+import ru.znamenka.api.domain.TrainingApi;
 import ru.znamenka.service.ApiStore;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static ru.znamenka.jpa.model.QTraining.training;
 
 /**
  * <p>
@@ -71,6 +74,13 @@ public class ClientController {
             service.save(ClientApi.class, clientNew);
         }
         return new ModelAndView(new RedirectView("/client"));
+    }
+
+
+    @GetMapping("/{id}/trainings")
+    @ResponseBody
+    public List<TrainingApi> getTrainingsByClient(@PathVariable Long id) {
+        return service.findAll(TrainingApi.class, training.clientId.eq(id));
     }
 
 

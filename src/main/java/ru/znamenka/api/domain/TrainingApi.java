@@ -24,6 +24,9 @@ public class TrainingApi implements BaseApi {
     private Long trainerId;
 
     @Getter @Setter
+    private String trainerName;
+
+    @Getter @Setter
     private Timestamp start;
 
     @Getter @Setter

@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+    $('#startTime').datetimepicker({
+        defaultDate: '05/09/2016 08:00:00',
+        format: 'DD/MM/YYYY HH:mm:ss'
+    });
+
     $('#loading-image').bind('ajaxStart', function() {
         $(this).hide();
     }).bind('ajaxStop', function() {
@@ -128,6 +133,20 @@ $(document).ready(function() {
 
     });
     /// createNew
+    $("a[href='#menu1']").on('shown.bs.tab', function (event) {
+        var id = $('.editButton').attr('data-id');
+        $.ajax({
+            url: '/client/' + id + '/trainings',
+            method: 'GET'
+        }).success(function(data) {
+            $.each(data, function (i, training) {
+                var tr = $('#modal-trainings')
+                    .append($("<tr></tr>"));
 
+                tr.appendChild($("<td></td>")).text(data.start)
+                tr.appendChild($("<td></td>")).text(data.trainerName);
+            })
+        });
+    })
 });
 
