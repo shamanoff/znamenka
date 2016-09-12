@@ -1,9 +1,13 @@
 package ru.znamenka.controller;
 
+import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,4 +45,21 @@ class GlobalDefaultExceptionHandler {
             throw e;
         return e;
     }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ModelAndView handle404(NoHandlerFoundException ex, HttpServletRequest req) {
+        return new ModelAndView("error/404");
+    }
+
+    @ExceptionHandler(ConversionNotSupportedException.class)
+    public ModelAndView handle500(ConversionNotSupportedException ex, HttpServletRequest req) {
+        return new ModelAndView("error/500");
+    }
+
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ModelAndView handle401(AccessDeniedException ex, HttpServletRequest req) {
+        return new ModelAndView("error/401");
+    }
+
 }
