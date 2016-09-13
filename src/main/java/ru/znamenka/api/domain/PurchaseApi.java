@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.znamenka.api.BaseApi;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 /**
@@ -28,12 +29,15 @@ public class PurchaseApi implements BaseApi {
     @Getter @Setter
     private Boolean expired;
 
+    @NotNull
     @Getter @Setter
     private Long clientId;
 
+    @NotNull
     @Getter @Setter
     private Long productId;
 
+    @NotNull
     @Getter @Setter
     private Long trainerId;
 
