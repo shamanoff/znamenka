@@ -6,6 +6,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.calendar.Calendar;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
@@ -18,10 +19,11 @@ import static com.google.api.services.calendar.CalendarScopes.CALENDAR;
 import static java.util.Collections.singleton;
 
 @Component
+@Slf4j
 public class GoogleAuthorizer {
 
-    @Autowired
-    private ApplicationContext ctx;
+    /** Application context */
+    private final ApplicationContext ctx;
 
     /** Global instance of the HTTP transport. */
     private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
@@ -29,6 +31,10 @@ public class GoogleAuthorizer {
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 
+    @Autowired
+    public GoogleAuthorizer(ApplicationContext ctx) {
+        this.ctx = ctx;
+    }
 
     public Calendar getCalendar() throws IOException {
         Resource resource = new ClassPathResource("Znamenka2-6e8e3cf47824.json");

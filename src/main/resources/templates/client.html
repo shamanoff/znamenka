@@ -211,7 +211,6 @@
                         <li class="active"><a data-toggle="tab" href="#home">О клиенте</a></li>
                         <li><a data-toggle="tab" href="#menu1">Тренировки клиента</a></li>
                         <li><a data-toggle="tab" href="#menu2">Продажи</a></li>
-                        <li><a data-toggle="tab" href="#menu3">Гогоди го</a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -276,7 +275,7 @@
                                                     <label class="col-md-4 control-label">Дата рождения</label>
                                                     <div class='col-md-4'>
                                                         <div class="input-group">
-                                                            <div class='input-group date' id='startTime'>
+                                                            <div class='input-group date' id='startTime-edit'>
                       <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                       </span> <input type='text' class="form-control"/>
@@ -332,23 +331,34 @@
                             </form>
                         </div>
                         <div id="menu1" class="tab-pane fade">
-                            <table>
+                            <table id="modal-trainings" class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th>Начало</th>
                                     <th>Тренер</th>
                                 </tr>
                                 </thead>
-                                <tbody id="modal-trainings">
+                                <tbody>
 
                                 </tbody>
                             </table>
                         </div>
                         <div id="menu2" class="tab-pane fade">
-                            3
-                        </div>
-                        <div id="menu3" class="tab-pane fade">
-                            4
+                            <table id="modal-purchases" class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Дата продажи</th>
+                                    <th>Продукт</th>
+                                    <th>Цена</th>
+                                    <th>Оплачено</th>
+                                    <th>Скидка</th>
+                                    <th>Тренер</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <!-- </div> -->

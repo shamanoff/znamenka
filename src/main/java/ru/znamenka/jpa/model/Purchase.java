@@ -47,7 +47,7 @@ public class Purchase implements BaseModel<Long> {
     @Getter @Setter
     private Long clientId;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
     @Getter @Setter
     private Product product;
