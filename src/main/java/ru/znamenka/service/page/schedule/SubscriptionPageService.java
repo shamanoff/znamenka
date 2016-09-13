@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Collections.singletonList;
 import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QPayment.payment;
@@ -130,6 +131,9 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
                 .setTimeZone("Europe/Moscow");
         event.setStart(start);
 
+        EventDateTime end = new EventDateTime()
+                .setDateTime(googleTime(training.getStart().toLocalDateTime().plus(1L, HOURS)));
+        event.setEnd(end);
         Trainer trainer = repo.findOne(Trainer.class, training.getTrainerId());
         event.setSummary(trainer != null ? trainer.getName() : message.getMessage("schedule.trainer.not_found"));
         Client client = repo.findOne(Client.class, training.getClientId());

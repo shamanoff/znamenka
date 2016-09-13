@@ -28,9 +28,8 @@ public interface ApiStore {
      * @param clazz  класс бизнес-модели
      * @param entity коллекция сущностей
      * @param <E>    тип бизнес-модели
-     * @return сущность, которая была сохранена
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> A save(Class<A> clazz, A entity);
+    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> void save(Class<A> clazz, A entity);
 
     /**
      * @see CrudRepository#findOne(java.io.Serializable)
