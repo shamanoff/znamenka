@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    var editButton = $(".editButton");
+
     $('#startTime').datetimepicker({
         defaultDate: '05/09/2016 08:00:00',
         format: 'DD/MM/YYYY HH:mm:ss'
@@ -15,7 +17,7 @@ $(document).ready(function () {
         $(this).show();
     });
 
-    $(".editButton").click(function () {
+    editButton.click(function () {
         $('li > a[href="' + "#home" + '"]').tab("show");
 
     });
@@ -58,7 +60,7 @@ $(document).ready(function () {
         });
     // Конец. Валидация формы перед отправкой
 
-    $('.editButton').on('click', function () {
+    editButton.on('click', function () {
         // Get the record's ID via attribute
         var id = $(this).attr('data-id');
         $('#aboutClient')
