@@ -1,13 +1,19 @@
 package ru.znamenka.api.converter.page.client;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.znamenka.api.converter.ApiConverter;
+import ru.znamenka.api.converter.domain.PaymentApiConverter;
+import ru.znamenka.api.domain.PaymentApi;
 import ru.znamenka.api.page.client.ClientPurchaseApi;
 import ru.znamenka.jpa.model.Payment;
 import ru.znamenka.jpa.model.Purchase;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Collections.emptyList;
 
 /**
  * <p>
@@ -19,6 +25,9 @@ import java.util.List;
  */
 @Component
 public class ClientPurchaseApiConverter implements ApiConverter<Purchase, ClientPurchaseApi> {
+
+    @Autowired
+    private PaymentApiConverter converter;
 
     @Override
     public Class<Purchase> getEntityType() {
@@ -45,6 +54,7 @@ public class ClientPurchaseApiConverter implements ApiConverter<Purchase, Client
                 .discountAmount(source.getDiscount() != null ? String.valueOf(source.getDiscount().getDiscountAmount()) : " - ")
                 .trainerName(source.getTrainer().getName())
                 .purchaseDate(Timestamp.valueOf(source.getPurchaseDate().toLocalDate().atStartOfDay()))
+                .payments(payments(source.getPayments()))
                 .build();
     }
 
@@ -56,5 +66,13 @@ public class ClientPurchaseApiConverter implements ApiConverter<Purchase, Client
                 .reduce((p1, p2) -> p1 + p2)
                 .map(Object::toString)
                 .orElse(" - ");
+    }
+
+    private List<PaymentApi> payments(List<Payment> payments) {
+        if (payments == null) return emptyList();
+        return payments
+                .stream()
+                .map(converter::convert)
+                .collect(Collectors.toList());
     }
 }

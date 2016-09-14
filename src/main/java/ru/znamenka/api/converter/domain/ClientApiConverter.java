@@ -24,7 +24,6 @@ public class ClientApiConverter implements ApiConverter<Client, ClientApi> {
         client.setId(source.getId());
         client.setBirthDate(source.getBirthDate());
         client.setEmail(source.getEmail());
-        client.setPhone(source.getPhone() == null ? null : Long.valueOf(source.getPhone()).intValue());
         client.setName(source.getFname());
         client.setSurname(source.getSname());
 
@@ -39,7 +38,6 @@ public class ClientApiConverter implements ApiConverter<Client, ClientApi> {
         api.setFname(client.getName());
         api.setSname(client.getSurname());
         api.setEmail(client.getEmail());
-        api.setPhone(client.getPhone().toString());
         api.setBirthDate(client.getBirthDate());
         return api;
     }

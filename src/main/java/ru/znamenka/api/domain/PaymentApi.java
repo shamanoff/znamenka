@@ -5,6 +5,7 @@ import lombok.Setter;
 import ru.znamenka.api.BaseApi;
 
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 
 public class PaymentApi implements BaseApi {
 
@@ -17,4 +18,7 @@ public class PaymentApi implements BaseApi {
     @NotNull
     @Setter
     private Long purchaseId;
+
+    @Getter @Setter
+    private Timestamp paymentDate;
 }
