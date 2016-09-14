@@ -25,7 +25,7 @@ public class Client implements BaseModel<Long> {
 
     @Column(name = "phone")
     @Getter @Setter
-    private Integer phone;
+    private String phone;
 
     @Getter @Setter
     @Column(name = "email")
@@ -38,6 +38,14 @@ public class Client implements BaseModel<Long> {
     @Column(name = "name")
     @Getter @Setter
     private String name;
+
+    @Column(name = "male")
+    @Getter @Setter
+    private Boolean male;
+
+    @Column(name = "comment")
+    @Getter @Setter
+    private String comment;
 
     @OneToMany(mappedBy = "client", fetch = LAZY)
     @Getter @Setter

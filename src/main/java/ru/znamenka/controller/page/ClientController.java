@@ -56,18 +56,22 @@ public class ClientController {
     public ClientApi clientApi(@PathVariable Long id) {
         return service.findOne(ClientApi.class, id);
     }
+
     @RequestMapping(value = "/{id}", method = PUT)
-    public RedirectView updateClient(@Valid ClientApi client, BindingResult bindingResult, @PathVariable Long id) {
+    @ResponseBody
+    public ClientApi updateClient(@Valid ClientApi client, BindingResult bindingResult, @PathVariable Long id) {
+        ClientApi clientApi = service.findOne(ClientApi.class, id);
         if (!bindingResult.hasErrors()) {
-            ClientApi clientApi = service.findOne(ClientApi.class, id);
             clientApi.setFname(client.getFname());
             clientApi.setSname(client.getSname());
             clientApi.setBirthDate(client.getBirthDate());
             clientApi.setPhone(client.getPhone());
             clientApi.setEmail(client.getEmail());
+            clientApi.setComment(client.getComment());
+            clientApi.setMale(client.getMale());
             service.save(ClientApi.class, clientApi);
         }
-        return new RedirectView("/client");
+        return clientApi;
     }
 
     @RequestMapping(method = POST)

@@ -25,7 +25,7 @@ public class ClientBalance implements BaseApi {
     private String surname;
 
     @Getter @Setter
-    private Integer phone;
+    private String phone;
 
     @Getter @Setter
     private String email;
