@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
+    <title>500</title>
+    <link rel="stylesheet" th:href="@{css/error_page.css}">
 </head>
 <body>
-<p>Не найдена</p>
+<th:block th:include="~{fragment/imports :: import_script(~{::script})}">
+    <script th:src="@{js/error_page.js}"></script>
+</th:block>
+<div class="container">
+    <div class="row">
+        <p>Приносим извинения, что-то пошло не так. Перейдем на <a th:href='@{/index}'> главную</a> ?</p>
+    </div>
+</div>
+<h1>50<span id="silhouette">0</span><span id="wobble">0</span></h1>
 </body>
 </html>

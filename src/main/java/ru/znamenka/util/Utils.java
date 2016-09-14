@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static java.time.ZoneOffset.UTC;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.PRIVATE;
@@ -86,17 +87,17 @@ public final class Utils {
         return sb.toString();
     }
 
-    public static DateTime googleTime(ZonedDateTime time) {
-        return new DateTime(time.toInstant().toEpochMilli(), time.getOffset().getTotalSeconds() / 60);
+    public static DateTime googleTime(LocalDateTime time) {
+        return new DateTime(time.toInstant(UTC).toEpochMilli(), 0);
     }
 
     public static DateTime googleTime(Timestamp timestamp) {
-        ZonedDateTime time = ZonedDateTime.of(timestamp.toLocalDateTime(), ZoneOffset.UTC);
+        LocalDateTime time = timestamp.toLocalDateTime();
         return googleTime(time);
     }
 
-    public static ZonedDateTime javaTime(DateTime dateTime) {
-        return ZonedDateTime.ofInstant(
+    public static LocalDateTime javaTime(DateTime dateTime) {
+        return LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(dateTime.getValue()), ZoneOffset.ofHours(dateTime.getTimeZoneShift() / 60)
         );
     }

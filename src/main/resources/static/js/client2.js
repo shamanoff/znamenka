@@ -1,14 +1,15 @@
 $(document).ready(function () {
 
     var editButton = $(".editButton");
+    var aboutClient = $('#aboutClient');
+    var myModal = $('#myModal');
 
     $('#startTime').datetimepicker({
-        defaultDate: '05/09/2016 08:00:00',
-        format: 'DD/MM/YYYY HH:mm:ss'
+        defaultDate: '05/09/2016',
+        format: 'DD/MM/YYYY'
     });
     $('#startTime-edit').datetimepicker({
-        defaultDate: '05/09/2016 08:00:00',
-        format: 'DD/MM/YYYY HH:mm:ss'
+        format: 'DD/MM/YYYY'
     });
 
     $('#loading-image').bind('ajaxStart', function () {
@@ -24,7 +25,7 @@ $(document).ready(function () {
 
     //////////////////
     // Начало. Валидация формы перед отправкой
-    $('#aboutClient')
+    aboutClient
         .submit(function (e) {
             // Save the form data via an Ajax request
             e.preventDefault();
@@ -42,20 +43,14 @@ $(document).ready(function () {
                 var $button = $('button[data-id="' + response.id + '"]'),
                     $tr = $button.closest('tr'),
                     $cells = $tr.find('td');
-
                 // Update the cell data
                 $cells
-
-                    .eq(1).html(response.name).end()
-                    .eq(2).html(response.email).end()
-                    .eq(3).html(response.website).end();
-
+                    .eq(1).html(response.fname + ' ' + response.sname).end()
+                    .eq(2).html(response.phone).end()
                 // Hide the dialog
-                $form.parents('.bootbox').modal('hide');
-
+                myModal.modal('hide');
                 // You can inform the user that the data is updated successfully
                 // by highlighting the row or showing a message box
-                bootbox.alert('The user profile is updated');
             });
         });
     // Конец. Валидация формы перед отправкой
@@ -63,7 +58,7 @@ $(document).ready(function () {
     editButton.on('click', function () {
         // Get the record's ID via attribute
         var id = $(this).attr('data-id');
-        $('#aboutClient')
+        aboutClient
             .find('[name="id"]').val("response.id").end();
 
         $.ajax({
@@ -71,19 +66,26 @@ $(document).ready(function () {
             method: 'GET'
         }).success(function (response) {
             // Populate the form fields with the data returned from server
-            console.log('getting data');
             //ДОБАВИТЬ ОБНУЛЕНИЕ ВСЕХ 4 ФОРМ НА ТАБАХ
-            $('#aboutClient')
+            aboutClient
                 .find('[name="id"]').val(response.id).end()
                 .find('[name="fname"]').val(response.fname).end()
                 .find('[name="sname"]').val(response.sname).end()
                 .find('[name="email"]').val(response.email).end()
-            //.find('[name="website"]').val(response.website).end();
-            console.log('[got data] ' + response.email)
+                .find('[name="phone"]').val(response.phone).end()
+                .find('[name="birthDate"]').val(moment(response.birthDate).format("DD/MM/YYYY")).end()
+                .find('[name="comment"]').val(response.comment).end();
+            if (response.male == true) {
+                aboutClient
+                    .find('[name="male"][value="true"]').attr('checked', true).end()
+            } else {
+                aboutClient
+                    .find('[name="male"][value="false"]').attr('checked', true).end()
+            }
             // Show the dialog
-            $('#myModal')
+            myModal
                 .on('shown.bs.modal', function () {
-                    $('#aboutClient')
+                    aboutClient
                         .data('bootstrapValidator').resetForm(); // Reset form
                 })
                 .on('hide.bs.modal', function (e) {
