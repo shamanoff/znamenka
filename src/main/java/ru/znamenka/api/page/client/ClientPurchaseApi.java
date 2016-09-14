@@ -3,8 +3,10 @@ package ru.znamenka.api.page.client;
 import lombok.Builder;
 import lombok.Getter;
 import ru.znamenka.api.BaseApi;
+import ru.znamenka.api.domain.PaymentApi;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * <p>
@@ -29,4 +31,7 @@ public class ClientPurchaseApi implements BaseApi {
     private final String trainerName;
     @Getter
     private final String discountAmount;
+
+    @Getter
+    private final List<PaymentApi> payments;
 }

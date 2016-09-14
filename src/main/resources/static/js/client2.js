@@ -23,32 +23,7 @@ $(document).ready(function () {
     //////////////////
     // Начало. Валидация формы перед отправкой
     $('#aboutClient')
-        .bootstrapValidator({
-            // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                name: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Имя не может быть пустым'
-                        }
-                    }
-                },
-                last_name: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Фамилия не может быть пустым'
-                        }
-                    }
-                }
-
-            }
-        })
-        .on('success.form.fv', function (e) {
+        .submit(function (e) {
             // Save the form data via an Ajax request
             e.preventDefault();
 
@@ -98,8 +73,8 @@ $(document).ready(function () {
             //ДОБАВИТЬ ОБНУЛЕНИЕ ВСЕХ 4 ФОРМ НА ТАБАХ
             $('#aboutClient')
                 .find('[name="id"]').val(response.id).end()
-                .find('[name="name"]').val(response.fname).end()
-                .find('[name="last_name"]').val(response.sname).end()
+                .find('[name="fname"]').val(response.fname).end()
+                .find('[name="sname"]').val(response.sname).end()
                 .find('[name="email"]').val(response.email).end()
             //.find('[name="website"]').val(response.website).end();
             console.log('[got data] ' + response.email)
@@ -198,6 +173,18 @@ $(document).ready(function () {
                     .append($("<td>" + purchase.discountAmount + "</td>"))
                     .append($("<td>" + purchase.trainerName + "</td>"));
                 $('#modal-purchases').find('tbody').append(row);
+
+                $.each(purchase.payments, function (i, payment) {
+                    row = $("<tr>");
+                    row.append($("<td>" + moment.unix(payment.paymentDate / 1000).format("DD/MM/YYYY") + "</td>"))
+                        .append($("<td></td>"))
+                        .append($("<td></td>"))
+                        .append($("<td>" +payment.amount + "</td>"))
+                        .append($("<td></td>"))
+                        .append($("<td></td>"));
+                    $('#modal-purchases').find('tbody').append(row);
+                })
+
             })
         });
     });

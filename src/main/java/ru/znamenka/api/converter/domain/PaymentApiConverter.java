@@ -38,6 +38,7 @@ public class PaymentApiConverter implements ApiConverter<Payment, PaymentApi> {
         PaymentApi api = new PaymentApi();
         api.setAmount(source.getPaymentAmount());
         api.setPurchaseId(source.getPurchaseId());
+        api.setPaymentDate(source.getPaymentDate());
         return api;
     }
 }
