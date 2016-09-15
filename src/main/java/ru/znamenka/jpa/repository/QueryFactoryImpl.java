@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
+import javax.annotation.PreDestroy;
 import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -61,6 +62,11 @@ public class QueryFactoryImpl implements QueryFactory {
         }
 
         return new PageImpl<>(content, pageable, total);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        this.entityManager.close();
     }
 
 }
