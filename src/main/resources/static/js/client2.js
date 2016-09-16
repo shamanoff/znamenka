@@ -146,7 +146,7 @@ $(document).ready(function () {
     });
     /// createNew
     $("a[href='#menu1']").on('shown.bs.tab', function (event) {
-        var id = $('.editButton').attr('data-id');
+        var id = aboutClient.find('[name="id"]').val();
         $.ajax({
             url: '/client/' + id + '/trainings',
             method: 'GET'
@@ -162,7 +162,7 @@ $(document).ready(function () {
     });
 
     $("a[href='#menu2']").on('shown.bs.tab', function (event) {
-        var id = $('.editButton').attr('data-id');
+        var id = aboutClient.find('[name="id"]').val();
         $.ajax({
             url: '/client/' + id + '/purchases',
             method: 'GET'
