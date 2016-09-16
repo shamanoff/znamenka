@@ -19,6 +19,15 @@ $(document).ready(function () {
         }
     });
 
+
+    $('#calendar').fullCalendar({
+        googleCalendarApiKey: 'AIzaSyCYSwkC8872Q0Y-UA0g6SWAORZ-Dvqte10',
+        events: {
+            googleCalendarId: '4jto0age6tsrrkuhveervcj0sk@group.calendar.google.com',
+            className: 'gcal-event'
+        }
+    });
+
 });
 
 function getAbon(clientId) {
