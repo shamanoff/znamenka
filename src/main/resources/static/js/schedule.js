@@ -21,11 +21,42 @@ $(document).ready(function () {
 
 
     $('#calendar').fullCalendar({
-        googleCalendarApiKey: 'AIzaSyCYSwkC8872Q0Y-UA0g6SWAORZ-Dvqte10',
+        selectable:true,
+
+
+        select: function(start, end) {
+            var title = prompt('Event Title:');
+            var eventData;
+            if (title) {
+                eventData = {
+                    title: title,
+                    start: start,
+                    end: end
+                };
+                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            }
+            $('#calendar').fullCalendar('unselect');
+        },
+
+        header: {
+            left: 'prev,next today',
+            center: ''/'title',
+            right:  'title'//'agendaWeek'//,agendaDay' /month,
+        },
+        buttonText: {
+            today: 'today',
+            //month: 'month',
+            week: 'week',
+            day: 'day'
+        }, googleCalendarApiKey: 'AIzaSyCYSwkC8872Q0Y-UA0g6SWAORZ-Dvqte10',
         events: {
             googleCalendarId: '4jto0age6tsrrkuhveervcj0sk@group.calendar.google.com',
-            className: 'gcal-event'
-        }
+            className: 'gcal-event',
+            editable:true
+
+
+        },
+        defaultView: 'agendaWeek'
     });
 
 });

@@ -8,6 +8,10 @@ td {
   border:solid 1px #eee;
 }
 
+.bg-white{
+  background:#ffffff;
+}
+
 input {
   border:solid 1px #ccc;
   border-radius: 5px;
