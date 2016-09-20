@@ -2,10 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
     <title>Расписание</title>
+    <link rel="stylesheet" th:href="@{css/fullcalendar.min.css}">
+
     <link rel="stylesheet" th:href="@{css/style.css}"/>
 </head>
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{::script})}">
+    <script th:src="@{js/calendar/fullcalendar.min.js}"></script>
+    <script th:src="@{js/jquery-ui/1.11.2/jquery-ui.min.js}"></script>
+    <script th:src="@{js/calendar/ru.js}"></script>
+    <script th:src="@{js/calendar/gcal.js}"></script>
     <script th:src="@{js/schedule.js}"></script>
 </th:block>
 <div th:include="header"></div>
@@ -80,12 +86,8 @@
 
 
             <label class="col-md-1 control-label"></label>
-            <div class="col-md-4 control-label">
-
-
-                <iframe src="https://calendar.google.com/calendar/embed?src=4jto0age6tsrrkuhveervcj0sk%40group.calendar.google.com&amp;showTitle=0&amp;showPrint=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;ctz=Europe%2FMoscow showTitle=0"
-                        style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-
+            <div class="col-md-12 control-label">
+                <div id='calendar' class=" well bg-white"></div>
             </div>
 
         </fieldset>

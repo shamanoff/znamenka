@@ -1,66 +1,62 @@
 $(document).ready(function () {
 
     $('#startTime').datetimepicker({
-        defaultDate: '05/09/2016 08:00:00',
-        format: 'DD/MM/YYYY HH:mm:ss'
+        format: 'DD/MM/YYYY HH:mm'
     });
 
 
-    $('#contact_form').bootstrapValidator({
-        // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            сlient: {
-                validators: {
-                    notEmpty: {
-                        message: 'Выберите клиента'
-                    }
-                }
-            },
-            abonement: {
-                validators: {
 
-                    notEmpty: {
-                        message: 'Выберите абонемент'
-                    }
-                }
-            }
-        }
-    })
-        .on('success.form.bv', function(e) {
-            $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
-            $('#contact_form').data('bootstrapValidator').resetForm();
-
-            // Prevent form submission
-            e.preventDefault();
-
-            // Get the form instance
-            var $form = $(e.target);
-
-            // Get the BootstrapValidator instance
-            var bv = $form.data('bootstrapValidator');
-
-            // Use Ajax to submit form data
-            $.post($form.attr('action'), $form.serialize(), function(result) {
-                console.log(result);
-            }, 'json');
-        });
-
-
-    var clientId = $("#select-client").val();
+    var selectClient = $("#select-client");
+    var clientId = selectClient.val();
     if (clientId != '') {
         getAbon(clientId)
     }
 
-    $("#select-client").change(function () {
-        var clientId = $("#select-client").val();
+    selectClient.change(function () {
+        var clientId = selectClient.val();
         if (clientId != '') {
             getAbon(clientId)
         }
+    });
+
+
+    $('#calendar').fullCalendar({
+        selectable:true,
+
+
+        select: function(start, end) {
+            var title = prompt('Event Title:');
+            var eventData;
+            if (title) {
+                eventData = {
+                    title: title,
+                    start: start,
+                    end: end
+                };
+                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            }
+            $('#calendar').fullCalendar('unselect');
+        },
+
+        header: {
+            left: 'prev,next today',
+            center: ''/'title',
+            right:  'title'//'agendaWeek'//,agendaDay' /month,
+        },
+        buttonText: {
+            today: 'today',
+            //month: 'month',
+            week: 'week',
+            day: 'day'
+        }, googleCalendarApiKey: 'AIzaSyCYSwkC8872Q0Y-UA0g6SWAORZ-Dvqte10',
+        events: {
+            googleCalendarId: '4jto0age6tsrrkuhveervcj0sk@group.calendar.google.com',
+            className: 'gcal-event',
+            editable:true
+
+
+        },
+        defaultView: 'agendaWeek'
     });
 
 });

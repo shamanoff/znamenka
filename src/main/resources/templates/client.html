@@ -6,7 +6,7 @@
 </head>
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{::script})}">
-    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js}"></script>
+    <script th:src="@{js/form-validator/validator.min.js}"></script>
     <script th:src="@{js/client2.js}"></script>
 </th:block>
 <div th:include="header"></div>
@@ -21,7 +21,8 @@
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input th:field="*{fname}" placeholder="Иван" class="form-control" type="text" pattern="^[A-zА-я]+"/>
+                            <input th:field="*{fname}" placeholder="Иван" class="form-control" type="text"
+                                   pattern="^[А-я]+"/>
                         </div>
                     </div>
                 </div>
@@ -31,7 +32,8 @@
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input th:field="*{sname}" placeholder="Иванов" class="form-control" type="text" pattern="^[A-zА-я]+"/>
+                            <input th:field="*{sname}" placeholder="Иванов" class="form-control" type="text"
+                                   pattern="^[А-я]+"/>
                         </div>
                     </div>
                 </div>
@@ -54,7 +56,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
                             <input th:field="*{phone}" placeholder="79151234567" class="form-control" type="text"
-                            pattern="^7[0-9]+" data-minlength="11"/>
+                                   pattern="^7[0-9]{10}" data-minlength="11"/>
                         </div>
                     </div>
                 </div>
@@ -78,29 +80,32 @@
                     <div class="col-md-4">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="gender" value="male" required/> мужской
+                                <input type="radio" name="gender" value="true" required th:field="*{male}"/> мужской
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="gender" value="female" required/> женский
+                                <input type="radio" name="gender" value="false" required th:field="*{male}"/> женский
                             </label>
                         </div>
                     </div>
                 </div>
                 <!-- Text area -->
-                <div class="form-group">
+                <div class=" form-group">
                     <label class="col-md-4 control-label">Комментарий</label>
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                            <textarea class="form-control" name="comment" placeholder="Комментарий"></textarea>
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-pencil"></i></span>
+                            <textarea class="form-control" name="comment" placeholder="Комментарий"
+                                      th:field="*{comment}"></textarea>
                         </div>
                     </div>
                 </div>
                 <!-- Success message -->
                 <div class="alert alert-success" role="alert" id="success_message">Success <i
-                        class="glyphicon glyphicon-thumbs-up"></i> Thanks for contacting us, we will get back to you
+                        class="glyphicon glyphicon-thumbs-up"></i> Thanks for contacting us, we will get back to
+                    you
                     shortly.
                 </div>
                 <!-- Button -->
@@ -116,41 +121,28 @@
     </form>
     <!--2nd form-->
     <form class="well form-horizontal" action=" " method="post" id="contact_form">
-
-
         <div class="form-group">
             <div class="col-md-5">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                     <input type="text" class="form-control search" placeholder="Поиск по клиентам"/>
-                    <span class="input-group-btn">
-
-
-      </span>
-
+                    <span class="input-group-btn"></span>
                 </div>
                 <span class="counter pull-left"></span>
-
             </div>
-
             <div class="col-md-4 pull-right">
                 <button class="btn btn-primary pull-right showCreate" type="button">Создать нового клиента</button>
             </div>
-
         </div>
-
-
         <!-- Collapse item-->
         <div class="form-group">
             <div class="col-md-12">
-
                 <div class="panel panel-default panel-table">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col col-xs-6">
                                 <h3 class="panel-title">Список клиентов</h3>
                             </div>
-
                         </div>
                     </div>
                     <div class="panel-body">
@@ -158,7 +150,7 @@
                             <thead>
                             <tr>
                                 <th class="col-md-5 col-xs-5">Клиент</th>
-                                <th class="col-md-5 col-xs-5">Телефон</th>
+                                <th class="col-md-5 col-xs-5">Номер телефона</th>
                                 <th class="col-md-5 col-xs-5">Просмотр карточки</th>
                             </tr>
                             <tr class="warning no-result">
@@ -167,11 +159,10 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             <tr th:each="client : ${clients}">
                                 <td class="hidden" th:text="${client.id}"></td>
                                 <td th:text="${client.name}"></td>
-                                <td th:text="${client.phone}"></td>
+                                <td th:text="${client.phone}">Время тренировки</td>
                                 <td>
                                     <button th:attr="data-id=${client.id}" type="button"
                                             class="btn btn-default editButton" data-toggle="modal"
@@ -185,32 +176,28 @@
                 </div>
             </div>
         </div>
-
     </form>
 
     <!-- Modal start -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
-
             <!-- Modal content-->
             <div class="modal-content">
-
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Карточка клиента</h4>
                 </div>
                 <div id="modal1" class="modal-body col-md-12 ">
                     <!--   <div class="container col-md-12"> -->
-
                     <ul class="nav nav-tabs ">
                         <li class="active"><a data-toggle="tab" href="#home">О клиенте</a></li>
                         <li><a data-toggle="tab" href="#menu1">Тренировки клиента</a></li>
                         <li><a data-toggle="tab" href="#menu2">Продажи</a></li>
                     </ul>
-
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade in active">
-                            <form id="aboutClient" class="well form-horizontal" th:action="@{/client}" method="post" data-toggle="validator">
+                            <form id="aboutClient" class="well form-horizontal" th:action="@{/client}" method="post"
+                                  data-toggle="validator">
                                 <fieldset>
                                     <div class="panel-group" id="panel-194688">
                                         <div id="panel-element-922199" class="panel-collapse">
@@ -226,7 +213,7 @@
                                                                 <i class="glyphicon glyphicon-user"></i>
                                                             </span>
                                                             <input name="fname" placeholder="Иван" class="form-control"
-                                                                   type="text" pattern="^[A-zА-я]+"/>
+                                                                   type="text" pattern="^[А-я]+"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -238,12 +225,13 @@
                                                             <span class="input-group-addon"><i
                                                                     class="glyphicon glyphicon-user"></i></span>
                                                             <input name="sname" placeholder="Иванов"
-                                                                   class="form-control" type="text" pattern="^[A-zА-я]+"/>
+                                                                   class="form-control" type="text"
+                                                                   pattern="^[А-я]+"/>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- Text input-->
-                                                <div class="form-group">
+                                                <div class="form-group has-feedback">
                                                     <label class="col-md-4 control-label">E-Mail</label>
                                                     <div class="col-md-4 inputGroupContainer">
                                                         <div class="input-group">
@@ -255,14 +243,15 @@
                                                     </div>
                                                 </div>
                                                 <!-- Text input-->
-                                                <div class="form-group">
+                                                <div class="form-group has-feedback">
                                                     <label class="col-md-4 control-label">Мобильный телефон</label>
                                                     <div class="col-md-4 inputGroupContainer">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i
                                                                     class="glyphicon glyphicon-earphone"></i></span>
                                                             <input name="phone" placeholder="79151234567"
-                                                                   class="form-control" type="text" pattern="^7[0-9+" data-minlength="11"/>
+                                                                   class="form-control" type="text" pattern="^7[0-9]{10}"
+                                                                   data-minlength="11"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -275,7 +264,7 @@
                                                                 <span class="input-group-addon">
                                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                                 </span>
-                                                                <input type='text' class="form-control"/>
+                                                                <input name="birthDate" type='text' class="form-control"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -286,12 +275,12 @@
                                                     <div class="col-md-4">
                                                         <div class="radio">
                                                             <label>
-                                                                <input type="radio" name="gender" value="male"/> мужской
+                                                                <input type="radio" name="male" value="true"/> мужской
                                                             </label>
                                                         </div>
                                                         <div class="radio">
                                                             <label>
-                                                                <input type="radio" name="gender" value="female"/>
+                                                                <input type="radio" name="male" value="false"/>
                                                                 женский
                                                             </label>
                                                         </div>

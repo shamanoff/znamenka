@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.znamenka.api.domain.ClientApi;
 import ru.znamenka.api.domain.TrainingApi;
 import ru.znamenka.api.page.schedule.SubscriptionApi;
@@ -29,6 +30,7 @@ import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
+@RequestMapping("/schedule")
 public class ScheduleController {
 
     private final ApiStore service;
@@ -41,7 +43,7 @@ public class ScheduleController {
         this.service = service;
     }
 
-    @GetMapping("/schedule")
+    @GetMapping
     public String getSchedulePage(Model model) {
         List<ClientApi> list = service.findAll(ClientApi.class);
         model.addAttribute("clients", list);
@@ -56,7 +58,7 @@ public class ScheduleController {
         return "clients";
     }
 
-    @GetMapping("/schedule/subscriptions")
+    @GetMapping("/subscriptions")
     public ResponseEntity<List<SubscriptionApi>> getSubscriptions(@RequestParam("clientId") Long clientId) {
         if (clientId == null) {
             return badRequest().body(emptyList());
@@ -65,7 +67,7 @@ public class ScheduleController {
         return ok(subscriptions);
     }
 
-    @RequestMapping(path = "/schedule/", method = POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8")
+    @RequestMapping(path = "/", method = POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8")
     public ModelAndView bookTraining(@Valid TrainingApi training, BindingResult bindingResult) throws IOException {
         if (!bindingResult.hasErrors()) {
             training.setStatusId(1L);
@@ -73,9 +75,9 @@ public class ScheduleController {
             service.save(TrainingApi.class, training);
             pageService.postToCalendar(training);
         }
-        ModelAndView mv = new ModelAndView("schedule");
-        mv.addObject("training", training);
-        mv.addObject("clients", service.findAll(ClientApi.class));
+        ModelAndView mv = new ModelAndView(new RedirectView("/schedule"));
+//        mv.addObject("training", training);
+//        mv.addObject("clients", service.findAll(ClientApi.class));
         return mv;
     }
 
