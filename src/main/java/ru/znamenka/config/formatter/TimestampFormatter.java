@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public class TimestampFormatter implements Formatter<Timestamp> {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     @Override
     public Timestamp parse(String text, Locale locale) throws ParseException {

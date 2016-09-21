@@ -50,7 +50,7 @@ public class ScheduleController {
         model.addAttribute("training", new TrainingApi());
         return "schedule";
     }
-//// TODO: 06.09.2016 getpage???? 
+
     @GetMapping("/clients")
     public String getClientPage(Model model) {
         List<ClientApi> list = service.findAll(ClientApi.class);
@@ -75,19 +75,12 @@ public class ScheduleController {
             service.save(TrainingApi.class, training);
             pageService.postToCalendar(training);
         }
-        ModelAndView mv = new ModelAndView(new RedirectView("/schedule"));
-//        mv.addObject("training", training);
-//        mv.addObject("clients", service.findAll(ClientApi.class));
-        return mv;
+        return new ModelAndView(new RedirectView("/schedule"));
     }
 
     private Long getTrainerIdIfExists() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getTrainer().getId();
     }
-
-    // TODO: 10.08.2016  сделать мапинг для метода поиска покупок по клиенту task 1.1
-
-    // TODO: 10.08.2016  сделать мапинг для метода поиска платежей по покупке task 2.1
 
 }

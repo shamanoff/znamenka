@@ -23,8 +23,7 @@ $(document).ready(function () {
 
     });
 
-    //////////////////
-    // Начало. Валидация формы перед отправкой
+
     aboutClient
         .submit(function (e) {
             // Save the form data via an Ajax request
@@ -46,14 +45,14 @@ $(document).ready(function () {
                 // Update the cell data
                 $cells
                     .eq(1).html(response.fname + ' ' + response.sname).end()
-                    .eq(2).html(response.phone).end()
+                    .eq(2).html(response.phone).end();
                 // Hide the dialog
                 myModal.modal('hide');
                 // You can inform the user that the data is updated successfully
                 // by highlighting the row or showing a message box
             });
         });
-    // Конец. Валидация формы перед отправкой
+
 
     editButton.on('click', function () {
         // Get the record's ID via attribute

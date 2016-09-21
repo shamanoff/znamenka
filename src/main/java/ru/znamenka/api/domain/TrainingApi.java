@@ -30,6 +30,9 @@ public class TrainingApi implements BaseApi {
     private Timestamp start;
 
     @Getter @Setter
+    private Timestamp end;
+
+    @Getter @Setter
     private Long clientId;
 
     @Getter @Setter

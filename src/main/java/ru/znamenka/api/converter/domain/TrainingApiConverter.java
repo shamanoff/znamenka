@@ -9,7 +9,7 @@ import ru.znamenka.jpa.model.*;
  * Created by Сережа on 10.08.2016.
  */
 @Component
-public class TrainingApiConverter implements ApiConverter<Training,TrainingApi>{
+public class TrainingApiConverter implements ApiConverter<Training, TrainingApi> {
 
     @Override
     public Class<TrainingApi> getApiType() {
@@ -46,11 +46,6 @@ public class TrainingApiConverter implements ApiConverter<Training,TrainingApi>{
 
         return api;
     }
-
-
-
-
-
 
 
 }
