@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import ru.znamenka.api.domain.TrainingApi;
 import ru.znamenka.api.page.schedule.SubscriptionApi;
 import ru.znamenka.jpa.model.Client;
-import ru.znamenka.jpa.model.Trainer;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.service.page.BaseExecutor;
 import ru.znamenka.util.locale.ExtMessageSource;
@@ -133,9 +132,9 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
         EventDateTime end = new EventDateTime()
                 .setDateTime(googleTime(training.getEnd()));
         event.setEnd(end);
-        Trainer trainer = repo.findOne(Trainer.class, training.getTrainerId());
-        event.setSummary(trainer != null ? trainer.getName() : message.getMessage("schedule.trainer.not_found"));
+
         Client client = repo.findOne(Client.class, training.getClientId());
+        event.setSummary(client.getName() + " " + client.getSurname());
         EventAttendee attendee = new EventAttendee();
         attendee.setEmail(client.getEmail());
         attendee.setDisplayName(client.getName() + " " + client.getSurname());

@@ -45,16 +45,7 @@ $(document).ready(function () {
             var $form = $(e.target);
             // Use Ajax to submit form data
             $.post($form.attr('action'), $form.serialize(), function (result) {
-                // var eventData;
-                // clientName = trainingForm.find('#select-client option:selected').text();
-                // start = trainingForm.find('[name="start"]').val();
-                // end = trainingForm.find('[name="end"]').val();
-                // eventData = {
-                //     title: clientName,
-                //     start: start,
-                //     end: end
-                // };
-                // calendar.fullCalendar('renderEvent', eventData, true);
+                console.log('success ' + result);
                 calendar.fullCalendar('refetchEvents');
             }, 'json');
             myModal.modal("hide");
@@ -92,9 +83,9 @@ $(document).ready(function () {
             //month: 'month',
             week: 'week',
             day: 'day'
-        }, googleCalendarApiKey: 'AIzaSyCYSwkC8872Q0Y-UA0g6SWAORZ-Dvqte10',
+        }, googleCalendarApiKey: 'AIzaSyCJhfsFEpthpzFVseRU-BKKsnLn3SxZ4Z0', //'AIzaSyCYSwkC8872Q0Y-UA0g6SWAORZ-Dvqte10',
         events: {
-            googleCalendarId: '4jto0age6tsrrkuhveervcj0sk@group.calendar.google.com',
+            googleCalendarId: 'znamenka.crm@gmail.com', //'4jto0age6tsrrkuhveervcj0sk@group.calendar.google.com',
             className: 'gcal-event',
             editable: true
         },

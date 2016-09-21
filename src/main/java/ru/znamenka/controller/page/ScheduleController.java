@@ -11,8 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.znamenka.api.domain.ClientApi;
 import ru.znamenka.api.domain.TrainingApi;
 import ru.znamenka.api.page.schedule.SubscriptionApi;
@@ -25,6 +24,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -67,15 +67,23 @@ public class ScheduleController {
         return ok(subscriptions);
     }
 
-    @RequestMapping(path = "/", method = POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8")
-    public ModelAndView bookTraining(@Valid TrainingApi training, BindingResult bindingResult) throws IOException {
+    @RequestMapping(
+            path = "/",
+            method = POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8",
+            produces = APPLICATION_JSON_VALUE
+    )
+    @ResponseBody
+    public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) throws IOException {
         if (!bindingResult.hasErrors()) {
             training.setStatusId(1L);
             training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
-            service.save(TrainingApi.class, training);
             pageService.postToCalendar(training);
+            service.save(TrainingApi.class, training);
+            return ok(training);
         }
-        return new ModelAndView(new RedirectView("/schedule"));
+        return badRequest().body(training);
+
     }
 
     private Long getTrainerIdIfExists() {
