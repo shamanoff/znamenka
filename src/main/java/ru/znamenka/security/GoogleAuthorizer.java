@@ -8,6 +8,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.calendar.Calendar;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -21,6 +22,9 @@ import static java.util.Collections.singleton;
 @Component
 @Slf4j
 public class GoogleAuthorizer {
+
+    @Value("${calendar.private_key.filename}")
+    private String privateKey;
 
     /** Application context */
     private final ApplicationContext ctx;
@@ -37,7 +41,7 @@ public class GoogleAuthorizer {
     }
 
     public Calendar getCalendar() throws IOException {
-        Resource resource = new ClassPathResource("Znamenka2-6e8e3cf47824.json");
+        Resource resource = new ClassPathResource(privateKey);
         String appName = ctx.getApplicationName();
 
         GoogleCredential credential = GoogleCredential.fromStream(resource.getInputStream()).createScoped(singleton(CALENDAR));
