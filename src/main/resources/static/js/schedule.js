@@ -83,12 +83,15 @@ $(document).ready(function () {
             //month: 'month',
             week: 'week',
             day: 'day'
-        }, googleCalendarApiKey: 'AIzaSyCJhfsFEpthpzFVseRU-BKKsnLn3SxZ4Z0', //'AIzaSyCYSwkC8872Q0Y-UA0g6SWAORZ-Dvqte10',
-        events: {
-            googleCalendarId: 'znamenka.crm@gmail.com', //'4jto0age6tsrrkuhveervcj0sk@group.calendar.google.com',
-            className: 'gcal-event',
-            editable: true
         },
+        events: {
+            url: '/schedule/events',
+            type: 'GET',
+            error: function () {
+                console.log('there was an error while fetching events!');
+            }
+        }
+        ,
         annotations: [{
             start: new Date(2016, 8, 20, 13, 30),
             end: new Date(2016, 8, 22, 14, 0),

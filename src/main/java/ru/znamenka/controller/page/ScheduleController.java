@@ -12,21 +12,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ru.znamenka.api.CalendarEvent;
 import ru.znamenka.api.domain.ClientApi;
 import ru.znamenka.api.domain.TrainingApi;
 import ru.znamenka.api.page.schedule.SubscriptionApi;
 import ru.znamenka.jpa.model.User;
 import ru.znamenka.service.ApiStore;
+import ru.znamenka.service.page.schedule.ScheduleLoadService;
 import ru.znamenka.service.page.schedule.SubscriptionPageService;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.util.Assert.notNull;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
@@ -37,10 +41,20 @@ public class ScheduleController {
 
     private final SubscriptionPageService pageService;
 
+    private final ScheduleLoadService eventsService;
+
     @Autowired
-    public ScheduleController(SubscriptionPageService pageService, @Qualifier("dataService") ApiStore service) {
+    public ScheduleController(
+            SubscriptionPageService pageService,
+            @Qualifier("dataService") ApiStore service,
+            ScheduleLoadService eventsService
+    ) {
+        notNull(pageService);
+        notNull(service);
+        notNull(eventsService);
         this.pageService = pageService;
         this.service = service;
+        this.eventsService = eventsService;
     }
 
     @GetMapping
@@ -84,6 +98,12 @@ public class ScheduleController {
         }
         return badRequest().body(training);
 
+    }
+
+    @GetMapping(path = "/events", produces = APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<CalendarEvent> events(Date start, Date end) {
+        return eventsService.loadEvents(start, end);
     }
 
     private Long getTrainerIdIfExists() {

@@ -3,6 +3,7 @@ package ru.znamenka.util;
 import com.google.api.client.util.DateTime;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.*;
 import java.util.ArrayList;
@@ -92,9 +93,17 @@ public final class Utils {
         return new DateTime(time.toInstant(UTC).toEpochMilli(), 0);
     }
 
+    public static DateTime googleDate(Date date) {
+        return new DateTime(date);
+    }
+
     public static DateTime googleTime(Timestamp timestamp) {
         LocalDateTime time = timestamp.toLocalDateTime().minus(3, HOURS);
         return googleTime(time);
+    }
+
+    public static Timestamp javaTimestamp(DateTime dateTime) {
+        return Timestamp.valueOf(javaTime(dateTime));
     }
 
     public static LocalDateTime javaTime(DateTime dateTime) {

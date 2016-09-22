@@ -6,17 +6,18 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.znamenka.jpa.model.*;
-import ru.znamenka.jpa.repository.EntityRepository;
+import ru.znamenka.api.CalendarEvent;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.time.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static ru.znamenka.util.Utils.googleDate;
+import static ru.znamenka.util.Utils.javaTimestamp;
 
 @Service
 @Slf4j
@@ -25,57 +26,32 @@ public class ScheduleLoadService {
     @Autowired
     private Calendar calendar;
 
-    @Autowired
-    @Qualifier("facadeRepository")
-    private EntityRepository repo;
+    @Value("${calendar.id:primary}")
+    private String calendarId;
 
-
-    public List<Training> test(Date date) throws IOException {
-        List<Event> eventList = getEventsByDate(date);
-
-        List<Training> trainings = new ArrayList<>();
+    public List<CalendarEvent> loadEvents(Date startDate, Date endDate) {
+        List<Event> eventList = getEvents(startDate, endDate).getItems();
+        List<CalendarEvent> calendarEvents = new ArrayList<>(eventList.size());
         for (Event event : eventList) {
             DateTime start = event.getStart().getDateTime();
-            ZonedDateTime dt = ZonedDateTime.ofInstant(
-                    Instant.ofEpochMilli(start.getValue()), ZoneOffset.ofHours(start.getTimeZoneShift() / 60)
-            );
-            String trainerName = event.getSummary();
-            Trainer trainer = repo.findOne(Trainer.class, QTrainer.trainer.name.eq(trainerName));
-            if (event.getAttendees().isEmpty()) {
-                throw new RuntimeException();
-            }
-            String clientEmail = event.getAttendees().stream().findFirst().get().getEmail();
-            Client client = repo.findOne(Client.class, QClient.client.email.eq(clientEmail));
-            Training training = new Training();
-            training.setClient(client);
-            training.setTrainer(trainer);
-            training = repo.save(Training.class, training);
-            trainings.add(training);
+            Timestamp startEvent = javaTimestamp(start);
+            DateTime end = event.getEnd().getDateTime();
+            Timestamp endEvent = javaTimestamp(end);
+            String summary = event.getSummary();
+            CalendarEvent calendarEvent = new CalendarEvent(summary, startEvent, endEvent);
+            calendarEvents.add(calendarEvent);
         }
-        return trainings;
+        return calendarEvents;
     }
 
-    private List<Event> getEventsByDate(Date date) {
-        return getEvents()
-                .getItems()
-                .stream()
-                .filter(event -> {
-                    DateTime dateTime = event.getStart().getDateTime();
-                    if (dateTime == null) return false;
-                    return dateTime.getValue() == date.getTime();
-                })
-                .collect(Collectors.toList());
-    }
-
-
-    private Events getEvents() {
+    private Events getEvents(Date startDate, Date endDate) {
         try {
             return calendar
                     .events()
-                    .list("4jto0age6tsrrkuhveervcj0sk@group.calendar.google.com")
-                    .setMaxResults(10)
+                    .list(calendarId)
                     .setOrderBy("startTime")
-                    .setSingleEvents(true)
+                    .setTimeMin(googleDate(startDate))
+                    .setTimeMax(googleDate(endDate))
                     .execute();
         } catch (IOException e) {
             log.error(e.getMessage(), e);
