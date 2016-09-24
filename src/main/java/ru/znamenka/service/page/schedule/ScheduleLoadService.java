@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.time.temporal.ChronoUnit.HOURS;
 import static ru.znamenka.util.Utils.googleDate;
 import static ru.znamenka.util.Utils.javaTimestamp;
 
@@ -40,9 +41,9 @@ public class ScheduleLoadService {
         List<CalendarEvent> calendarEvents = new ArrayList<>(eventList.size());
         for (Event event : eventList) {
             DateTime start = event.getStart().getDateTime();
-            Timestamp startEvent = javaTimestamp(start);
+            Timestamp startEvent = Timestamp.valueOf(javaTimestamp(start).toLocalDateTime().plus(2, HOURS));
             DateTime end = event.getEnd().getDateTime();
-            Timestamp endEvent = javaTimestamp(end);
+            Timestamp endEvent = Timestamp.valueOf(javaTimestamp(end).toLocalDateTime().plus(2, HOURS));
             String summary = event.getSummary();
             CalendarEvent calendarEvent = new CalendarEvent(summary, startEvent, endEvent);
             calendarEvents.add(calendarEvent);

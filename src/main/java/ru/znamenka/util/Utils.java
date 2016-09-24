@@ -14,7 +14,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.time.ZoneOffset.UTC;
-import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.PRIVATE;
@@ -98,7 +97,7 @@ public final class Utils {
     }
 
     public static DateTime googleTime(Timestamp timestamp) {
-        LocalDateTime time = timestamp.toLocalDateTime().minus(3, HOURS);
+        LocalDateTime time = timestamp.toLocalDateTime();
         return googleTime(time);
     }
 

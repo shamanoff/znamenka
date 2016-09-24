@@ -18,10 +18,12 @@ import ru.znamenka.service.page.BaseExecutor;
 import ru.znamenka.util.locale.ExtMessageSource;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Collections.singletonList;
 import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QPayment.payment;
@@ -122,16 +124,15 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
      */
     public Event postToCalendar(TrainingApi training) throws IOException {
         Event event = new Event();
-        event.setCreated(googleTime(training.getStart()));
 
-        EventDateTime start = new EventDateTime()
-                .setDateTime(googleTime(training.getStart()))
-                .setTimeZone("Europe/Moscow");
-        event.setStart(start);
+        LocalDateTime start = training.getStart().toLocalDateTime().minus(3, HOURS);
+        event.setCreated(googleTime(start));
+        EventDateTime startEvent = new EventDateTime().setDateTime(googleTime(start));
+        event.setStart(startEvent);
 
-        EventDateTime end = new EventDateTime()
-                .setDateTime(googleTime(training.getEnd()));
-        event.setEnd(end);
+        LocalDateTime end = training.getEnd().toLocalDateTime().minus(3, HOURS);
+        EventDateTime endEvent = new EventDateTime().setDateTime(googleTime(end));
+        event.setEnd(endEvent);
 
         Client client = repo.findOne(Client.class, training.getClientId());
         event.setSummary(client.getName() + " " + client.getSurname());
