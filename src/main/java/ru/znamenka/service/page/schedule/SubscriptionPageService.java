@@ -140,7 +140,7 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
         attendee.setEmail(client.getEmail());
         attendee.setDisplayName(client.getName() + " " + client.getSurname());
         event.setAttendees(singletonList(attendee));
-        event.setDescription(message.getMessage("schedule.event.description") + " " + attendee.getDisplayName());
+        event.setDescription("Запланирована тренировка для клиента: " + attendee.getDisplayName());
 
         return calendar.events().insert(calendarId, event).execute();
     }
