@@ -115,6 +115,12 @@ public class ScheduleController {
         return eventsService.loadEvents(start, end);
     }
 
+    @GetMapping(path = "/events/busy", produces = APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<CalendarEvent> eventsBusy(Date start, Date end) {
+        return eventsService.loadEventsBusy(start, end);
+    }
+
     private Long getTrainerIdIfExists() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getTrainer().getId();

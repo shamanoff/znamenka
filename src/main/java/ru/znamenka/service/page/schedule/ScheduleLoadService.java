@@ -15,6 +15,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ru.znamenka.util.Utils.googleDate;
 import static ru.znamenka.util.Utils.javaTimestamp;
@@ -28,6 +29,11 @@ public class ScheduleLoadService {
 
     @Value("${calendar.id:primary}")
     private String calendarId;
+
+    public List<CalendarEvent> loadEventsBusy(Date startDate, Date endDate) {
+        List<CalendarEvent> events = loadEvents(startDate, endDate);
+        return events.stream().map(e -> e.setTitle("Занято")).collect(Collectors.toList());
+    }
 
     public List<CalendarEvent> loadEvents(Date startDate, Date endDate) {
         List<Event> eventList = getEvents(startDate, endDate).getItems();

@@ -1,7 +1,6 @@
 package ru.znamenka.api;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.sql.Timestamp;
 
@@ -14,7 +13,6 @@ import java.sql.Timestamp;
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Getter
-@Setter
 public class CalendarEvent {
 
     public CalendarEvent() {
@@ -32,4 +30,18 @@ public class CalendarEvent {
 
     private Timestamp end;
 
+    public CalendarEvent setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public CalendarEvent setStart(Timestamp start) {
+        this.start = start;
+        return this;
+    }
+
+    public CalendarEvent setEnd(Timestamp end) {
+        this.end = end;
+        return this;
+    }
 }
