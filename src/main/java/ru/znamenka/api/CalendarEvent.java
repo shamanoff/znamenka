@@ -1,8 +1,6 @@
 package ru.znamenka.api;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
@@ -15,10 +13,18 @@ import java.sql.Timestamp;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Getter @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 public class CalendarEvent {
+
+    public CalendarEvent() {
+    }
+
+    public CalendarEvent(String title, Timestamp start, Timestamp end) {
+        this.title = title;
+        this.start = start;
+        this.end = end;
+    }
 
     private String title;
 

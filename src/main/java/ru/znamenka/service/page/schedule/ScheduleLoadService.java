@@ -49,7 +49,6 @@ public class ScheduleLoadService {
             return calendar
                     .events()
                     .list(calendarId)
-                    .setOrderBy("startTime")
                     .setTimeMin(googleDate(startDate))
                     .setTimeMax(googleDate(endDate))
                     .execute();

@@ -100,7 +100,7 @@ public class ScheduleController {
             training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
             pageService.postToCalendar(training);
 
-            CalendarEvent event = new CalendarEvent(training.getClientName(), training.getStart(), training.getEnd());
+            CalendarEvent event = new CalendarEvent("Занято", training.getStart(), training.getEnd());
             mesTemplate.convertAndSend("/calendar/event", event);
             service.save(TrainingApi.class, training);
             return ok(training);

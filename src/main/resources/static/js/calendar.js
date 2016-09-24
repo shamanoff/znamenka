@@ -41,7 +41,7 @@ $(document).ready(function () {
     });
 
 
-    var socket = new SockJS('/color');
+    var socket = new SockJS('/calendar');
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
