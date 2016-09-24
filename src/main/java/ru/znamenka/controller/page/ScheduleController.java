@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,18 +44,23 @@ public class ScheduleController {
 
     private final ScheduleLoadService eventsService;
 
+    private final SimpMessageSendingOperations mesTemplate;
+
     @Autowired
     public ScheduleController(
             SubscriptionPageService pageService,
             @Qualifier("dataService") ApiStore service,
-            ScheduleLoadService eventsService
+            ScheduleLoadService eventsService,
+            SimpMessageSendingOperations mesTemplate
     ) {
         notNull(pageService);
         notNull(service);
         notNull(eventsService);
+        notNull(mesTemplate);
         this.pageService = pageService;
         this.service = service;
         this.eventsService = eventsService;
+        this.mesTemplate = mesTemplate;
     }
 
     @GetMapping
@@ -93,6 +99,9 @@ public class ScheduleController {
             training.setStatusId(1L);
             training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
             pageService.postToCalendar(training);
+
+            CalendarEvent event = new CalendarEvent(training.getClientName(), training.getStart(), training.getEnd());
+            mesTemplate.convertAndSend("/calendar/event", event);
             service.save(TrainingApi.class, training);
             return ok(training);
         }
