@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Collections.singletonList;
 import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QPayment.payment;
@@ -125,13 +124,13 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
     public Event postToCalendar(TrainingApi training) throws IOException {
         Event event = new Event();
 
-        LocalDateTime start = training.getStart().toLocalDateTime().minus(3, HOURS);
+        LocalDateTime start = training.getStart().toLocalDateTime();
         event.setCreated(googleTime(start));
-        EventDateTime startEvent = new EventDateTime().setDateTime(googleTime(start));
+        EventDateTime startEvent = new EventDateTime().setDateTime(googleTime(start)).setTimeZone("Europe/Moscow");
         event.setStart(startEvent);
 
-        LocalDateTime end = training.getEnd().toLocalDateTime().minus(3, HOURS);
-        EventDateTime endEvent = new EventDateTime().setDateTime(googleTime(end));
+        LocalDateTime end = training.getEnd().toLocalDateTime();
+        EventDateTime endEvent = new EventDateTime().setDateTime(googleTime(end)).setTimeZone("Europe/Moscow");
         event.setEnd(endEvent);
 
         Client client = repo.findOne(Client.class, training.getClientId());

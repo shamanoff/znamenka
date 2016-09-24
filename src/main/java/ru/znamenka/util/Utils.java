@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.time.ZoneOffset.UTC;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static lombok.AccessLevel.PRIVATE;
@@ -89,7 +88,7 @@ public final class Utils {
     }
 
     public static DateTime googleTime(LocalDateTime time) {
-        return new DateTime(time.toInstant(UTC).toEpochMilli(), 0);
+        return new DateTime(time.toInstant(ZoneOffset.ofHours(3)).toEpochMilli(), 0);
     }
 
     public static DateTime googleDate(Date date) {
