@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.znamenka.annotation.ActionLogged;
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.page.client.ClientPurchaseApi;
@@ -59,6 +60,7 @@ public class ClientController {
 
     @RequestMapping(value = "/{id}", method = PUT)
     @ResponseBody
+    @ActionLogged(action = "обновил информацию о пользователе")
     public ClientApi updateClient(@Valid ClientApi client, BindingResult bindingResult, @PathVariable Long id) {
         ClientApi clientApi = service.findOne(ClientApi.class, id);
         if (!bindingResult.hasErrors()) {
