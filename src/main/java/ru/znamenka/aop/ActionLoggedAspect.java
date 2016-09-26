@@ -45,7 +45,7 @@ public class ActionLoggedAspect {
      * @return возвращает то же значение, что и аннотируемый метод
      * @throws Throwable исключение, бросаемое аннотируемым методом
      */
-    @Around("@annotation(com.prognoz.annotations.Logged)")
+    @Around("@annotation(ru.znamenka.annotation.ActionLogged)")
     public Object log(ProceedingJoinPoint pjp) throws Throwable {
         if (pjp.getSignature() instanceof MethodSignature) {
             MethodSignature signature = (MethodSignature) pjp.getSignature();
