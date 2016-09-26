@@ -3,11 +3,10 @@ package ru.znamenka.jpa.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.time.LocalDateTime;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
+import static java.sql.Timestamp.valueOf;
 import static java.time.LocalDateTime.now;
 
 @Entity(name = "jf_user_action_log")
@@ -15,11 +14,16 @@ import static java.time.LocalDateTime.now;
 public class ActionLog implements BaseModel<Long>, LogEntity {
 
     @Id
+    @SequenceGenerator(name="jf_user_action_log_id_seq",
+            sequenceName="jf_user_action_log_id_seq",
+            allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator="jf_user_action_log_id_seq")
     @Column(name = "id")
     private Long id;
 
     @Column(name = "currenttime")
-    private LocalDateTime currentTime;
+    private Timestamp currentTime;
 
     @Column(name = "username")
     private String username;
@@ -39,7 +43,7 @@ public class ActionLog implements BaseModel<Long>, LogEntity {
         actionLog.setUsername(user == null ? "anonymous" : user.getUsername());
         actionLog.setSuccess(success);
         actionLog.setMessage(message);
-        actionLog.setCurrentTime(now());
+        actionLog.setCurrentTime(valueOf(now()));
 
         return actionLog;
     }
