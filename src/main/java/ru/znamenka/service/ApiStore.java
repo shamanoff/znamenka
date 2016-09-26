@@ -7,7 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import ru.znamenka.api.BaseApi;
+import ru.znamenka.represent.DomainApi;
+import ru.znamenka.represent.UpdatableApi;
 import ru.znamenka.jpa.model.BaseModel;
 
 import java.io.Serializable;
@@ -29,7 +30,7 @@ public interface ApiStore {
      * @param entity коллекция сущностей
      * @param <E>    тип бизнес-модели
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> void save(Class<A> clazz, A entity);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> void save(Class<A> clazz, A entity);
 
     /**
      * @see CrudRepository#findOne(java.io.Serializable)
@@ -39,7 +40,7 @@ public interface ApiStore {
      * @param <ID>  тип уникального идентификатора бизнес-модели
      * @return объект бизнес-модели с заданным id
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> A findOne(Class<A> clazz, ID id);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> A findOne(Class<A> clazz, ID id);
 
     /**
      * @see CrudRepository#exists(java.io.Serializable)
@@ -49,7 +50,7 @@ public interface ApiStore {
      * @param <ID>  тип уникального идентификатора бизнес-модели
      * @return true, если хранится, иначе false
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> boolean exists(Class<A> clazz, ID id);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> boolean exists(Class<A> clazz, ID id);
 
     /**
      * @see CrudRepository#findAll()
@@ -57,7 +58,7 @@ public interface ApiStore {
      * @param <E>   тип бизнес-модели
      * @return список сущностей
      */
-    <E extends BaseModel, A extends BaseApi> List<A> findAll(Class<A> clazz);
+    <E extends BaseModel, A extends DomainApi> List<A> findAll(Class<A> clazz);
 
     /**
      * @see PagingAndSortingRepository#findAll(Sort)
@@ -67,7 +68,7 @@ public interface ApiStore {
      * @return список сущностей
      * @throws RuntimeException
      */
-    <E extends BaseModel, A extends BaseApi> List<A> findAll(Class<A> clazz, Sort sort);
+    <E extends BaseModel, A extends DomainApi> List<A> findAll(Class<A> clazz, Sort sort);
 
     /**
      * @see PagingAndSortingRepository#findAll(Pageable)
@@ -77,7 +78,7 @@ public interface ApiStore {
      * @param pageable объект, содержащий информацию о номере странице и количестве записей на этой странице
      * @return станица, которая содержит данные и служебную информацию
      */
-    <E extends BaseModel, A extends BaseApi> Page<A> findAll(Class<A> clazz, Pageable pageable);
+    <E extends BaseModel, A extends DomainApi> Page<A> findAll(Class<A> clazz, Pageable pageable);
 
     /**
      * @see CrudRepository#count()
@@ -85,7 +86,7 @@ public interface ApiStore {
      * @param <E>   тип бизнес-модели
      * @return  количество сущностей
      */
-    <E extends BaseModel, A extends BaseApi> long count(Class<A> clazz);
+    <E extends BaseModel, A extends DomainApi> long count(Class<A> clazz);
 
     /**
      * @see CrudRepository#delete(java.io.Serializable)
@@ -94,14 +95,14 @@ public interface ApiStore {
      * @param <E>   тип бизнес-модели
      * @param <ID>  тип идентификатора
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> void delete(Class<A> clazz, ID id);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> void delete(Class<A> clazz, ID id);
 
     /**
      * @see CrudRepository#deleteAll()
      * @param clazz класс бизнес-модели
      * @param <E>   тип бизнес-модели
      */
-    <E extends BaseModel, A extends BaseApi> void deleteAll(Class<A> clazz);
+    <E extends BaseModel, A extends DomainApi> void deleteAll(Class<A> clazz);
 
     /**
      * @see org.springframework.data.jpa.repository.JpaRepository#flush()
@@ -114,7 +115,7 @@ public interface ApiStore {
      * @param <E>   тип бизнес-модели
      * @throws RuntimeException
      */
-    <E extends BaseModel, A extends BaseApi> void deleteAllInBatch(Class<A> clazz);
+    <E extends BaseModel, A extends DomainApi> void deleteAllInBatch(Class<A> clazz);
 
     /**
      * @see org.springframework.data.jpa.repository.JpaRepository#getOne(java.io.Serializable)
@@ -124,7 +125,7 @@ public interface ApiStore {
      * @param <ID>  тип уникального идентификатора бизнес-модели
      * @return ссылка на объект с данным идентификатором.
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> A getOne(Class<A> clazz, ID id);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> A getOne(Class<A> clazz, ID id);
 
     /**
      * @see org.springframework.data.jpa.repository.JpaRepository#saveAndFlush(Object)
@@ -133,7 +134,7 @@ public interface ApiStore {
      * @param <E>    тип бизнес-модели
      * @return сущность, которая была сохранена
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> A saveAndFlush(Class<A> clazz, A entity);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> A saveAndFlush(Class<A> clazz, A entity);
 
     /**
      * @see CrudRepository#save(Iterable)
@@ -143,7 +144,7 @@ public interface ApiStore {
      * @param <E>      тип бизнес-модели
      * @return список сущностей
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> List<A> saveAndFlush(Class<A> clazz, List<A> entities);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> List<A> saveAndFlush(Class<A> clazz, List<A> entities);
 
     /**
      * @see CrudRepository#save(Iterable)
@@ -152,7 +153,7 @@ public interface ApiStore {
      * @param <E>    тип бизнес-модели
      * @return сохраненные бизнес-модели
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> List<A> save(Class<A> clazz, List<A> entities);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> List<A> save(Class<A> clazz, List<A> entities);
 
     /**
      * @see QueryDslPredicateExecutor#findOne(Predicate)
@@ -161,7 +162,7 @@ public interface ApiStore {
      * @param <E>    тип бизнес-модели
      * @return сущность
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> A findOne(Class<A> clazz, Predicate predicate);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> A findOne(Class<A> clazz, Predicate predicate);
 
     /**
      * @see QueryDslPredicateExecutor#findAll(Predicate)
@@ -170,7 +171,7 @@ public interface ApiStore {
      * @param <E>    тип бизнес-модели
      * @return найденные бизнес-модели
      */
-    <E extends BaseModel, A extends BaseApi> List<A> findAll(Class<A> clazz, Predicate predicate);
+    <E extends BaseModel, A extends DomainApi> List<A> findAll(Class<A> clazz, Predicate predicate);
 
     /**
      * @see QueryDslPredicateExecutor#findAll(Predicate, Sort)
@@ -180,7 +181,7 @@ public interface ApiStore {
      * @param <E>    тип бизнес-модели
      * @return найденные бизнес-модели
      */
-    <E extends BaseModel, A extends BaseApi> List<A> findAll(Class<A> clazz, Predicate predicate, Sort sort);
+    <E extends BaseModel, A extends DomainApi> List<A> findAll(Class<A> clazz, Predicate predicate, Sort sort);
 
     /**
      * @see QueryDslPredicateExecutor#findAll(Predicate, Pageable)
@@ -190,7 +191,7 @@ public interface ApiStore {
      * @param <E>    тип бизнес-модели
      * @return страница, содержащая бизнес-модели
      */
-    <E extends BaseModel, A extends BaseApi> Page<A> findAll(Class<A> clazz, Predicate predicate, Pageable pageable);
+    <E extends BaseModel, A extends DomainApi> Page<A> findAll(Class<A> clazz, Predicate predicate, Pageable pageable);
 
     /**
      * @see QueryDslPredicateExecutor#count(Predicate)
@@ -199,7 +200,7 @@ public interface ApiStore {
      * @param <E>    тип бизнес-модели
      * @return количество сущностей, удолетворяющих предикату
      */
-    <E extends BaseModel, A extends BaseApi> long count(Class<A> clazz, Predicate predicate);
+    <E extends BaseModel, A extends DomainApi> long count(Class<A> clazz, Predicate predicate);
 
     /**
      * @see QueryDslPredicateExecutor#exists(Predicate)
@@ -208,6 +209,8 @@ public interface ApiStore {
      * @param <E>    тип бизнес-модели
      * @return true, если существуют бизнес-модели, удолетворяющие предикату
      */
-    <E extends BaseModel<ID>, A extends BaseApi, ID extends Serializable> boolean exists(Class<A> clazz, Predicate predicate);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> boolean exists(Class<A> clazz, Predicate predicate);
+
+    <E extends BaseModel<ID>, A extends DomainApi & UpdatableApi<ID>, ID extends Serializable> A update(Class<A> clazz, A entity);
 
 }

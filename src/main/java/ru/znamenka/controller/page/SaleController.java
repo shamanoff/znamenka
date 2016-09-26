@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.znamenka.api.domain.*;
-import ru.znamenka.api.page.sale.ClientDebtApi;
+import ru.znamenka.represent.domain.*;
+import ru.znamenka.represent.page.sale.ClientDebtApi;
 import ru.znamenka.service.ApiStore;
 import ru.znamenka.service.page.sale.SalePageService;
 
@@ -22,7 +22,7 @@ import static java.util.Collections.emptyList;
 import static org.springframework.util.Assert.notNull;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static ru.znamenka.api.domain.PurchaseApi.emptyPurchase;
+import static ru.znamenka.represent.domain.PurchaseApi.emptyPurchase;
 
 /**
  * <p>

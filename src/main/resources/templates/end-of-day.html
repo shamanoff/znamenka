@@ -10,9 +10,9 @@
     <script th:src="@{js/end-of-day.js}"></script>
 </th:block>
 <div th:include="header"></div>
-<div class="container" th:fragment="training-table" id="container">
+<div class="container">
 
-    <form class="well form-horizontal" action="/end-of-day" method="post" id="contact_form">
+    <form class="well form-horizontal" th:action="@{/end-of-day}" method="post" id="training-form">
         <fieldset>
             <!-- Select Basic -->
             <div class="form-group">
@@ -59,7 +59,7 @@
                                     <th>Статус тренировки</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody th:fragment="training-table" id="training-tbody">
                                 <tr th:each="training: ${trainings}">
                                     <td th:text="${training.clientName}"></td>
                                     <td th:text="${#dates.format(training.start, 'hh:mm')}"></td>
@@ -70,7 +70,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i
                                                             class="glyphicon glyphicon-list"></i></span>
-                                                    <select name="trainingStatus" class="form-control selectpicker">
+                                                    <select th:name="'trainingStatus[' + ${training.id} + ']'" class="form-control selectpicker">
                                                         <option value="">Выберите статус</option>
                                                         <option
                                                                 th:each="status : ${statuses}"

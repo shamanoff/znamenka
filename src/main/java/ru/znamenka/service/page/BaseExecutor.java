@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
-import ru.znamenka.api.BaseApi;
+import ru.znamenka.represent.DomainApi;
 import ru.znamenka.jpa.repository.QueryFactory;
 
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Service
-public abstract class BaseExecutor<S, T extends BaseApi> {
+public abstract class BaseExecutor<S, T extends DomainApi> {
 
     /**
      * Исполнитель запросов

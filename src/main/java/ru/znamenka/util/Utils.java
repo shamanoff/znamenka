@@ -110,8 +110,5 @@ public final class Utils {
         );
     }
 
-    public static Timestamp fromLocalDate(LocalDate date) {
-        return Timestamp.valueOf(LocalDateTime.of(date, LocalTime.MIN));
-    }
 
 }

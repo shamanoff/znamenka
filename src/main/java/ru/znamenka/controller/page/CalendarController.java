@@ -6,7 +6,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.znamenka.api.CalendarEvent;
+import ru.znamenka.represent.CalendarEvent;
 
 import static org.springframework.util.Assert.notNull;
 

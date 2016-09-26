@@ -4,15 +4,17 @@ import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ru.znamenka.api.domain.TrainingApi;
+import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.service.ApiStore;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QTraining.training;
-import static ru.znamenka.util.Utils.fromLocalDate;
 
 /**
  * <p>
@@ -35,8 +37,16 @@ public class EndOfDayPageService {
 
     public List<TrainingApi> getTrainings(LocalDate date, Long trainerId) {
         Predicate predicate = training.status.id.eq(1L)
-                .and(training.start.eq(fromLocalDate(date)))
+                .and(training.start.between(from(date), to(date)))
                 .and(training.trainer.id.eq(trainerId));
         return apiStore.findAll(TrainingApi.class, predicate);
+    }
+
+    private Timestamp from(LocalDate date) {
+        return Timestamp.valueOf(LocalDateTime.of(date, LocalTime.MIN));
+    }
+
+    private Timestamp to(LocalDate date) {
+        return Timestamp.valueOf(LocalDateTime.of(date, LocalTime.MAX));
     }
 }
