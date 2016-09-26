@@ -5,7 +5,7 @@ import com.querydsl.core.types.Expression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.stereotype.Service;
-import ru.znamenka.api.page.sale.ClientDebtApi;
+import ru.znamenka.represent.page.sale.ClientDebtApi;
 import ru.znamenka.service.page.BaseExecutor;
 
 import java.util.List;

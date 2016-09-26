@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.znamenka.api.domain.TrainingApi;
-import ru.znamenka.api.page.schedule.SubscriptionApi;
+import ru.znamenka.represent.domain.TrainingApi;
+import ru.znamenka.represent.page.schedule.SubscriptionApi;
 import ru.znamenka.jpa.model.Client;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.service.page.BaseExecutor;
@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.time.temporal.ChronoUnit.HOURS;
 import static java.util.Collections.singletonList;
 import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QPayment.payment;
@@ -125,13 +124,13 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
     public Event postToCalendar(TrainingApi training) throws IOException {
         Event event = new Event();
 
-        LocalDateTime start = training.getStart().toLocalDateTime().minus(3, HOURS);
+        LocalDateTime start = training.getStart().toLocalDateTime();
         event.setCreated(googleTime(start));
-        EventDateTime startEvent = new EventDateTime().setDateTime(googleTime(start));
+        EventDateTime startEvent = new EventDateTime().setDateTime(googleTime(start)).setTimeZone("Europe/Moscow");
         event.setStart(startEvent);
 
-        LocalDateTime end = training.getEnd().toLocalDateTime().minus(3, HOURS);
-        EventDateTime endEvent = new EventDateTime().setDateTime(googleTime(end));
+        LocalDateTime end = training.getEnd().toLocalDateTime();
+        EventDateTime endEvent = new EventDateTime().setDateTime(googleTime(end)).setTimeZone("Europe/Moscow");
         event.setEnd(endEvent);
 
         Client client = repo.findOne(Client.class, training.getClientId());
@@ -140,7 +139,7 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
         attendee.setEmail(client.getEmail());
         attendee.setDisplayName(client.getName() + " " + client.getSurname());
         event.setAttendees(singletonList(attendee));
-        event.setDescription(message.getMessage("schedule.event.description") + " " + attendee.getDisplayName());
+        event.setDescription("Запланирована тренировка для клиента: " + attendee.getDisplayName());
 
         return calendar.events().insert(calendarId, event).execute();
     }

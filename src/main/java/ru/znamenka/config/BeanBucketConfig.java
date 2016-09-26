@@ -4,8 +4,9 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.znamenka.api.converter.ApiConverter;
 import ru.znamenka.jpa.repository.QueryDslRepository;
+import ru.znamenka.represent.converter.ApiConverter;
+import ru.znamenka.represent.converter.UpdatableApiConverter;
 
 import java.util.Collection;
 import java.util.Map;
@@ -52,6 +53,16 @@ public class BeanBucketConfig {
         final Collection<ApiConverter> converters = ctx.getBeansOfType(ApiConverter.class).values();
         Map<Class, ApiConverter> map = new ConcurrentHashMap<>(converters.size());
         for (ApiConverter converter : converters) {
+            map.put(converter.getApiType(), converter);
+        }
+        return map;
+    }
+
+    @Bean(destroyMethod = "clear")
+    public Map<Class, UpdatableApiConverter> convertersBucketForUpdatable() {
+        final Collection<UpdatableApiConverter> converters = ctx.getBeansOfType(UpdatableApiConverter.class).values();
+        Map<Class, UpdatableApiConverter> map = new ConcurrentHashMap<>(converters.size());
+        for (UpdatableApiConverter converter : converters) {
             map.put(converter.getApiType(), converter);
         }
         return map;

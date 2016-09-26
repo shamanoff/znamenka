@@ -8,17 +8,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.znamenka.api.CalendarEvent;
+import ru.znamenka.represent.CalendarEvent;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static java.time.temporal.ChronoUnit.HOURS;
-import static ru.znamenka.util.Utils.googleDate;
-import static ru.znamenka.util.Utils.javaTimestamp;
+import static ru.znamenka.util.Utils.*;
 
 @Service
 @Slf4j
@@ -30,14 +29,19 @@ public class ScheduleLoadService {
     @Value("${calendar.id:primary}")
     private String calendarId;
 
+    public List<CalendarEvent> loadEventsBusy(Date startDate, Date endDate) {
+        List<CalendarEvent> events = loadEvents(startDate, endDate);
+        return events.stream().map(e -> e.setTitle("Занято")).collect(Collectors.toList());
+    }
+
     public List<CalendarEvent> loadEvents(Date startDate, Date endDate) {
         List<Event> eventList = getEvents(startDate, endDate).getItems();
         List<CalendarEvent> calendarEvents = new ArrayList<>(eventList.size());
         for (Event event : eventList) {
             DateTime start = event.getStart().getDateTime();
-            Timestamp startEvent = Timestamp.valueOf(javaTimestamp(start).toLocalDateTime().plus(2, HOURS));
+            Timestamp startEvent = Timestamp.valueOf(javaTime(start));
             DateTime end = event.getEnd().getDateTime();
-            Timestamp endEvent = Timestamp.valueOf(javaTimestamp(end).toLocalDateTime().plus(2, HOURS));
+            Timestamp endEvent = Timestamp.valueOf(javaTime(end));
             String summary = event.getSummary();
             CalendarEvent calendarEvent = new CalendarEvent(summary, startEvent, endEvent);
             calendarEvents.add(calendarEvent);
@@ -50,7 +54,6 @@ public class ScheduleLoadService {
             return calendar
                     .events()
                     .list(calendarId)
-                    .setOrderBy("startTime")
                     .setTimeMin(googleDate(startDate))
                     .setTimeMax(googleDate(endDate))
                     .execute();

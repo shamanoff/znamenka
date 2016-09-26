@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Import;
         , CacheConfig.class
         , BeanConfig.class
         , SecurityConfig.class
+        , WebSocketConfig.class
 })
 @EnableAutoConfiguration
 public class AppConfig {

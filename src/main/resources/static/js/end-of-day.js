@@ -1,63 +1,60 @@
-$(document).ready(init(new Date()));
+$(document).ready(function () {
+    var startTime = $('#startTime');
+    var trainingForm = $('#training-form');
 
-function getTraining(date) {
-    $.ajax({
-        url: "/end-of-day",
-        type: "get",
-        data: {
-            "date": date.format('DD/MM/YYYY').toString()
-        },
-        success: function(data) {
-            $('#container').replaceWith(data);
-            init(date.toDate())
-        }
+    startTime.datetimepicker({
+        defaultDate: new Date(),
+        format: 'DD/MM/YYYY'
     });
-}
-
-function init(date) {
-    $('#startTime')
-        .datetimepicker({
-            defaultDate: date,
-            format: 'DD/MM/YYYY'
-        });
-    $('#startTime').on('dp.change', function(e) {
+    startTime.on('dp.change', function (e) {
         getTraining(e.date);
     });
 
-    $('#contact_form').bootstrapValidator({
-        // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            phone: {
-                validators: {
+    trainingForm.submit(function (e) {
+        e.preventDefault();
+        // Get the form instance
+        var $form = $(e.target);
 
-                    notEmpty: {
-                        message: 'Введите статус тренировки'
-                    }
-                }
-            }
-        }
-    })
-        .on('success.form.bv', function (e) {
-            $('#success_message').slideDown({opacity: "show"}, "slow");// Do something ...
-            $('#contact_form').data('bootstrapValidator').resetForm();
-
-            // Prevent form submission
-            e.preventDefault();
-
-            // Get the form instance
-            var $form = $(e.target);
-
-            // Get the BootstrapValidator instance
-            var bv = $form.data('bootstrapValidator');
-
-            // Use Ajax to submit form data
-            $.post($form.attr('action'), $form.serialize(), function (result) {
-                console.log(result);
-            }, 'json');
+        $.ajax({
+            type: "POST",
+            url: $form.attr('action'),
+            data: JSON.stringify(toData($form)),
+            success: function (result) {
+                getTraining(startTime.data("DateTimePicker").date());
+            },
+            contentType: 'application/json',
+            dataType:"json"
         });
-}
+    });
+
+    function toData($form) {
+        var statuses = [];
+        var trainings = $form.find('[name="trainingId"]').toArray();
+        $.each(trainings, function (index) {
+            var id, status, obj = {};
+            id = $(this).val();
+            status = $form.find('[name="trainingStatus[' + id + ']"]').val();
+            if (status != "") {
+                obj.trainingId = id;
+                obj.status = status;
+                statuses.push(obj)
+            }
+        });
+        return statuses;
+    }
+
+    function getTraining(date) {
+        $.ajax({
+            url: "/end-of-day/trainings",
+            type: "get",
+            data: {
+                "date": date.format('DD/MM/YYYY').toString()
+            },
+            success: function (data) {
+                $('#training-tbody').replaceWith(data);
+            }
+        });
+    }
+
+});
+

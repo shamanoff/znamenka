@@ -30,6 +30,7 @@
                             <li><a href="/client">Заведение клиентов</a></li>
                             <li><a href="/schedule">Запись на тренировку</a></li>
                             <li><a href="/sale">Продажи</a></li>
+                            <li><a href="/events">Расписание</a></li>
                         </ul>
                     </li>
 
@@ -37,24 +38,8 @@
                         <a href="/end-of-day">Отчет за смену</a>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" sec:authentication="principal.trainer.name">Владимир
-                            Путин <span class="glyphicon glyphicon-user pull-right"></span></a>
-                        <ul class="dropdown-menu">
-                            <!-- TODO добавить реализацию -->
-                            <!--<li><a href="#">Настройки   <span class="glyphicon glyphicon-cog pull-right"></span></a></li>-->
-                            <!--<li class="divider"></li>-->
-                            <!--<li><a href="#">Мои отчеты<span class="glyphicon glyphicon-stats pull-right"></span></a></li>-->
-                            <!--<li class="divider"></li>-->
-                            <!--<li><a href="#">Мои задачи <span class="badge pull-right"> 42 </span></a></li>-->
-                            <!--<li class="divider"></li>-->
-                            <li><a href="/logout">Выход<span class="glyphicon glyphicon-log-out pull-right"></span></a>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
+                <th:block th:include="~{fragment/user}">
+                </th:block>
             </div>
         </nav>
 
