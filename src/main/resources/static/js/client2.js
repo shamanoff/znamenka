@@ -136,7 +136,7 @@ $(document).ready(function () {
 
     ////////////////// showCreate
     $(".showCreate").on('click', function () {
-        $("#formCreate").toggle(500);
+        $(".formCreate").toggle(500);
 
         //$(".formCreate").hide(500);
     });
@@ -144,7 +144,7 @@ $(document).ready(function () {
 
     /// createNew
     $(".createNew").on('click', function () {
-        $("#formCreate").hide(500);
+        $(".formCreate").hide(500);
 
     });
     /// createNew
