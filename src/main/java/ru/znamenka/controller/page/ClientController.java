@@ -60,7 +60,7 @@ public class ClientController {
 
     @RequestMapping(value = "/{id}", method = PUT)
     @ResponseBody
-    @ActionLogged(action = "обновил информацию о пользователе")
+    @ActionLogged(action = "обновил информацию о клиенте")
     public ClientApi updateClient(@Valid ClientApi client, BindingResult bindingResult, @PathVariable Long id) {
         ClientApi clientApi = service.findOne(ClientApi.class, id);
         if (!bindingResult.hasErrors()) {

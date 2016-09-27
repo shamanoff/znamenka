@@ -17,7 +17,6 @@ import static java.util.Collections.emptyList;
 import static org.springframework.util.Assert.notNull;
 
 /**
- * <p>
  * Реализация {@link QueryFactory}
  * <p>
  * Создан 21.06.2016
@@ -32,6 +31,11 @@ public class QueryFactoryImpl implements QueryFactory {
      */
     private final EntityManager entityManager;
 
+    /**
+     * Констуктор для внедрения зависимостей
+     *
+     * @param em entity manager
+     */
     public QueryFactoryImpl(@Autowired EntityManager em) {
         this.entityManager = em;
     }
@@ -64,6 +68,9 @@ public class QueryFactoryImpl implements QueryFactory {
         return new PageImpl<>(content, pageable, total);
     }
 
+    /**
+     * Перед сбором объекта, entity manager будет закрыт
+     */
     @PreDestroy
     public void destroy() {
         this.entityManager.close();

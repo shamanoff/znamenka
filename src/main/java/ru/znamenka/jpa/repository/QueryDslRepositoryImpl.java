@@ -9,17 +9,15 @@ import javax.persistence.EntityManager;
 import java.io.Serializable;
 
 /**
- * <p>
- *     Реализация для метода {@link QueryDslRepository#getJavaType()}
+ * Реализация для метода {@link QueryDslRepository#getJavaType()}
  * <p>
  * Создан 21.06.2016
+ *
  * @author Евгений Уткин (Eugene Utkin)
  */
 public class QueryDslRepositoryImpl<T extends BaseModel<ID>, ID extends Serializable> extends QueryDslJpaRepository<T, ID> implements QueryDslRepository<T, ID> {
 
     private final JpaEntityInformation<T, ID> entityInformation;
-
-    private final EntityManager em;
 
     /**
      * {@inheritDoc}
@@ -27,7 +25,6 @@ public class QueryDslRepositoryImpl<T extends BaseModel<ID>, ID extends Serializ
     public QueryDslRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
         this.entityInformation = entityInformation;
-        this.em = entityManager;
     }
 
     /**
@@ -36,7 +33,6 @@ public class QueryDslRepositoryImpl<T extends BaseModel<ID>, ID extends Serializ
     public QueryDslRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager, EntityPathResolver resolver) {
         super(entityInformation, entityManager, resolver);
         this.entityInformation = entityInformation;
-        this.em = entityManager;
     }
 
     /**

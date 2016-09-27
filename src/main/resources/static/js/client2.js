@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     var editButton = $(".editButton");
     var aboutClient = $('#aboutClient');
+    var createClient = $('#formCreate');
     var myModal = $('#myModal');
 
     $('#startTime').datetimepicker({
@@ -24,15 +25,11 @@ $(document).ready(function () {
     });
 
 
-    aboutClient
-        .submit(function (e) {
-            // Save the form data via an Ajax request
-            e.preventDefault();
+    aboutClient.validator().on('submit', function (e) {
 
+        if (!e.isDefaultPrevented()) {
             var $form = $(e.target),
                 id = $form.find('[name="id"]').val();
-
-            // The url and method might be different in your application
             $.ajax({
                 url: '/client/' + id,
                 method: 'PUT',
@@ -51,7 +48,14 @@ $(document).ready(function () {
                 // You can inform the user that the data is updated successfully
                 // by highlighting the row or showing a message box
             });
-        });
+        }
+    });
+
+    createClient.validator().on('submit', function (e) {
+        if (!e.isDefaultPrevented()) {
+            $(e.target).submit();
+        }
+    });
 
 
     editButton.on('click', function () {
@@ -132,7 +136,7 @@ $(document).ready(function () {
 
     ////////////////// showCreate
     $(".showCreate").on('click', function () {
-        $(".formCreate").toggle(500);
+        $("#formCreate").toggle(500);
 
         //$(".formCreate").hide(500);
     });
@@ -140,7 +144,7 @@ $(document).ready(function () {
 
     /// createNew
     $(".createNew").on('click', function () {
-        $(".formCreate").hide(500);
+        $("#formCreate").hide(500);
 
     });
     /// createNew
@@ -182,7 +186,7 @@ $(document).ready(function () {
                     row.append($("<td>" + moment.unix(payment.paymentDate / 1000).format("DD/MM/YYYY") + "</td>"))
                         .append($("<td></td>"))
                         .append($("<td></td>"))
-                        .append($("<td>" +payment.amount + "</td>"))
+                        .append($("<td>" + payment.amount + "</td>"))
                         .append($("<td></td>"))
                         .append($("<td></td>"));
                     $('#modal-purchases').find('tbody').append(row);

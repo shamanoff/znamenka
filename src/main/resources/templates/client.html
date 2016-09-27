@@ -11,8 +11,8 @@
 </th:block>
 <div th:include="header"></div>
 <div class="container">
-    <form class="well form-horizontal formCreate" action="#" th:action="@{/client}" method="post"
-          th:object="${clientNew}" data-toggle="validator">
+    <form class="well form-horizontal" action="#" th:action="@{/client}" method="post"
+          th:object="${clientNew}" data-toggle="validator" data-delay="100" id="formCreate">
         <fieldset>
             <div class="panel-body">
                 <!-- Text input-->
@@ -21,7 +21,7 @@
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input th:field="*{fname}" placeholder="Иван" class="form-control" type="text"
+                            <input th:field="*{fname}" placeholder="Иван" class="form-control" type="text" required
                                    pattern="^[А-я]+"/>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input th:field="*{sname}" placeholder="Иванов" class="form-control" type="text"
+                            <input th:field="*{sname}" placeholder="Иванов" class="form-control" type="text" required
                                    pattern="^[А-я]+"/>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
                             <input th:field="*{phone}" placeholder="79151234567" class="form-control" type="text"
-                                   pattern="^7[0-9]{10}" data-minlength="11"/>
+                                   pattern="^7[0-9]{10}" data-minlength="11" required/>
                         </div>
                     </div>
                 </div>

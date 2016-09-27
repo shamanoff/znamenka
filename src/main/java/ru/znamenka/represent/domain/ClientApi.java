@@ -35,5 +35,15 @@ public class ClientApi implements DomainApi, UpdatableApi<Long> {
     @Getter @Setter
     private String comment;
 
-
+    @Override
+    public String toString() {
+        return "Клиент {" + "id=" + id +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", birthDate=" + birthDate +
+                ", male=" + male +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

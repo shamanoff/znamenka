@@ -56,6 +56,12 @@ public class ActionLoggedAspect {
             String success = annotation.successText();
             String failed = annotation.failedText();
 
+            Object[] parameters = pjp.getArgs();
+            if (parameters.length > 0) {
+                Object param = parameters[0];
+                action = action + ": " + param;
+            }
+
             val user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             try {
                 Object proceed = pjp.proceed();

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 
 /**
- * <p>
  * Интерфейс фабрики для создания запросов, в формате {@link JPAQuery}
  * <p>
  * Создан 20.06.2016
