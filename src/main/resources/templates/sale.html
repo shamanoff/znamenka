@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
     <title>Продажи</title>
-    <link rel="stylesheet" th:href="@{css/sale.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sale.css}"/>
 </head>
 
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{::script})}">
-    <script th:src="@{js/sale.js}"></script>
+    <script th:src="@{/js/sale.js}"></script>
 </th:block>
 <div th:include="header"></div>
 <div class="container">
