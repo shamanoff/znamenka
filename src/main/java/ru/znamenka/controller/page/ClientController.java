@@ -3,12 +3,11 @@ package ru.znamenka.controller.page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.znamenka.annotation.ActionLogged;
@@ -17,24 +16,31 @@ import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.page.client.ClientPurchaseApi;
 import ru.znamenka.service.ApiStore;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
+import static org.springframework.http.ResponseEntity.badRequest;
+import static org.springframework.http.ResponseEntity.notFound;
+import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static ru.znamenka.jpa.model.QClient.client;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
 import static ru.znamenka.jpa.model.QTraining.training;
 
 /**
  * <p>
- *
+ * <p>
  * Создан 12.08.2016
  * <p>
-
+ *
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Controller
 @RequestMapping("/client")
+@Validated
 @Slf4j
 public class ClientController {
 
@@ -97,6 +103,21 @@ public class ClientController {
         return service.findAll(ClientPurchaseApi.class, purchase.client.id.eq(id));
     }
 
+    @GetMapping("/search/phone")
+    @ResponseBody
+    public ResponseEntity<?> searchClientByPhone(@Pattern(regexp = "^7[0-9]{10}") String phone
+    ) {
+        ClientApi clientApi = service.findOne(ClientApi.class, client.phone.eq(phone));
+        if (clientApi == null) {
+            return notFound().build();
+        }
+        return ok(clientApi);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity handleValidationEx(ConstraintViolationException e) {
+        return badRequest().build();
+    }
 
 
 }
