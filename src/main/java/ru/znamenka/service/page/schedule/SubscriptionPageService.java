@@ -10,22 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.znamenka.represent.domain.TrainingApi;
-import ru.znamenka.represent.page.schedule.SubscriptionApi;
 import ru.znamenka.jpa.model.Client;
 import ru.znamenka.jpa.repository.EntityRepository;
+import ru.znamenka.represent.domain.TrainingApi;
+import ru.znamenka.represent.page.schedule.SubscriptionApi;
 import ru.znamenka.service.page.BaseExecutor;
-import ru.znamenka.util.locale.ExtMessageSource;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static java.util.Collections.singletonList;
 import static org.springframework.util.Assert.notNull;
-import static ru.znamenka.jpa.model.QPayment.payment;
 import static ru.znamenka.jpa.model.QProduct.product;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
 import static ru.znamenka.util.Utils.googleTime;
@@ -55,11 +51,6 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
      */
     private final EntityRepository repo;
 
-    /**
-     * Источник сообщений
-     */
-    private final ExtMessageSource message;
-
     @Value("${calendar.id:primary}")
     private String calendarId;
 
@@ -73,19 +64,15 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
      *
      * @param repo     репозиторий бизнес-моделей
      * @param calendar google календарь
-     * @param message  источник сообщений
      */
     @Autowired
     public SubscriptionPageService(@Qualifier("facadeRepository") EntityRepository repo,
-                                   Calendar calendar,
-                                   ExtMessageSource message
+                                   Calendar calendar
     ) {
         notNull(repo);
         notNull(calendar);
-        notNull(message);
         this.repo = repo;
         this.calendar = calendar;
-        this.message = message;
     }
 
     /**
@@ -121,7 +108,7 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
      * @return событие в гугль календаре
      * @throws IOException если возникли проблемы с отправкой запроса
      */
-    public Event postToCalendar(TrainingApi training) throws IOException {
+    public Event postToCalendar(TrainingApi training) {
         Event event = new Event();
 
         LocalDateTime start = training.getStart().toLocalDateTime();
@@ -141,32 +128,11 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
         event.setAttendees(singletonList(attendee));
         event.setDescription("Запланирована тренировка для клиента: " + attendee.getDisplayName());
 
-        return calendar.events().insert(calendarId, event).execute();
-    }
-
-    // TODO: 10.08.2016 сделать метод для поиска покупок по клиенту   task1
-    public Map<Long, Long> getPurchaseByClient(Long clientId) {
-        List<Tuple> tuples = initPurchaseQuery(clientId).fetch();
-
-        Map<Long, Long> payments = new HashMap<>(tuples.size());
-        for (Tuple tuple : tuples) {
-            payments.put(
-                    tuple.get(payment.id),
-                    tuple.get(payment.paymentAmount)
-            );
+        try {
+            return calendar.events().insert(calendarId, event).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
-        return payments;
     }
-
-    private JPAQuery<Tuple> initPurchaseQuery(Long clientId) {
-        return getQuery()
-                .select(payment.id, payment.paymentAmount, purchase.discount)
-                .from(purchase)
-                .leftJoin(purchase.payments, payment)
-                .where(purchase.client.id.eq(clientId));
-    }
-
-    // TODO: 10.08.2016 сделать метод для поиска платежей по покупке    task2
-
 
 }

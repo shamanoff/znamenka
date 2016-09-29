@@ -7,23 +7,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import ru.znamenka.jpa.model.User;
 import ru.znamenka.represent.CalendarEvent;
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.page.schedule.SubscriptionApi;
-import ru.znamenka.jpa.model.User;
 import ru.znamenka.service.ApiStore;
+import ru.znamenka.service.client.ClientService;
 import ru.znamenka.service.page.schedule.ScheduleLoadService;
 import ru.znamenka.service.page.schedule.SubscriptionPageService;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
@@ -46,38 +45,48 @@ public class ScheduleController {
 
     private final SimpMessageSendingOperations mesTemplate;
 
+    private final ClientService clientService;
+
     @Autowired
     public ScheduleController(
             SubscriptionPageService pageService,
             @Qualifier("dataService") ApiStore service,
             ScheduleLoadService eventsService,
-            SimpMessageSendingOperations mesTemplate
-    ) {
+            SimpMessageSendingOperations mesTemplate,
+            ClientService clientService) {
         notNull(pageService);
         notNull(service);
         notNull(eventsService);
         notNull(mesTemplate);
+        notNull(clientService);
         this.pageService = pageService;
         this.service = service;
         this.eventsService = eventsService;
         this.mesTemplate = mesTemplate;
+        this.clientService = clientService;
     }
 
+    /**
+     * Метод для инициализации страницы "Запись на тренировку".
+     * Загружает список клиентов, у которых есть активные абонементы
+     *
+     * @return страница templates/schedule.html
+     */
     @GetMapping
-    public String getSchedulePage(Model model) {
-        List<ClientApi> list = service.findAll(ClientApi.class);
-        model.addAttribute("clients", list);
-        model.addAttribute("training", new TrainingApi());
-        return "schedule";
+    public ModelAndView getSchedulePage() {
+        ModelAndView mv = new ModelAndView("schedule");
+        List<ClientApi> list = clientService.allActiveClients();
+        mv.addObject("clients", list);
+        mv.addObject("training", new TrainingApi());
+        return mv;
     }
 
-    @GetMapping("/clients")
-    public String getClientPage(Model model) {
-        List<ClientApi> list = service.findAll(ClientApi.class);
-        model.addAttribute("clients", list);
-        return "clients";
-    }
-
+    /**
+     * API для подгрузки абонементов клиента по его id
+     *
+     * @param clientId уникальный идентификатор клиента
+     * @return список абонементов
+     */
     @GetMapping("/subscriptions")
     public ResponseEntity<List<SubscriptionApi>> getSubscriptions(@RequestParam("clientId") Long clientId) {
         if (clientId == null) {
@@ -87,14 +96,24 @@ public class ScheduleController {
         return ok(subscriptions);
     }
 
+    /**
+     * API для бронивания тренировки для пользователя.
+     * Тренировка записывается в базу со статусом "Зарезервирована" и номером
+     * тренера.
+     * <p>Далее, тренировка постится в гугль календарь и затем по веб сокету
+     * постится в раписание студии (смотри {@link CalendarController}
+     *
+     * @param training      параметры тренировки
+     * @param bindingResult результат валидации
+     * @return 200 если тренировка успешно забронирована, 400 в ином случае
+     */
     @RequestMapping(
             path = "/",
             method = POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8",
             produces = APPLICATION_JSON_VALUE
     )
-    @ResponseBody
-    public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) throws IOException {
+    public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             training.setStatusId(1L);
             training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
@@ -109,18 +128,34 @@ public class ScheduleController {
 
     }
 
+    /**
+     * API, которое является event-source для full-calendar'я на фронт енде.
+     * Получает список событий и отдает на фронт-енд с фильтром по дате
+     *
+     * @param start начальная дата поиска событий
+     * @param end   конечная дата
+     * @return список событий
+     */
     @GetMapping(path = "/events", produces = APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<CalendarEvent> events(Date start, Date end) {
-        return eventsService.loadEvents(start, end);
+    public ResponseEntity<List<CalendarEvent>> events(Date start, Date end) {
+        return ok(eventsService.loadEvents(start, end));
     }
 
+    /**
+     * API для общедоступного расписания студии с фильтром по дате
+     * @param start начальная дата поиска событий
+     * @param end   конечная дата
+     * @return список событий
+     */
     @GetMapping(path = "/events/busy", produces = APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public List<CalendarEvent> eventsBusy(Date start, Date end) {
-        return eventsService.loadEventsBusy(start, end);
+    public ResponseEntity<List<CalendarEvent>> eventsBusy(Date start, Date end) {
+        return ok(eventsService.loadEventsBusy(start, end));
     }
 
+    /**
+     * Получает тренера из security контекста
+     * @return уникальный идентификатор пользователя-тренера
+     */
     private Long getTrainerIdIfExists() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getTrainer().getId();
