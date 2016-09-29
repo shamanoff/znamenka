@@ -1,7 +1,6 @@
 package ru.znamenka.service.page.client;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import static ru.znamenka.jpa.model.QTrainer.trainer;
 import static ru.znamenka.jpa.model.QTraining.training;
 
 @Service
-@Slf4j
 public class ClientPageService extends BaseExecutor<Client, ClientApi> {
 
     @Autowired

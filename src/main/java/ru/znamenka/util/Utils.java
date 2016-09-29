@@ -5,7 +5,10 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -108,6 +111,10 @@ public final class Utils {
         return LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(dateTime.getValue()), ZoneOffset.ofHours(dateTime.getTimeZoneShift() / 60)
         );
+    }
+
+    public static Timestamp plus(Timestamp ts, long amount, TemporalUnit unit) {
+        return Timestamp.valueOf(ts.toLocalDateTime().plus(amount, unit));
     }
 
 
