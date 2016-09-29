@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
     <title>Рабочий стол</title>
-    <link rel="stylesheet" th:href="@{css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{})}" th:remove="tag"></th:block>

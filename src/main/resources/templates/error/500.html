@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
     <title>500</title>
-    <link rel="stylesheet" th:href="@{css/error_page.css}">
+    <link rel="stylesheet" th:href="@{/css/error_page.css}">
 </head>
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{::script})}">
-    <script th:src="@{js/error_page.js}"></script>
+    <script th:src="@{/js/error_page.js}"></script>
 </th:block>
 <div class="container">
     <div class="row">

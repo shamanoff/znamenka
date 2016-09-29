@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
     <title>Расписание</title>
-    <link rel="stylesheet" th:href="@{css/fullcalendar.min.css}">
-    <link rel="stylesheet" th:href="@{css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/fullcalendar.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{::script})}">
-    <script th:src="@{js/sockjs/sockjs.min.js}"></script>
-    <script th:src="@{js/sockjs/stomp.js}"></script>
-    <script th:src="@{js/calendar/fullcalendar.min.js}"></script>
-    <script th:src="@{js/jquery-ui.min.js}"></script>
-    <script th:src="@{js/calendar/ru.js}"></script>
-    <script th:src="@{js/calendar.js}"></script>
+    <script th:src="@{/js/sockjs/sockjs.min.js}"></script>
+    <script th:src="@{/js/sockjs/stomp.js}"></script>
+    <script th:src="@{/js/calendar/fullcalendar.min.js}"></script>
+    <script th:src="@{/js/jquery-ui.min.js}"></script>
+    <script th:src="@{/js/calendar/ru.js}"></script>
+    <script th:src="@{/js/calendar.js}"></script>
 </th:block>
 <div th:include="header"></div>
 
