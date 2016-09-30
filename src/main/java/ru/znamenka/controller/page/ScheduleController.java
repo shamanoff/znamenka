@@ -114,6 +114,9 @@ public class ScheduleController {
             produces = APPLICATION_JSON_VALUE
     )
     public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) {
+    @ResponseBody
+    // TODO: 28.09.2016 разобраться с кучей разных типов для времени
+    public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) throws IOException {
         if (!bindingResult.hasErrors()) {
             training.setStatusId(1L);
             training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
