@@ -77,7 +77,7 @@ public class ScheduleController {
         ModelAndView mv = new ModelAndView("schedule");
         List<ClientApi> list = clientService.activeClients();
         mv.addObject("clients", list);
-        mv.addObject("training", new TrainingApi());
+        mv.addObject("training", TrainingApi.empty());
         return mv;
     }
 

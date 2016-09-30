@@ -18,6 +18,10 @@ import java.sql.Timestamp;
 
 public class TrainingApi implements DomainApi, UpdatableApi<Long> {
 
+    public static TrainingApi empty() {
+        return new TrainingApi();
+    }
+
     @Getter @Setter
     private Long id;
 
