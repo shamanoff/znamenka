@@ -31,7 +31,7 @@ $(document).ready(function () {
             var $form = $(e.target),
                 id = $form.find('[name="id"]').val();
             $.ajax({
-                url: '/client/' + id,
+                url: '/client',
                 method: 'PUT',
                 data: $form.serialize()
             }).success(function (response) {

@@ -1,6 +1,7 @@
 package ru.znamenka.service.logging;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import ru.znamenka.jpa.model.ActionLog;
 import ru.znamenka.jpa.repository.domain.ActionLogRepository;
@@ -20,6 +21,7 @@ public class ActionLoggingService implements LoggingService<ActionLog> {
      * {@inheritDoc}
      */
     @Override
+    @Async
     public void log(ActionLog record) {
         notNull(record);
         repo.save(record);

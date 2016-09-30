@@ -12,7 +12,7 @@ import java.sql.Date;
 
 public class ClientApi implements DomainApi, UpdatableApi<Long> {
 
-    @Getter @Setter
+    @Getter
     private Long id;
     @Getter @Setter
     private String name;
@@ -34,6 +34,11 @@ public class ClientApi implements DomainApi, UpdatableApi<Long> {
     private Boolean male;
     @Getter @Setter
     private String comment;
+
+    public ClientApi setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
     @Override
     public String toString() {

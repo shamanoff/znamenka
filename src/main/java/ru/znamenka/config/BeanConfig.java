@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import ru.znamenka.security.GoogleAuthorizer;
 import ru.znamenka.util.locale.ExtResourceBundleSource;
 
@@ -26,6 +29,7 @@ import java.io.IOException;
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Configuration
+@EnableAsync
 @ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Configuration.class))
 public class BeanConfig {
 
@@ -64,6 +68,11 @@ public class BeanConfig {
     @Bean
     public FileChangedReloadingStrategy fileChangedStrategy() {
         return new FileChangedReloadingStrategy();
+    }
+
+    @Bean
+    public TaskExecutor taskExecutor() {
+        return new ThreadPoolTaskExecutor();
     }
 
 }

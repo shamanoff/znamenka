@@ -75,7 +75,7 @@ public class ScheduleController {
     @GetMapping
     public ModelAndView getSchedulePage() {
         ModelAndView mv = new ModelAndView("schedule");
-        List<ClientApi> list = clientService.allActiveClients();
+        List<ClientApi> list = clientService.activeClients();
         mv.addObject("clients", list);
         mv.addObject("training", new TrainingApi());
         return mv;
@@ -113,10 +113,8 @@ public class ScheduleController {
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8",
             produces = APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) {
-    @ResponseBody
     // TODO: 28.09.2016 разобраться с кучей разных типов для времени
-    public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) throws IOException {
+    public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             training.setStatusId(1L);
             training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
