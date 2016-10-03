@@ -58,6 +58,7 @@ $(document).ready(function () {
     calendar.fullCalendar({
         navLinks: true, // can click day/week names to navigate views
         selectable: true,
+        minTime: "06:00:00",
         selectHelper: true,
         select: function (start, end) {
             myModal.modal("show");
