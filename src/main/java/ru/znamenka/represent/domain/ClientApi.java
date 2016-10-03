@@ -35,6 +35,10 @@ public class ClientApi implements DomainApi, UpdatableApi<Long> {
     @Getter @Setter
     private String comment;
 
+    public static ClientApi empty() {
+        return new ClientApi();
+    }
+
     public ClientApi setId(Long id) {
         this.id = id;
         return this;

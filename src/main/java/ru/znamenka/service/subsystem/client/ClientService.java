@@ -1,5 +1,6 @@
-package ru.znamenka.service.client;
+package ru.znamenka.service.subsystem.client;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,15 @@ import ru.znamenka.jpa.model.Client;
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.page.client.ClientPurchaseApi;
+import ru.znamenka.represent.page.schedule.SubscriptionApi;
 import ru.znamenka.service.ApiStore;
-import ru.znamenka.service.page.BaseExecutor;
+import ru.znamenka.service.Executor;
 
 import java.util.List;
 
+import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QClient.client;
+import static ru.znamenka.jpa.model.QProduct.product;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
 import static ru.znamenka.jpa.model.QTrainer.trainer;
 import static ru.znamenka.jpa.model.QTraining.training;
@@ -26,13 +30,31 @@ import static ru.znamenka.jpa.model.QTraining.training;
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Service
-public class ClientService extends BaseExecutor<Client, ClientApi> implements IClientService {
+public class ClientService implements IClientService {
+
+    /**
+     * Уникальные идентификаторы абонементов в таблице продуктов
+     */
+    private static final Number[] SUBSCRIPTIONS = new Long[]{1L, 2L, 3L};
 
     private final ApiStore service;
 
+    private final Executor<Client, ClientApi> clientExecutor;
+
+    private final Executor<Tuple, SubscriptionApi> subscriptionExecutor;
+
     @Autowired
-    public ClientService(@Qualifier("dataService") ApiStore service) {
+    public ClientService(
+            @Qualifier("dataService") ApiStore service,
+            Executor<Client, ClientApi> clientExecutor,
+            Executor<Tuple, SubscriptionApi> subscriptionExecutor
+    ) {
+        notNull(service);
+        notNull(clientExecutor);
+        notNull(subscriptionExecutor);
         this.service = service;
+        this.clientExecutor = clientExecutor;
+        this.subscriptionExecutor = subscriptionExecutor;
     }
 
     /**
@@ -63,7 +85,7 @@ public class ClientService extends BaseExecutor<Client, ClientApi> implements IC
      */
     @Override
     public List<ClientApi> activeClients() {
-        JPAQuery<Client> query = getQuery();
+        JPAQuery<Client> query = clientExecutor.getQuery();
         query
                 .from(client)
                 .where(
@@ -74,7 +96,7 @@ public class ClientService extends BaseExecutor<Client, ClientApi> implements IC
                 );
 
         List<Client> clients = query.fetch();
-        return toApi(clients);
+        return clientExecutor.toApi(clients);
     }
 
     /**
@@ -82,7 +104,7 @@ public class ClientService extends BaseExecutor<Client, ClientApi> implements IC
      */
     @Override
     public List<ClientApi> clientsByTrainerId(Long trainerId) {
-        JPAQuery<Client> query = getQuery();
+        JPAQuery<Client> query = clientExecutor.getQuery();
         query.select(client).distinct()
                 .from(client)
                 .innerJoin(client.trainings, training)
@@ -90,7 +112,7 @@ public class ClientService extends BaseExecutor<Client, ClientApi> implements IC
                 .where(trainer.id.eq(trainerId));
 
         List<Client> clients = query.fetch();
-        return toApi(clients);
+        return clientExecutor.toApi(clients);
     }
 
     /**
@@ -133,5 +155,34 @@ public class ClientService extends BaseExecutor<Client, ClientApi> implements IC
         return service.findOne(ClientApi.class, client.phone.eq(phone));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<SubscriptionApi> subscriptions(Long clientId) {
+        List<Tuple> tuple = initSubScrQuery(clientId).fetch();
+        return subscriptionExecutor.toApi(tuple);
+    }
+
+    /**
+     * Инициализирует SQL запрос
+     * SELECT pur.id, pr.product_name
+     * FROM purchase pur
+     *   LEFT JOIN product pr ON pur.product_id = pr.id
+     * WHERE pur.client_id = ?
+     *   AND pr.id in (?)
+     *   AND pr.expire_days > 0
+     * @param clientId уникальный идентификатор клиента
+     * @return запрос
+     */
+    private JPAQuery<Tuple> initSubScrQuery(Long clientId) {
+        return subscriptionExecutor.getQuery()
+                .select(purchase.id, product.productName)
+                .from(purchase)
+                .leftJoin(purchase.product, product)
+                .where(purchase.client.id.eq(clientId)
+                        .and(product.id.in(SUBSCRIPTIONS))
+                        .and(product.expireDays.gt(0)));
+    }
 
 }

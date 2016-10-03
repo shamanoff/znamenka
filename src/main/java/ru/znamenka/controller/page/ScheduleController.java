@@ -10,23 +10,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.znamenka.jpa.model.User;
 import ru.znamenka.represent.CalendarEvent;
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
-import ru.znamenka.represent.page.schedule.SubscriptionApi;
 import ru.znamenka.service.ApiStore;
-import ru.znamenka.service.client.ClientService;
 import ru.znamenka.service.page.schedule.ScheduleLoadService;
 import ru.znamenka.service.page.schedule.SubscriptionPageService;
+import ru.znamenka.service.subsystem.client.ClientService;
 
 import javax.validation.Valid;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.ok;
@@ -34,7 +32,7 @@ import static org.springframework.util.Assert.notNull;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-@RequestMapping("/schedule")
+@RequestMapping("/training")
 public class ScheduleController {
 
     private final ApiStore service;
@@ -76,25 +74,13 @@ public class ScheduleController {
     public ModelAndView getSchedulePage() {
         ModelAndView mv = new ModelAndView("schedule");
         List<ClientApi> list = clientService.activeClients();
+        mv.addObject("clientNew", ClientApi.empty());
         mv.addObject("clients", list);
         mv.addObject("training", TrainingApi.empty());
         return mv;
     }
 
-    /**
-     * API для подгрузки абонементов клиента по его id
-     *
-     * @param clientId уникальный идентификатор клиента
-     * @return список абонементов
-     */
-    @GetMapping("/subscriptions")
-    public ResponseEntity<List<SubscriptionApi>> getSubscriptions(@RequestParam("clientId") Long clientId) {
-        if (clientId == null) {
-            return badRequest().body(emptyList());
-        }
-        List<SubscriptionApi> subscriptions = pageService.getSubscriptionByClientId(clientId);
-        return ok(subscriptions);
-    }
+
 
     /**
      * API для бронивания тренировки для пользователя.
@@ -108,7 +94,7 @@ public class ScheduleController {
      * @return 200 если тренировка успешно забронирована, 400 в ином случае
      */
     @RequestMapping(
-            path = "/",
+            path = "club-client",
             method = POST,
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8",
             produces = APPLICATION_JSON_VALUE
@@ -126,7 +112,18 @@ public class ScheduleController {
             return ok(training);
         }
         return badRequest().body(training);
+    }
 
+    @RequestMapping(path = "new-client", method = POST)
+    public ResponseEntity<TrainingApi> bookTraining(@Valid ClientApi client, Timestamp startTraining, BindingResult br) {
+        if (br.hasErrors()) return badRequest().body(TrainingApi.empty());
+        client = clientService.store().save(ClientApi.class, client);
+        TrainingApi training = new TrainingApi();
+        training.setClientId(client.getId());
+        training.setStart(startTraining);
+        training.setStatusId(1L);
+
+        return ok(training);
     }
 
     /**

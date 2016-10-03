@@ -1,8 +1,9 @@
-package ru.znamenka.service.client;
+package ru.znamenka.service.subsystem.client;
 
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.page.client.ClientPurchaseApi;
+import ru.znamenka.represent.page.schedule.SubscriptionApi;
 import ru.znamenka.service.ApiStore;
 
 import java.util.List;
@@ -78,6 +79,14 @@ public interface IClientService {
      * @return клиент
      */
     ClientApi clientByPhone(String phone);
+
+    /**
+     * Возвращает список активных абонементов клиента
+     *
+     * @param clientId уникальный идентификатор клиента
+     * @return список абонементов
+     */
+    List<SubscriptionApi> subscriptions(Long clientId);
 
 
 }

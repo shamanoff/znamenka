@@ -17,86 +17,199 @@
 <div th:include="header"></div>
 
 
-<div id="myModal" class="modal fade" role="dialog">
+<div id="training-modal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Карточка клиента</h4>
+                <h4 class="modal-title">Работа с календарем</h4>
             </div>
             <div id="modal1" class="modal-body col-md-12 ">
-                <!--     //<div id="home" class="tab-pane fade in active"> -->
-                <form id="trainingForm" class="well form-horizontal" action="#" method="post" th:object="${training}"
-                      th:action="@{/schedule/}"  data-toggle="validator">
-                    <fieldset>
-                        <div class="panel-body">
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="select-client">Клиент</label>
-                                <div class="col-md-4 selectContainer">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                                        <select th:field="*{clientId}" id="select-client" name="сlient"
-                                                class="form-control selectpicker">
-                                            <option value="">Выберите клиента</option>
-                                            <option th:each="clientId: ${clients}" th:value="${clientId.id}"
-                                                    th:text="${clientId.name}">
-                                                Alabama
-                                            </option>
-                                        </select>
+
+                <ul class="nav nav-tabs ">
+                    <li class="active"><a data-toggle="tab" href="#alreadyClient">Запись члена клуба </a></li>
+                    <li><a data-toggle="tab" href="#newClient">Запись нового клиента </a></li>
+
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="alreadyClient" class="tab-pane fade in active">
+                        <!--     //<div id="home" class="tab-pane fade in active"> -->
+                        <form id="trainingForm" class="well form-horizontal" action="#" method="post"
+                              th:object="${training}"
+                              th:action="@{/training/club-client}" data-toggle="validator">
+                            <fieldset>
+                                <div class="panel-body">
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="select-client-for-club">Клиент</label>
+                                        <div class="col-md-4 selectContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                                <select th:field="*{clientId}" id="select-client-for-club" name="сlient"
+                                                        class="form-control selectpicker">
+                                                    <option value="">Выберите клиента</option>
+                                                    <option th:each="clientId: ${clients}" th:value="${clientId.id}"
+                                                            th:text="${clientId.name}">
+                                                        Alabama
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <!-- Select Basic -->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="select-abonement">Абонемент</label>
-                                <div class="col-md-4 selectContainer">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                                        <select th:field="*{purchaseId}" id="select-abonement" name="abonement"
-                                                class="form-control selectpicker">
-                                        </select>
+                                    <!-- Select Basic -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="select-abonement">Абонемент</label>
+                                        <div class="col-md-4 selectContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                                <select th:field="*{purchaseId}" id="select-abonement-for-club" name="abonement"
+                                                        class="form-control selectpicker">
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="ds">Начало</label>
-                                <div class="col-md-4 inputGroupContainer">
-                                    <div class="input-group date" id='startTime'>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="ds">Начало тренировки</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group date" id='startTime-for-club'>
                                         <span class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
-                                        <input th:field="*{start}" name="start" class="form-control" type="text" id="ds">
+                                                <input th:field="*{start}" name="start" class="form-control "
+                                                       type="text" id="ds" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Button -->
+                                    <div class="form-group">
+                                        <!--                 <label class="col-md-4 control-label"></label> -->
+                                        <div class="col-md-4 col-md-offset-3">
+                                            <button type="submit" class="btn btn-primary" id="training-submit-for-club">
+                                                Запланировать тренировку
+                                                <span class="glyphicon glyphicon-send"></span></button>
+                                        </div>
+                                        <div class="hidden col-md-4 ">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть
+                                                форму
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="de">Конец</label>
-                                <div class="col-md-4 inputGroupContainer">
-                                    <div class="input-group date" id='endTime'>
+                            </fieldset>
+                        </form>
+
+                    </div> <!--home-->
+                    <div id="newClient" class="tab-pane fade">
+                        <form class="well form-horizontal formCreate" action="#" th:action="@{/training/new-client}" method="post"
+                              th:object="${clientNew}" data-toggle="validator" data-delay="100" id="formCreate">
+                            <fieldset>
+                                <div class="panel-body">
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="ds">Начало тренировки</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group date" id='startTime'>
                                         <span class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
-                                        <input th:field="*{end}" name="end" class="form-control" type="text" id="de">
+                                                <input name="startTraining" class="form-control "
+                                                       type="text" id="ds1" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Text input-->
+                                    <div class="form-group has-feedback">
+                                        <label class="col-md-4 control-label">Имя</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <input th:field="*{fname}" placeholder="Иван" class="form-control"
+                                                       type="text" required
+                                                       pattern="^[А-я]+"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group has-feedback">
+                                        <label class="col-md-4 control-label">Фамилия</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                <input th:field="*{sname}" placeholder="Иванов" class="form-control"
+                                                       type="text" required
+                                                       pattern="^[А-я]+"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Text input-->
+                                    <div class="form-group has-feedback">
+                                        <label class="col-md-4 control-label">Мобильный телефон</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i
+                                                        class="glyphicon glyphicon-earphone"></i></span>
+                                                <input th:field="*{phone}" placeholder="79151234567"
+                                                       class="form-control" type="text"
+                                                       pattern="^7[0-9]{10}" data-minlength="11" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group has-feedback">
+                                        <label class="col-md-4 control-label">Марка и номер машины</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-star"></i></span>
+                                                <!-- todo добавить в форму-->
+                                                <input placeholder="БМВ х123хх" class="form-control"
+                                                       type="text"/>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- radio checks -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Заказать пропуск?</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value=""></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Text area -->
+                                    <div class=" form-group">
+                                        <label class="col-md-4 control-label">Комментарий к тренировке</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-pencil"></i></span>
+                                                <textarea class="form-control" name="comment" placeholder="Комментарий"
+                                                          th:field="*{comment}"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Button -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label"></label>
+                                        <div class="col-md-4">
+                                            <button type="submit" class="btn btn-primary" id="training-submit-for-new">Создать запись о
+                                                клиенте <span
+                                                        class="glyphicon glyphicon-send"></span></button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Button -->
-                            <div class="form-group">
-                                <!--                 <label class="col-md-4 control-label"></label> -->
-                                <div class="col-md-4 col-md-offset-3">
-                                    <button type="submit" class="btn btn-primary" id="createScheduleBtn">Запланировать тренировку
-                                        <span class="glyphicon glyphicon-send"></span></button>
-                                </div>
-                                <div class="hidden col-md-4 ">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть форму
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                </div> <!--tab-content -->
             </div>
             <div class="modal-footer">
             </div>
@@ -108,9 +221,56 @@
 <label class="col-md-1 control-label"></label>
 <div class="col-md-12 control-label">
     <div class="container">
-    <div id='calendar' class="well bg-white"></div>
+        <div class="container">
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                    <fieldset>
+                        <div class="panel-group" id="panel-194688">
+                            <div id="panel-element-922199" class="panel-collapse">
+                                <div class="panel-body">
+                                    <!-- Text input-->
+                                    <div class="form-group has-feedback">
+                                        <label class="col-md-4 control-label">Отобразить</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+
+                                                <label class="col-md-4 checkbox-inline" for="checkboxes-0">
+                                                    <input type="checkbox" name="checkboxes" id="checkboxes-0"
+                                                           value="1">
+                                                    Клиентов
+                                                </label>
+                                                <label class="col-md-6 checkbox-inline" for="checkboxes-1">
+                                                    <input type="checkbox" name="checkboxes" id="checkboxes-1"
+                                                           value="2">
+                                                    Дежурства тренеров
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="select-abonement">График
+                                            тренера</label>
+                                        <div class="col-md-4 selectContainer">
+                                            <div class="input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-list"></i></span>
+                                                <select id="select-abonement"
+                                                        name="abonement"
+                                                        class="form-control selectpicker">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div id='calendar' class="well bg-white"></div>
+        </div>
     </div>
-</div>
-<!-- /.container -->
+    <!-- /.container -->
 </body>
 </html>

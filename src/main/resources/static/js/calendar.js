@@ -22,7 +22,7 @@ $(document).ready(function () {
             day: 'day'
         },
         events: {
-            url: '/schedule/events/busy',
+            url: '/training/events/busy',
             type: 'GET',
             error: function () {
                 console.log('there was an error while fetching events!');

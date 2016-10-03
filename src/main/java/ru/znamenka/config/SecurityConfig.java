@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/css/**", "/js/**", "/fonts/**", "/webjars/**").permitAll()
-                .antMatchers("/schedule/events/busy", "/events", "/calendar/**").permitAll()
+                .antMatchers("/training/events/busy", "/events", "/calendar/**").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
                 .formLogin().loginPage("/login").successForwardUrl("/index")

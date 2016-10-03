@@ -4,8 +4,6 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
-import com.querydsl.core.Tuple;
-import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,17 +11,12 @@ import org.springframework.stereotype.Service;
 import ru.znamenka.jpa.model.Client;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.represent.domain.TrainingApi;
-import ru.znamenka.represent.page.schedule.SubscriptionApi;
-import ru.znamenka.service.page.BaseExecutor;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static java.util.Collections.singletonList;
 import static org.springframework.util.Assert.notNull;
-import static ru.znamenka.jpa.model.QProduct.product;
-import static ru.znamenka.jpa.model.QPurchase.purchase;
 import static ru.znamenka.util.Utils.googleTime;
 
 /**
@@ -39,7 +32,7 @@ import static ru.znamenka.util.Utils.googleTime;
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Service
-public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi> {
+public class SubscriptionPageService {
 
     /**
      * Google календарь
@@ -53,11 +46,6 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
 
     @Value("${calendar.id:primary}")
     private String calendarId;
-
-    /**
-     * Уникальные идентификаторы абонементов в таблице продуктов
-     */
-    private static final Number[] SUBSCRIPTIONS = new Long[]{1L, 2L, 3L};
 
     /**
      * Конструктор
@@ -75,30 +63,7 @@ public class SubscriptionPageService extends BaseExecutor<Tuple, SubscriptionApi
         this.calendar = calendar;
     }
 
-    /**
-     * Возвращает список активных абонементов
-     * @param clientId уникальный идентификатор клиента
-     * @return список абонементов
-     */
-    public List<SubscriptionApi> getSubscriptionByClientId(Long clientId) {
-        List<Tuple> tuple = initSubScrQuery(clientId).fetch();
-        return toApi(tuple);
-    }
 
-    /**
-     * Инициализирует SQL запрос
-     * @param clientId уникальный идентификатор клиента
-     * @return запрос
-     */
-    private JPAQuery<Tuple> initSubScrQuery(Long clientId) {
-        return getQuery()
-                .select(purchase.id, product.productName)
-                .from(purchase)
-                .leftJoin(purchase.product, product)
-                .where(purchase.client.id.eq(clientId)
-                        .and(product.id.in(SUBSCRIPTIONS))
-                        .and(product.expireDays.gt(0)));
-    }
 
     // // TODO: 11.08.2016 если нет таких клиентов и тренеров
 

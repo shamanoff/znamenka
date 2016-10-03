@@ -4,9 +4,6 @@ import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import ru.znamenka.jpa.model.Client;
-import ru.znamenka.represent.domain.ClientApi;
-import ru.znamenka.service.page.BaseExecutor;
 
 import javax.persistence.EntityManager;
 

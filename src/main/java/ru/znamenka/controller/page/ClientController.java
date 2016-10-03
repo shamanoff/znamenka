@@ -8,10 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
@@ -20,13 +17,15 @@ import ru.znamenka.jpa.model.User;
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.page.client.ClientPurchaseApi;
-import ru.znamenka.service.client.ClientService;
+import ru.znamenka.represent.page.schedule.SubscriptionApi;
+import ru.znamenka.service.subsystem.client.ClientService;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static org.springframework.http.ResponseEntity.*;
 import static org.springframework.util.Assert.notNull;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -172,6 +171,21 @@ public class ClientController {
             return noContent().build();
         }
         return ok(clientApi);
+    }
+
+    /**
+     * API для подгрузки абонементов клиента по его id
+     *
+     * @param clientId уникальный идентификатор клиента
+     * @return список абонементов
+     */
+    @GetMapping("/subscriptions")
+    public ResponseEntity<List<SubscriptionApi>> getSubscriptions(@RequestParam("clientId") Long clientId) {
+        if (clientId == null) {
+            return badRequest().body(emptyList());
+        }
+        List<SubscriptionApi> subscriptions = clientService.subscriptions(clientId);
+        return ok(subscriptions);
     }
 
     /**

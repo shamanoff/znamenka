@@ -1,56 +1,55 @@
 $(document).ready(function () {
 
     var calendar = $('#calendar');
-    var trainingForm = $('#trainingForm');
-    var createScheduleBtn = $('#createScheduleBtn');
-    var selectClient = $("#select-client");
-    var selectAbon = $('#select-abonement');
-    var myModal = $('#myModal');
+
+    var trainingFormForClub = $('#trainingForm'); // форма для записи на тренировку клиента с клубной картой
+    var trainingFormForNew = $('#formCreate'); //форма для записи на тренировку нового клиента
+    var submitBtnForClub = $('#training-submit-for-club');
+    var submitBtnForNew = $('#training-submit-for-new');
+
+    var selectClientForClub = $("#select-client-for-club");
+    var selectAbonForClub = $('#select-abonement-for-club');
+
+    var myModal = $('#training-modal');
+    var clientId = selectClientForClub.val();
+
+    if (clientId != '') {
+        getAbon(clientId, selectAbonForClub);
+    }
+    selectClientForClub.change(function () {
+        clientId = selectClientForClub.val();
+        if (clientId != '') {
+            getAbon(clientId, selectAbonForClub)
+        }
+    });
 
     myModal
         .on('shown.bs.modal', function () {
-            selectClient.val("");
-            selectAbon.children('option').remove();
-            selectAbon
+            selectClientForClub.val("");
+            selectAbonForClub.children('option').remove();
+            selectAbonForClub
                 .append($("<option></option>")
                     .attr("value", "")
                     .text("Выберите абонемент"));
         });
 
-    $('#startTime').datetimepicker({
-        format: 'DD/MM/YYYY hh:mm'
-    });
-    $('#endTime').datetimepicker({
-        format: 'DD/MM/YYYY hh:mm'
-    });
-
-    var clientId = selectClient.val();
-    if (clientId != '') {
-        getAbon(clientId)
-    }
-
-    selectClient.change(function () {
-        var clientId = selectClient.val();
-        if (clientId != '') {
-            getAbon(clientId)
-        }
-    });
-
-    trainingForm
+    trainingFormForClub
         .submit(function (e) {
-            // Prevent form submission
-            e.preventDefault();
-
-            // Get the form instance
-            var $form = $(e.target);
-            // Use Ajax to submit form data
-            $.post($form.attr('action'), $form.serialize(), function (result) {
-                console.log('success ' + result);
-                calendar.fullCalendar('refetchEvents');
-            }, 'json');
-            myModal.modal("hide");
+            submitForm(e);
         });
 
+    function submitForm(e) {
+        // Prevent form submission
+        e.preventDefault();
+        // Get the form instance
+        var $form = $(e.target);
+        // Use Ajax to submit form data
+        $.post($form.attr('action'), $form.serialize(), function (result) {
+            console.log('success ' + result);
+            calendar.fullCalendar('refetchEvents');
+        }, 'json');
+        myModal.modal("hide");
+    }
 
     /* initialize the calendar
      -----------------------------------------------------------------*/
@@ -65,7 +64,7 @@ $(document).ready(function () {
 
             startRU = start.format("DD/MM/YYYY hh:mm");
             endRU = end.format("DD/MM/YYYY hh:mm");
-            trainingForm
+            trainingFormForClub
                 .find('[name="start"]').val(startRU).end()
                 .find('[name="end"]').val(endRU).end();
 
@@ -86,7 +85,7 @@ $(document).ready(function () {
             day: 'day'
         },
         events: {
-            url: '/schedule/events',
+            url: '/training/events',
             type: 'GET',
             error: function () {
                 console.log('there was an error while fetching events!');
@@ -104,25 +103,21 @@ $(document).ready(function () {
         defaultView: 'agendaWeek'
     });
 
-    function getAbon(clientId) {
+    function getAbon(clientId, $select) {
         $.ajax({
-            url: "/schedule/subscriptions",
+            url: "/client/subscriptions",
             type: "get",
             data: {
                 "clientId": clientId
             },
             success: function (data) {
                 $.each(data, function (i, subscription) {
-                    selectAbon
+                    $select
                         .append($("<option></option>")
                             .attr("value", subscription.purchaseId)
                             .text(subscription.productName));
                 });
-            },
-            error: function () {
-                console.log("There was an error");
             }
-
         });
     }
 
