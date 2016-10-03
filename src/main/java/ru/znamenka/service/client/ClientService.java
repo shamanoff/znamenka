@@ -83,7 +83,7 @@ public class ClientService extends BaseExecutor<Client, ClientApi> implements IC
     @Override
     public List<ClientApi> clientsByTrainerId(Long trainerId) {
         JPAQuery<Client> query = getQuery();
-        query.select(client)
+        query.select(client).distinct()
                 .from(client)
                 .innerJoin(client.trainings, training)
                 .innerJoin(training.trainer, trainer)
