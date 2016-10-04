@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ru.znamenka.represent.CalendarEvent;
 import ru.znamenka.represent.domain.ClientApi;
+import ru.znamenka.represent.domain.TrainerApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.service.subsystem.client.ClientService;
 import ru.znamenka.service.subsystem.training.EventService;

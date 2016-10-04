@@ -61,6 +61,8 @@ $(document).ready(function () {
         minTime: "06:00:00",
         selectHelper: true,
         select: function (start) {
+        minTime: '06:00:00',
+        select: function (start, end) {
             myModal.modal("show");
             var startRU = start.format("DD/MM/YYYY hh:mm");
             trainingFormForClub.find('[name="start"]').val(startRU).end();
@@ -75,10 +77,10 @@ $(document).ready(function () {
             right: 'agendaWeek,agendaDay' //month,
         },
         buttonText: {
-            today: 'today',
+            today: 'Сегодня',
             //month: 'month',
-            week: 'week',
-            day: 'day'
+            week: 'по неделям',
+            day: 'по дням'
         },
         events: {
             url: '/training/events',
