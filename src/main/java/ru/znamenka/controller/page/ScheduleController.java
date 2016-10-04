@@ -16,9 +16,8 @@ import ru.znamenka.represent.CalendarEvent;
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.service.ApiStore;
-import ru.znamenka.service.page.schedule.ScheduleLoadService;
-import ru.znamenka.service.page.schedule.SubscriptionPageService;
 import ru.znamenka.service.subsystem.client.ClientService;
+import ru.znamenka.service.subsystem.training.EventService;
 
 import javax.validation.Valid;
 import java.sql.Date;
@@ -37,9 +36,7 @@ public class ScheduleController {
 
     private final ApiStore service;
 
-    private final SubscriptionPageService pageService;
-
-    private final ScheduleLoadService eventsService;
+    private final EventService eventService;
 
     private final SimpMessageSendingOperations mesTemplate;
 
@@ -47,19 +44,16 @@ public class ScheduleController {
 
     @Autowired
     public ScheduleController(
-            SubscriptionPageService pageService,
+            EventService eventService,
             @Qualifier("dataService") ApiStore service,
-            ScheduleLoadService eventsService,
             SimpMessageSendingOperations mesTemplate,
             ClientService clientService) {
-        notNull(pageService);
+        notNull(eventService);
         notNull(service);
-        notNull(eventsService);
         notNull(mesTemplate);
         notNull(clientService);
-        this.pageService = pageService;
+        this.eventService = eventService;
         this.service = service;
-        this.eventsService = eventsService;
         this.mesTemplate = mesTemplate;
         this.clientService = clientService;
     }
@@ -104,7 +98,7 @@ public class ScheduleController {
         if (!bindingResult.hasErrors()) {
             training.setStatusId(1L);
             training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
-            pageService.postToCalendar(training);
+            eventService.postToCalendar(training);
 
             CalendarEvent event = new CalendarEvent("Занято", training.getStart(), training.getEnd());
             mesTemplate.convertAndSend("/calendar/event", event);
@@ -136,7 +130,7 @@ public class ScheduleController {
      */
     @GetMapping(path = "/events", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CalendarEvent>> events(Date start, Date end) {
-        return ok(eventsService.loadEvents(start, end));
+        return ok(eventService.loadEvents(start, end));
     }
 
     /**
@@ -147,7 +141,7 @@ public class ScheduleController {
      */
     @GetMapping(path = "/events/busy", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CalendarEvent>> eventsBusy(Date start, Date end) {
-        return ok(eventsService.loadEventsBusy(start, end));
+        return ok(eventService.loadEventsBusy(start, end));
     }
 
     /**
