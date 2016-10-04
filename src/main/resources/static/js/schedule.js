@@ -59,6 +59,7 @@ $(document).ready(function () {
         navLinks: true, // can click day/week names to navigate views
         selectable: true,
         selectHelper: true,
+        minTime: '06:00:00',
         select: function (start, end) {
             myModal.modal("show");
 
@@ -79,10 +80,10 @@ $(document).ready(function () {
             right: 'agendaWeek,agendaDay' //month,
         },
         buttonText: {
-            today: 'today',
+            today: 'Сегодня',
             //month: 'month',
-            week: 'week',
-            day: 'day'
+            week: 'по неделям',
+            day: 'по дням'
         },
         events: {
             url: '/schedule/events',

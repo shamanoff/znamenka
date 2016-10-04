@@ -23,7 +23,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Карточка клиента</h4>
+                <h4 class="modal-title">Запись на тренировку</h4>
             </div>
             <div id="modal1" class="modal-body col-md-12 ">
                 <!--     //<div id="home" class="tab-pane fade in active"> -->
@@ -42,12 +42,29 @@
                                             <option value="">Выберите клиента</option>
                                             <option th:each="clientId: ${clients}" th:value="${clientId.id}"
                                                     th:text="${clientId.name}">
-                                                Alabama
+
                                             </option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
+                            <!-- Text input к проверке-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-md-4 control-label" for="select-trainer">Тренер</label>-->
+                                <!--<div class="col-md-4 selectContainer">-->
+                                    <!--<div class="input-group">-->
+                                        <!--<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>-->
+                                        <!--<select th:field="*{trainerId}" id="select-trainer" name="trainer"-->
+                                                <!--class="form-control selectpicker">-->
+                                            <!--<option value="">Выберите тренера</option>-->
+                                            <!--<option th:each="trainerId: ${trainers}" th:value="${trainerId.id}"-->
+                                                    <!--th:text="${trainerId.name}">-->
+
+                                            <!--</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
                             <!-- Select Basic -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="select-abonement">Абонемент</label>
@@ -72,8 +89,8 @@
                                 </div>
                             </div>
                             <!-- Text input-->
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="de">Конец</label>
+                            <div class="form-group hidden">
+                                <label class="col-md-4 control-label " for="de">Конец</label>
                                 <div class="col-md-4 inputGroupContainer">
                                     <div class="input-group date" id='endTime'>
                                         <span class="input-group-addon"><i

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.znamenka.represent.CalendarEvent;
 import ru.znamenka.represent.domain.ClientApi;
+import ru.znamenka.represent.domain.TrainerApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.page.schedule.SubscriptionApi;
 import ru.znamenka.jpa.model.User;
@@ -66,7 +67,9 @@ public class ScheduleController {
     @GetMapping
     public String getSchedulePage(Model model) {
         List<ClientApi> list = service.findAll(ClientApi.class);
+        List<TrainerApi> trainersList = service.findAll(TrainerApi.class); // добавил Серега
         model.addAttribute("clients", list);
+        model.addAttribute("trainers", trainersList); //добавил Серега
         model.addAttribute("training", new TrainingApi());
         return "schedule";
     }
