@@ -1,27 +1,23 @@
 package ru.znamenka.controller.page;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import ru.znamenka.jpa.model.User;
 import ru.znamenka.represent.CalendarEvent;
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
-import ru.znamenka.service.ApiStore;
 import ru.znamenka.service.subsystem.client.ClientService;
 import ru.znamenka.service.subsystem.training.EventService;
+import ru.znamenka.service.subsystem.training.ITrainingService;
 
 import javax.validation.Valid;
 import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -34,27 +30,22 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/training")
 public class ScheduleController {
 
-    private final ApiStore service;
+    private final ITrainingService service;
 
     private final EventService eventService;
-
-    private final SimpMessageSendingOperations mesTemplate;
 
     private final ClientService clientService;
 
     @Autowired
     public ScheduleController(
             EventService eventService,
-            @Qualifier("dataService") ApiStore service,
-            SimpMessageSendingOperations mesTemplate,
+            ITrainingService service,
             ClientService clientService) {
         notNull(eventService);
         notNull(service);
-        notNull(mesTemplate);
         notNull(clientService);
         this.eventService = eventService;
         this.service = service;
-        this.mesTemplate = mesTemplate;
         this.clientService = clientService;
     }
 
@@ -74,8 +65,6 @@ public class ScheduleController {
         return mv;
     }
 
-
-
     /**
      * API для бронивания тренировки для пользователя.
      * Тренировка записывается в базу со статусом "Зарезервирована" и номером
@@ -93,23 +82,21 @@ public class ScheduleController {
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8",
             produces = APPLICATION_JSON_VALUE
     )
-    // TODO: 28.09.2016 разобраться с кучей разных типов для времени
     public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            training.setStatusId(1L);
-            training.setTrainerId(training.getTrainerId() != null ? training.getTrainerId() : getTrainerIdIfExists());
-            eventService.postToCalendar(training);
-
-            CalendarEvent event = new CalendarEvent("Занято", training.getStart(), training.getEnd());
-            mesTemplate.convertAndSend("/calendar/event", event);
-            service.save(TrainingApi.class, training);
-            return ok(training);
+        try {
+            if (!bindingResult.hasErrors()) {
+                service.save(training);
+                eventService.postToCalendar(training);
+                return ok(training);
+            }
+        } catch (Exception e) {
+            // for transactional both method
         }
         return badRequest().body(training);
     }
 
     @RequestMapping(path = "new-client", method = POST)
-    public ResponseEntity<TrainingApi> bookTraining(@Valid ClientApi client, Timestamp startTraining, BindingResult br) {
+    public ResponseEntity<TrainingApi> bookTraining(@Valid ClientApi client, LocalDateTime startTraining, BindingResult br) {
         if (br.hasErrors()) return badRequest().body(TrainingApi.empty());
         client = clientService.store().save(ClientApi.class, client);
         TrainingApi training = new TrainingApi();
@@ -135,6 +122,7 @@ public class ScheduleController {
 
     /**
      * API для общедоступного расписания студии с фильтром по дате
+     *
      * @param start начальная дата поиска событий
      * @param end   конечная дата
      * @return список событий
@@ -144,13 +132,5 @@ public class ScheduleController {
         return ok(eventService.loadEventsBusy(start, end));
     }
 
-    /**
-     * Получает тренера из security контекста
-     * @return уникальный идентификатор пользователя-тренера
-     */
-    private Long getTrainerIdIfExists() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getTrainer().getId();
-    }
 
 }

@@ -44,6 +44,7 @@ $(document).ready(function () {
         // Get the form instance
         var $form = $(e.target);
         // Use Ajax to submit form data
+
         $.post($form.attr('action'), $form.serialize(), function (result) {
             console.log('success ' + result);
             calendar.fullCalendar('refetchEvents');
@@ -59,15 +60,10 @@ $(document).ready(function () {
         selectable: true,
         minTime: "06:00:00",
         selectHelper: true,
-        select: function (start, end) {
+        select: function (start) {
             myModal.modal("show");
-
-            startRU = start.format("DD/MM/YYYY hh:mm");
-            endRU = end.format("DD/MM/YYYY hh:mm");
-            trainingFormForClub
-                .find('[name="start"]').val(startRU).end()
-                .find('[name="end"]').val(endRU).end();
-
+            var startRU = start.format("DD/MM/YYYY hh:mm");
+            trainingFormForClub.find('[name="start"]').val(startRU).end();
             calendar.fullCalendar('unselect');
         },
         editable: true,

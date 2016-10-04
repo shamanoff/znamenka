@@ -1,8 +1,12 @@
 package ru.znamenka.represent;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -12,36 +16,14 @@ import java.sql.Timestamp;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Getter
+@Getter @Setter @Accessors(chain = true, fluent = true)
+@NoArgsConstructor @AllArgsConstructor
 public class CalendarEvent {
-
-    public CalendarEvent() {
-    }
-
-    public CalendarEvent(String title, Timestamp start, Timestamp end) {
-        this.title = title;
-        this.start = start;
-        this.end = end;
-    }
 
     private String title;
 
-    private Timestamp start;
+    private LocalDateTime start;
 
-    private Timestamp end;
+    private LocalDateTime end;
 
-    public CalendarEvent setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public CalendarEvent setStart(Timestamp start) {
-        this.start = start;
-        return this;
-    }
-
-    public CalendarEvent setEnd(Timestamp end) {
-        this.end = end;
-        return this;
-    }
 }

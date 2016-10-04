@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -43,7 +43,7 @@ public class Training implements BaseModel<Long> {
 
     @Column(name = "start")
     @Getter @Setter
-    private Timestamp start;
+    private LocalDateTime start;
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "trainer_id", updatable = false, insertable = false)

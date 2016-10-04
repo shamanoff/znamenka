@@ -5,7 +5,9 @@ import lombok.Setter;
 import ru.znamenka.represent.DomainApi;
 import ru.znamenka.represent.UpdatableApi;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * <p>Представление для бизнес-модели Тренировка
@@ -32,12 +34,14 @@ public class TrainingApi implements DomainApi, UpdatableApi<Long> {
     private String trainerName;
 
     @Getter @Setter
-    private Timestamp start;
+    @NotNull
+    private LocalDateTime start;
 
     @Getter @Setter
     private Timestamp end;
 
     @Getter @Setter
+    @NotNull
     private Long clientId;
 
     @Getter @Setter
