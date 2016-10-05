@@ -1,6 +1,7 @@
 package ru.znamenka.represent.converter.domain;
 
 import org.springframework.stereotype.Component;
+import ru.znamenka.jpa.model.Client;
 import ru.znamenka.jpa.model.Training;
 import ru.znamenka.represent.converter.UpdatableApiConverter;
 import ru.znamenka.represent.domain.TrainingApi;
@@ -35,8 +36,12 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
     @Override
     public TrainingApi convert(Training training) {
         TrainingApi api = new TrainingApi();
-        api.setClientId(training.getClient().getId());
-        api.setClientName(training.getClient().getName() + " " + training.getClient().getSurname());
+        api.setClientId(training.getClientId());
+        Client client = training.getClient();
+        if (client != null) {
+            api.setClientName(client.getName() + " " + client.getSurname());
+        }
+        // TODO: 05.10.2016 не вытягивает зависимости по eager
         api.setTrainerId(training.getTrainer().getId());
         api.setTrainerName(training.getTrainer().getName());
         api.setId(training.getId());

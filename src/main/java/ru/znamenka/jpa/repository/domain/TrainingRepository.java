@@ -21,4 +21,8 @@ public interface TrainingRepository extends QueryDslRepository<Training, Long> {
     @Override
     @EntityGraph("Training.Graph")
     List<Training> findAll();
+
+    @Override
+    @EntityGraph("Training.Graph")
+    Training findOne(Long id);
 }

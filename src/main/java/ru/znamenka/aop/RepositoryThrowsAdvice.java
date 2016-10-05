@@ -1,4 +1,4 @@
-package ru.znamenka.service.validation.aop;
+package ru.znamenka.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.ThrowsAdvice;

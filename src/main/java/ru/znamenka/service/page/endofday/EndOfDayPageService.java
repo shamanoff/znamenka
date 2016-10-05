@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.service.ApiStore;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
+import static java.time.LocalTime.MAX;
+import static java.time.LocalTime.MIN;
 import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QTraining.training;
 
@@ -37,16 +37,9 @@ public class EndOfDayPageService {
 
     public List<TrainingApi> getTrainings(LocalDate date, Long trainerId) {
         Predicate predicate = training.status.id.eq(1L)
-                .and(training.start.between(from(date), to(date)))
-                .and(training.trainer.id.eq(trainerId));
+                .and(training.start.between(LocalDateTime.of(date, MIN), LocalDateTime.of(date, MAX))
+                .and(training.trainer.id.eq(trainerId)));
         return apiStore.findAll(TrainingApi.class, predicate);
     }
 
-    private Timestamp from(LocalDate date) {
-        return Timestamp.valueOf(LocalDateTime.of(date, LocalTime.MIN));
-    }
-
-    private Timestamp to(LocalDate date) {
-        return Timestamp.valueOf(LocalDateTime.of(date, LocalTime.MAX));
-    }
 }

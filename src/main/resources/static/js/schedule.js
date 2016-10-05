@@ -11,6 +11,7 @@ $(document).ready(function () {
     var selectAbonForClub = $('#select-abonement-for-club');
 
     var myModal = $('#training-modal');
+    var modalForExists = $('#exists-training-modal');
     var clientId = selectClientForClub.val();
 
     if (clientId != '') {
@@ -61,12 +62,14 @@ $(document).ready(function () {
         minTime: "06:00:00",
         selectHelper: true,
         select: function (start) {
-        minTime: '06:00:00',
-        select: function (start, end) {
             myModal.modal("show");
             var startRU = start.format("DD/MM/YYYY hh:mm");
             trainingFormForClub.find('[name="start"]').val(startRU).end();
+            trainingFormForNew.find('[name="start"]').val(startRU).end();
             calendar.fullCalendar('unselect');
+        },
+        eventClick: function (calEvent, jsEvent, view) {
+            modalForExists.modal('show');
         },
         editable: true,
 
@@ -88,8 +91,7 @@ $(document).ready(function () {
             error: function () {
                 console.log('there was an error while fetching events!');
             }
-        }
-        ,
+        },
         annotations: [{
             start: new Date(2016, 8, 20, 13, 30),
             end: new Date(2016, 8, 22, 14, 0),

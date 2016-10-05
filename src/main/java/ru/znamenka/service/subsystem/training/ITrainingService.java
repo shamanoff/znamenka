@@ -11,4 +11,6 @@ import ru.znamenka.represent.domain.TrainingApi;
 public interface ITrainingService {
 
     TrainingApi save(TrainingApi api);
+
+    TrainingApi updateStatus(Long status, Long trainingId);
 }

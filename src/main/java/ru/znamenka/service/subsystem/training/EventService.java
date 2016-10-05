@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 import ru.znamenka.jpa.model.Client;
+import ru.znamenka.jpa.model.Training;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.represent.CalendarEvent;
 import ru.znamenka.represent.domain.TrainingApi;
@@ -26,6 +27,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.util.Assert.notNull;
+import static ru.znamenka.jpa.model.QTraining.training;
 import static ru.znamenka.util.Utils.*;
 
 /**
@@ -70,20 +72,20 @@ public class EventService implements IEventService {
     @Override
     public List<CalendarEvent> loadEventsBusy(Date startDate, Date endDate) {
         List<CalendarEvent> events = loadEvents(startDate, endDate);
-        return events.stream().map(e -> e.title("Занято")).collect(toList());
+        return events.stream().map(e -> e.setTitle("Занято")).collect(toList());
     }
 
     @Override
     public List<CalendarEvent> loadEvents(Date startDate, Date endDate) {
-        List<Event> eventList = getEvents(startDate, endDate).getItems();
-        List<CalendarEvent> calendarEvents = new ArrayList<>(eventList.size());
-        for (Event event : eventList) {
-            val start = event.getStart().getDateTime();
-            val startEvent = javaTime(start);
-            val end = event.getEnd().getDateTime();
-            val endEvent = javaTime(end);
-            val summary = event.getSummary();
-            val calendarEvent = new CalendarEvent(summary, startEvent, endEvent);
+        List<Training> trainings = repo.findAll(Training.class, training.start.between(fromDate(startDate), fromDate(endDate)));
+        List<CalendarEvent> calendarEvents = new ArrayList<>(trainings.size());
+        for (Training training : trainings) {
+            val start = training.getStart();
+            // TODO: 05.10.2016 обязательно переделать, а то в разных местах прибавляется
+            val end = start.plus(30L, MINUTES);
+            Client client = training.getClient();
+            val summary = client.getName() + " " + client.getSurname();
+            val calendarEvent = new CalendarEvent(training.getId(), summary, start, end);
             calendarEvents.add(calendarEvent);
         }
         return calendarEvents;
@@ -105,7 +107,7 @@ public class EventService implements IEventService {
 
         try {
             calendar.events().insert(calendarId, event).execute();
-            CalendarEvent busyEvent = new CalendarEvent("Занято", start, end);
+            CalendarEvent busyEvent = new CalendarEvent(training.getId(), "Занято", start, end);
             mesTemplate.convertAndSend("/calendar/event", busyEvent);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);

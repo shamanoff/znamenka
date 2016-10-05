@@ -1,7 +1,6 @@
 package ru.znamenka.controller.page;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,6 +25,7 @@ import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.ok;
 import static org.springframework.util.Assert.notNull;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @Controller
 @RequestMapping("/training")
@@ -59,10 +59,12 @@ public class ScheduleController {
     @GetMapping
     public ModelAndView getSchedulePage() {
         ModelAndView mv = new ModelAndView("schedule");
-        List<ClientApi> list = clientService.activeClients();
+        List<ClientApi> clients = clientService.activeClients();
+        List<TrainerApi> trainers = clientService.store().findAll(TrainerApi.class);
         mv.addObject("clientNew", ClientApi.empty());
-        mv.addObject("clients", list);
+        mv.addObject("clients", clients);
         mv.addObject("training", TrainingApi.empty());
+        mv.addObject("trainers", trainers);
         return mv;
     }
 
@@ -77,16 +79,11 @@ public class ScheduleController {
      * @param bindingResult результат валидации
      * @return 200 если тренировка успешно забронирована, 400 в ином случае
      */
-    @RequestMapping(
-            path = "club-client",
-            method = POST,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE + "; charset:utf-8",
-            produces = APPLICATION_JSON_VALUE
-    )
+    @RequestMapping(path = "club-client", method = POST)
     public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) {
         try {
             if (!bindingResult.hasErrors()) {
-                service.save(training);
+                training = service.save(training);
                 eventService.postToCalendar(training);
                 return ok(training);
             }
@@ -97,14 +94,29 @@ public class ScheduleController {
     }
 
     @RequestMapping(path = "new-client", method = POST)
-    public ResponseEntity<TrainingApi> bookTraining(@Valid ClientApi client, LocalDateTime startTraining, BindingResult br) {
+    public ResponseEntity<TrainingApi> bookTraining(
+            @Valid ClientApi client,
+            LocalDateTime startTraining,
+            Long trainerId,
+            BindingResult br
+    ) {
         if (br.hasErrors()) return badRequest().body(TrainingApi.empty());
         client = clientService.store().save(ClientApi.class, client);
         TrainingApi training = new TrainingApi();
         training.setClientId(client.getId());
         training.setStart(startTraining);
+        training.setTrainerId(trainerId);
         training.setStatusId(1L);
 
+        return ok(training);
+    }
+
+    @RequestMapping(method = PUT)
+    public ResponseEntity<TrainingApi> updateTraining(Long statusId, Long trainingId) {
+        TrainingApi training = service.updateStatus(statusId, trainingId);
+        if (training == null) {
+            return badRequest().body(TrainingApi.empty());
+        }
         return ok(training);
     }
 

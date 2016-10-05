@@ -1,7 +1,6 @@
 package ru.znamenka.controller.page;
 
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -94,7 +93,7 @@ public class ClientController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<ClientApi> clientApi(@PathVariable Long id) {
-        val client = clientService.store().findOne(ClientApi.class, id);
+        ClientApi client = clientService.store().findOne(ClientApi.class, id);
         return ok(client);
     }
 

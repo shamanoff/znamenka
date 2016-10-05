@@ -246,13 +246,13 @@ public class ConvertEntityService implements ApiStore {
      *
      */
     @Override
-    public <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> A save(Class<A> clazz, A api) throws RuntimeException {
+    public <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> ID save(Class<A> clazz, A api) throws RuntimeException {
         notNull(clazz);
         ApiConverter<E, A> converter = converterBucket.get(clazz);
         Class<E> eClass = converter.getEntityType();
         E entity = converter.convertTo(api);
-        entity = facade.save(eClass, entity);
-        return converter.convert(entity);
+        ID id = facade.save(eClass, entity).getId();
+        return id;
     }
 
     /**
