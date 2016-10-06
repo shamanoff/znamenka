@@ -1,6 +1,8 @@
 package ru.znamenka.jpa.repository.domain;
 
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.znamenka.jpa.model.Training;
 import ru.znamenka.jpa.repository.QueryDslRepository;
 
@@ -25,4 +27,8 @@ public interface TrainingRepository extends QueryDslRepository<Training, Long> {
     @Override
     @EntityGraph("Training.Graph")
     Training findOne(Long id);
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    <S extends Training> S saveAndFlush(S s);
 }

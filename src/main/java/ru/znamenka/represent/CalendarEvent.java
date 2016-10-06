@@ -8,6 +8,8 @@ import lombok.experimental.Accessors;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import static java.time.ZoneOffset.UTC;
+
 /**
  * <p>
  * <p>
@@ -30,7 +32,7 @@ public class CalendarEvent {
     public CalendarEvent(Long id, String title, LocalDateTime start, LocalDateTime end) {
         this.id = id;
         this.title = title;
-        this.start = Timestamp.valueOf(start);
-        this.end = Timestamp.valueOf(end);
+        this.start = Timestamp.from(start.toInstant(UTC));
+        this.end = Timestamp.from(end.toInstant(UTC));
     }
 }

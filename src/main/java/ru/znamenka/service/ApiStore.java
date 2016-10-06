@@ -134,7 +134,7 @@ public interface ApiStore {
      * @param <E>    тип бизнес-модели
      * @return сущность, которая была сохранена
      */
-    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> A saveAndFlush(Class<A> clazz, A entity);
+    <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> ID saveAndFlush(Class<A> clazz, A entity);
 
     /**
      * @see CrudRepository#save(Iterable)

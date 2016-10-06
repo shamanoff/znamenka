@@ -27,7 +27,7 @@ public class TrainingService extends BaseExecutor<Training, TrainingApi> impleme
 
     public TrainingApi save(TrainingApi api) {
         api.setStatusId(1L);
-        Long id = apiStore.save(TrainingApi.class, api);
+        Long id = apiStore.saveAndFlush(TrainingApi.class, api);
         Training training = repo.findOne(id);
         return toApi(training);
     }
