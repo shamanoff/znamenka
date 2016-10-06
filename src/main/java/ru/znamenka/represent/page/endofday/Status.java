@@ -17,4 +17,6 @@ public class Status {
     private Long trainingId;
 
     private Long status;
+
+    private String comment;
 }

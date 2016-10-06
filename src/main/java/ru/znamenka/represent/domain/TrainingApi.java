@@ -52,4 +52,6 @@ public class TrainingApi implements DomainApi, UpdatableApi<Long> {
 
     
     private String statusName;
+
+    private String comment;
 }

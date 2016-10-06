@@ -30,6 +30,7 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
         training.setPurchaseId(source.getPurchaseId());
         training.setStart(source.getStart());
         training.setStatusId(source.getStatusId());
+        training.setComment(source.getComment());
         return training;
     }
 
@@ -45,7 +46,7 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
         api.setStatusId(training.getStatus().getId());
         api.setStatusName(training.getStatus().getName());
         api.setStart(training.getStart());
-
+        api.setComment(training.getComment());
         return api;
     }
 
@@ -63,6 +64,10 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
         val trainerId = source.getTrainerId();
         if (trainerId != null) {
             entity.setTrainerId(trainerId);
+        }
+        val comment = source.getComment();
+        if (comment != null) {
+            entity.setComment(comment);
         }
 
         return entity;

@@ -57,19 +57,18 @@
                                     <th>Клиент</th>
                                     <th>Начало тренировки</th>
                                     <th>Статус тренировки</th>
+                                    <th>Комментарий</th>
                                 </tr>
                                 </thead>
                                 <tbody th:fragment="training-table" id="training-tbody">
                                 <tr th:each="training: ${trainings}">
                                     <td th:text="${training.clientName}"></td>
-                                    <td th:text="${#dates.format(training.start, 'hh:mm')}"></td>
+                                    <td th:text="${#temporals.format(training.start, 'hh:mm')}"></td>
                                     <td>
                                         <div class="form-group">
                                             <input type="hidden" name="trainingId" th:value="${training.id}"/>
                                             <div class="col-md-12 inputGroupContainer">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon"><i
-                                                            class="glyphicon glyphicon-list"></i></span>
                                                     <select th:name="'trainingStatus[' + ${training.id} + ']'" class="form-control selectpicker">
                                                         <option value="">Выберите статус</option>
                                                         <option
@@ -78,6 +77,16 @@
                                                                 th:text="${status.name}">
                                                         </option>
                                                     </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="col-md-4 inputGroupContainer">
+                                                <div class="input-group">
+                                                    <textarea th:name="'comment[' + ${training.id} + ']'" class="form-control" id="es"
+                                                           type="text"></textarea>
                                                 </div>
                                             </div>
                                         </div>

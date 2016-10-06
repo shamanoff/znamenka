@@ -72,4 +72,7 @@ public class Training implements BaseModel<Long> {
 
     @Column(name = "status_id")
     private Long statusId;
+
+    @Column(name = "comment")
+    private String comment;
 }

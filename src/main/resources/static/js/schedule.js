@@ -102,6 +102,7 @@ $(document).ready(function () {
                     .find('[name="client"]').val(response.clientName).end()
                     .find('[name="trainer"]').val(response.trainerName).end()
                     .find('[name="status"]').val(response.statusName).end()
+                    .find('[name="comment"]').val(response.comment).end()
                     .find('[name="statusId"]').val(response.statusId).end();
                 if (response.statusId != 1) {
                     writeOffTrainingBtn.prop('disabled', true);

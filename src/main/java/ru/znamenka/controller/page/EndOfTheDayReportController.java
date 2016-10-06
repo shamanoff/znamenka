@@ -84,6 +84,7 @@ public class EndOfTheDayReportController {
         for (Status status : statuses) {
             TrainingApi api = apiStore.findOne(TrainingApi.class, status.getTrainingId());
             api.setStatusId(status.getStatus());
+            api.setComment(status.getComment());
             apiStore.update(TrainingApi.class, api);
         }
         return ResponseEntity.ok("{}");

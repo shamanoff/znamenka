@@ -35,8 +35,10 @@ $(document).ready(function () {
             id = $(this).val();
             status = $form.find('[name="trainingStatus[' + id + ']"]').val();
             if (status != "") {
+                var comment = $form.find('[name="comment[' + id + ']"]').val();
                 obj.trainingId = id;
                 obj.status = status;
+                obj.comment = comment;
                 statuses.push(obj)
             }
         });
