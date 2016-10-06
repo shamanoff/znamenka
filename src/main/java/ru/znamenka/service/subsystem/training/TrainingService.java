@@ -34,9 +34,8 @@ public class TrainingService extends BaseExecutor<Training, TrainingApi> impleme
 
     @Override
     public TrainingApi updateStatus(Long status, Long trainingId) {
-        TrainingApi training = apiStore.findOne(TrainingApi.class, trainingId);
-        if (training == null) return null;
-        return training.setStatusId(status);
+        TrainingApi api = apiStore.update(TrainingApi.class, new TrainingApi().setStatusId(status).setId(trainingId));
+        return api;
     }
 
 

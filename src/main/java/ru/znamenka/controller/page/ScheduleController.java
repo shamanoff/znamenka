@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.znamenka.represent.CalendarEvent;
 import ru.znamenka.represent.domain.ClientApi;
@@ -21,11 +20,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.ResponseEntity.badRequest;
-import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.http.ResponseEntity.*;
 import static org.springframework.util.Assert.notNull;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @Controller
 @RequestMapping("/training")
@@ -48,6 +44,20 @@ public class ScheduleController {
         this.eventService = eventService;
         this.service = service;
         this.clientService = clientService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getTrainingById(@PathVariable Long id) {
+        TrainingApi training = clientService.store().findOne(TrainingApi.class, id);
+        if (training == null) {
+            return noContent().build();
+        }
+        return ok(training);
+    }
+
+    @PostMapping("/{id}")
+    public void changeStatus(@PathVariable Long id, Long statusId) {
+        service.updateStatus(statusId, id);
     }
 
     /**
@@ -79,7 +89,7 @@ public class ScheduleController {
      * @param bindingResult результат валидации
      * @return 200 если тренировка успешно забронирована, 400 в ином случае
      */
-    @RequestMapping(path = "club-client", method = POST)
+    @PostMapping(path = "club-client")
     public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) {
         try {
             if (!bindingResult.hasErrors()) {
@@ -93,7 +103,7 @@ public class ScheduleController {
         return badRequest().body(training);
     }
 
-    @RequestMapping(path = "new-client", method = POST)
+    @PostMapping(path = "new-client")
     public ResponseEntity<TrainingApi> bookTraining(
             @Valid ClientApi client,
             LocalDateTime startTraining,
@@ -111,7 +121,7 @@ public class ScheduleController {
         return ok(training);
     }
 
-    @RequestMapping(method = PUT)
+    @PutMapping
     public ResponseEntity<TrainingApi> updateTraining(Long statusId, Long trainingId) {
         TrainingApi training = service.updateStatus(statusId, trainingId);
         if (training == null) {

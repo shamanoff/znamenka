@@ -38,15 +38,13 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
         TrainingApi api = new TrainingApi();
         api.setClientId(training.getClientId());
         Client client = training.getClient();
-        if (client != null) {
-            api.setClientName(client.getName() + " " + client.getSurname());
-        }
-        // TODO: 05.10.2016 не вытягивает зависимости по eager
+        api.setClientName(client.getName() + " " + client.getSurname());
         api.setTrainerId(training.getTrainer().getId());
         api.setTrainerName(training.getTrainer().getName());
         api.setId(training.getId());
         api.setPurchaseId(training.getPurchase().getId());
         api.setStatusId(training.getStatus().getId());
+        api.setStatusName(training.getStatus().getName());
         api.setStart(training.getStart());
 
         return api;

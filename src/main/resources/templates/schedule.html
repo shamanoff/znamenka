@@ -196,7 +196,8 @@
                                         <label class="col-md-4 control-label" for="ds">Начало тренировки</label>
                                         <div class="col-md-4 inputGroupContainer">
                                             <div class="input-group date" id='start-time-for-new'>
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                <span class="input-group-addon"><i
+                                                        class="glyphicon glyphicon-calendar"></i></span>
                                                 <input name="start" class="form-control "
                                                        type="text" id="ds1" readonly>
                                             </div>
@@ -256,92 +257,80 @@
                 <h4 class="modal-title">Работа с календарем</h4>
             </div>
             <div class="modal-body col-md-12">
-                    <div class="tab-pane fade in active">
-                        <!--     //<div id="home" class="tab-pane fade in active"> -->
-                        <form id="exists-training-form" class="well form-horizontal" action="#" method="post"
-                              th:object="${training}"
-                              th:action="@{/training/club-client}" data-toggle="validator">
-                            <fieldset>
-                                <div class="panel-body">
-                                    <!-- Select Basic -->
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label"
-                                               for="select-client-for-club">Клиент</label>
-                                        <div class="col-md-4 selectContainer">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                                                <select th:field="*{clientId}" id="select-client-for-club" name="сlient"
-                                                        class="form-control selectpicker">
-                                                    <option value="">Выберите клиента</option>
-                                                    <option th:each="client: ${clients}" th:value="${client.id}"
-                                                            th:text="${client.name}">
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Select Basic -->
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label"
-                                               for="select-abonement-for-club">Абонемент</label>
-                                        <div class="col-md-4 selectContainer">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                                                <select th:field="*{purchaseId}" id="select-abonement-for-club"
-                                                        name="abonement"
-                                                        class="form-control selectpicker">
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label"
-                                               for="select-client-for-club">Тренер</label>
-                                        <div class="col-md-4 selectContainer">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                                                <select id="select-trainer-for-club" name="trainerId"
-                                                        class="form-control selectpicker">
-                                                    <option value="">Выберите тренера</option>
-                                                    <option th:each="trainer: ${trainers}" th:value="${trainer.id}"
-                                                            th:text="${trainer.name}">
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Text input-->
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label" for="ds">Начало тренировки</label>
-                                        <div class="col-md-4 inputGroupContainer">
-                                            <div class="input-group date" id='start-time-for-club'>
-                                        <span class="input-group-addon"><i
-                                                class="glyphicon glyphicon-calendar"></i></span>
-                                                <input th:field="*{start}" name="start" class="form-control" id="ds"
-                                                       type="text" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Button -->
-                                    <div class="form-group">
-                                        <!--                 <label class="col-md-4 control-label"></label> -->
-                                        <div class="col-md-4 col-md-offset-3">
-                                            <button type="submit" class="btn btn-primary" id="training-submit-for-club">
-                                                Запланировать тренировку
-                                                <span class="glyphicon glyphicon-send"></span></button>
-                                        </div>
-                                        <div class="hidden col-md-4 ">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть
-                                                форму
-                                            </button>
+                <div class="tab-pane fade in active">
+                    <!--     //<div id="home" class="tab-pane fade in active"> -->
+                    <form id="exists-training-form" class="well form-horizontal" action="#" method="post"
+                          th:action="@{/training/club-client}">
+                        <fieldset>
+                            <div class="panel-body">
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="ec">Клиент</label>
+                                    <div class="col-md-4 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input name="client" class="form-control" id="ec"
+                                                   type="text" readonly>
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
-                        </form>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="eds">Начало тренировки</label>
+                                    <div class="col-md-4 inputGroupContainer">
+                                        <div class="input-group date">
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-calendar"></i></span>
+                                            <input name="start" class="form-control" id="eds"
+                                                   type="text" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="et">Тренер</label>
+                                    <div class="col-md-4 inputGroupContainer">
+                                        <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-calendar"></i></span>
+                                            <input name="trainer" class="form-control" id="et"
+                                                   type="text" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="es">Статус</label>
+                                    <div class="col-md-4 inputGroupContainer">
+                                        <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-calendar"></i></span>
+                                            <input name="status" class="form-control" id="es"
+                                                   type="text" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="id">
+                                <input type="hidden" name="statusId">
+                                <!-- Button -->
+                                <div class="form-group">
+                                    <!--                 <label class="col-md-4 control-label"></label> -->
+                                    <div class="col-md-4 col-md-offset-3">
+                                        <button type="button" class="btn btn-primary" id="status-write-off">
+                                            Отменить со списанием
+                                            <span class="glyphicon glyphicon-send"></span></button>
+                                    </div>
+                                    <div class="col-md-4 ">
+                                        <button type="button" class="btn btn-default" id="status-write-on">
+                                            Отменить без списания
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
 
-                    </div> <!--home-->
+                </div> <!--home-->
             </div>
             <div class="modal-footer">
             </div>
