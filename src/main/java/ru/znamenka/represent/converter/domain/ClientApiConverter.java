@@ -34,10 +34,18 @@ public class ClientApiConverter implements UpdatableApiConverter<Client, ClientA
 
     @Override
     public Client convertTo(ClientApi source, Client entity) {
-        entity.setName(source.getFname());
-        entity.setSurname(source.getSname());
-        entity.setPhone(source.getPhone());
-        entity.setEmail(source.getEmail());
+        if (source.getFname() != null) {
+            entity.setName(source.getFname());
+        }
+        if (source.getSname() != null) {
+            entity.setSurname(source.getSname());
+        }
+        if (source.getPhone() != null) {
+            entity.setPhone(source.getPhone());
+        }
+        if (source.getEmail() != null) {
+            entity.setEmail(source.getEmail());
+        }
         return entity;
     }
 

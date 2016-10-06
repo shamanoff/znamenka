@@ -113,7 +113,6 @@ public interface ApiStore {
      * @see org.springframework.data.jpa.repository.JpaRepository#deleteInBatch(Iterable)
      * @param clazz класс бизнес-модели
      * @param <E>   тип бизнес-модели
-     * @throws RuntimeException
      */
     <E extends BaseModel, A extends DomainApi> void deleteAllInBatch(Class<A> clazz);
 

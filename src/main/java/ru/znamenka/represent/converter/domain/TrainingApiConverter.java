@@ -1,7 +1,7 @@
 package ru.znamenka.represent.converter.domain;
 
+import lombok.val;
 import org.springframework.stereotype.Component;
-import ru.znamenka.jpa.model.Client;
 import ru.znamenka.jpa.model.Training;
 import ru.znamenka.represent.converter.UpdatableApiConverter;
 import ru.znamenka.represent.domain.TrainingApi;
@@ -37,9 +37,8 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
     public TrainingApi convert(Training training) {
         TrainingApi api = new TrainingApi();
         api.setClientId(training.getClientId());
-        Client client = training.getClient();
-        api.setClientName(client.getName() + " " + client.getSurname());
-        api.setTrainerId(training.getTrainer().getId());
+        api.setClientName(training.getClient().getName() + " " + training.getClient().getSurname());
+        api.setTrainerId(training.getTrainerId());
         api.setTrainerName(training.getTrainer().getName());
         api.setId(training.getId());
         api.setPurchaseId(training.getPurchase().getId());
@@ -53,9 +52,18 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
 
     @Override
     public Training convertTo(TrainingApi source, Training entity) {
-        entity.setStatusId(source.getStatusId());
-        entity.setStart(source.getStart());
-        entity.setTrainerId(source.getTrainerId());
+        val statusId = source.getStatusId();
+        if (statusId != null) {
+            entity.setStatusId(statusId);
+        }
+        val start = source.getStart();
+        if (start != null) {
+            entity.setStart(start);
+        }
+        val trainerId = source.getTrainerId();
+        if (trainerId != null) {
+            entity.setTrainerId(trainerId);
+        }
 
         return entity;
     }

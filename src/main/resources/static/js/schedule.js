@@ -43,15 +43,19 @@ $(document).ready(function () {
     writeOffTrainingBtn.click(function () {
         var data = {};
         var id = formForExistsTraining.find('[name="id"]').val();
-        data.statusId = 3;
-        $.post("/training/" + id, data);
+        data.statusId = 4;
+        $.post("/training/" + id, data, function () {
+            modalForExists.modal('hide');
+        });
     });
 
     writeOnTrainingBtn.click(function () {
         var data = {};
         var id = formForExistsTraining.find('[name="id"]').val();
-        data.statusId = 4;
-        $.post("/training/" + id, data);
+        data.statusId = 3;
+        $.post("/training/" + id, data, function () {
+            modalForExists.modal('hide');
+        });
     });
 
     function submitForm(e) {
@@ -99,15 +103,15 @@ $(document).ready(function () {
                     .find('[name="trainer"]').val(response.trainerName).end()
                     .find('[name="status"]').val(response.statusName).end()
                     .find('[name="statusId"]').val(response.statusId).end();
-                if (response.statusId != 1 ) {
+                if (response.statusId != 1) {
                     writeOffTrainingBtn.prop('disabled', true);
                     writeOnTrainingBtn.prop('disabled', true);
                 }
             });
         },
-        editable: true,
+        editable: false,
 
-        eventLimit: true,
+        eventLimit: false,
         header: {
             left: 'prev,next today',
             center: 'title',

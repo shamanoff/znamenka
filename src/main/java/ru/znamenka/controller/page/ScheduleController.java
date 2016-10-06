@@ -56,8 +56,8 @@ public class ScheduleController {
     }
 
     @PostMapping("/{id}")
-    public void changeStatus(@PathVariable Long id, Long statusId) {
-        service.updateStatus(statusId, id);
+    public ResponseEntity<TrainingApi>changeStatus(@PathVariable Long id, Long statusId) {
+        return ok(service.updateStatus(statusId, id));
     }
 
     /**
