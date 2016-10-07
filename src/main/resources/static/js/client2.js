@@ -77,7 +77,8 @@ $(document).ready(function () {
                 .find('[name="email"]').val(response.email).end()
                 .find('[name="phone"]').val(response.phone).end()
                 .find('[name="birthDate"]').val(moment(response.birthDate).format("DD/MM/YYYY")).end()
-                .find('[name="comment"]').val(response.comment).end();
+                .find('[name="comment"]').val(response.comment).end()
+                .find('[name="carNumber"]').val(response.carNumber).end();
             if (response.male == true) {
                 aboutClient
                     .find('[name="male"][value="true"]').attr('checked', true).end()
@@ -88,8 +89,7 @@ $(document).ready(function () {
             // Show the dialog
             myModal
                 .on('shown.bs.modal', function () {
-                    aboutClient
-                        .data('bootstrapValidator').resetForm(); // Reset form
+                    aboutClient.reset(); // Reset form
                 })
                 .on('hide.bs.modal', function (e) {
                     // Bootbox will remove the modal (including the body which contains the login form)
