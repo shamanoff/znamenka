@@ -78,7 +78,7 @@ public class ClientController {
     @GetMapping
     public ModelAndView index() {
         Long trainerId = getTrainerIdIfExists();
-        List<ClientApi> clients = clientService.clientsByTrainerId(trainerId);
+        List<ClientApi> clients = clientService.store().findAll(ClientApi.class); //.clientsByTrainerId(trainerId);
         ModelAndView mv = new ModelAndView("client");
         mv.addObject("clientNew", new ClientApi());
         mv.addObject("clients", clients);
@@ -165,6 +165,7 @@ public class ClientController {
     @GetMapping("/search/phone")
     public ResponseEntity<?> searchClientByPhone(@Pattern(regexp = "^7[0-9]{10}") String phone
     ) {
+
         ClientApi clientApi = clientService.clientByPhone(phone);
         if (clientApi == null) {
             return noContent().build();
