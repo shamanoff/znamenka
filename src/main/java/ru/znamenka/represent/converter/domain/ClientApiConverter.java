@@ -29,7 +29,7 @@ public class ClientApiConverter implements UpdatableApiConverter<Client, ClientA
         client.setPhone(source.getPhone());
         client.setComment(source.getComment());
         client.setMale(source.getMale());
-        client.setCarNumber(source.getCarNumber());
+        client.setCarNumber(source.getCarNumber() == null ? null : source.getCarNumber().toUpperCase());
         return client;
     }
 
@@ -48,7 +48,7 @@ public class ClientApiConverter implements UpdatableApiConverter<Client, ClientA
             entity.setEmail(source.getEmail());
         }
         if(source.getCarNumber() != null){
-            entity.setCarNumber(source.getCarNumber());
+            entity.setCarNumber(source.getCarNumber() == null ? null : source.getCarNumber().toUpperCase());
         }
         return entity;
     }

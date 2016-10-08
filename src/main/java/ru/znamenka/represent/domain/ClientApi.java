@@ -33,7 +33,7 @@ public class ClientApi implements DomainApi, UpdatableApi<Long> {
     @Getter @Setter
     private Boolean male;
     @Getter @Setter
-    @Pattern(regexp = "^[А-я]\\d{3}[А-я]{2}\\d{2,3}$")
+    //@Pattern(regexp = "^[А-я]\\d{3}[А-я]{2}\\d{2,3}$")
     private String carNumber;
     @Getter @Setter
     private String comment;

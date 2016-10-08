@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/training/events/busy", "/events", "/calendar/**").permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/index")
+                .formLogin().loginPage("/login").defaultSuccessUrl("/index", true)
                 .and()
                 .csrf()
                 .disable()
