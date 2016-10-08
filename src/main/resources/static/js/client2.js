@@ -161,6 +161,8 @@ $(document).ready(function () {
                     .append($("<td>" + training.trainerName + "</td>"));
                 $('#modal-trainings').find('tbody').append(row);
             })
+        }).error(function () {
+            $('#modal-trainings').find('tbody').children('tr').remove();
         });
     });
 

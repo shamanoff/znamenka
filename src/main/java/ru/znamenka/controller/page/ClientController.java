@@ -141,8 +141,9 @@ public class ClientController {
      * @return список тренировок
      */
     @GetMapping("/{id}/trainings")
-    public ResponseEntity<List<Map<String, Object>>> getTrainingsByClient(@PathVariable Long id) {
+    public ResponseEntity<?> getTrainingsByClient(@PathVariable Long id) {
         List<TrainingApi> trainings = clientService.trainings(id);
+        if (trainings == null) return noContent().build();
         List<Map<String, Object>> result = trainings.stream().map(t -> {
             Map<String, Object> map = new HashMap<>();
             map.put("trainerName", t.getTrainerName());
