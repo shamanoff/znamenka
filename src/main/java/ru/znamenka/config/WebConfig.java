@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import ru.znamenka.config.formatter.DateFormatter;
+import ru.znamenka.config.formatter.LocalDateTimeConverter;
 import ru.znamenka.config.formatter.LocalDateTimeFormatter;
 import ru.znamenka.config.formatter.TimestampFormatter;
 
@@ -124,6 +125,8 @@ public class WebConfig extends SpringDataWebConfiguration {
         registry.addFormatter(new TimestampFormatter());
         registry.addFormatter(new DateFormatter());
         registry.addFormatter(new LocalDateTimeFormatter());
+
+        registry.addConverter(new LocalDateTimeConverter());
     }
 
 }

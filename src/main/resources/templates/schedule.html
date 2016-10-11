@@ -97,7 +97,27 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <!-- radio checks -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Заказать пропуск?</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="passForAuto" th:field="*{passForAuto}" ></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Text area -->
+                                    <div class=" form-group">
+                                        <label class="col-md-4 control-label">Комментарий к тренировке</label>
+                                        <div class="col-md-4 inputGroupContainer">
+                                            <div class="input-group">
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-pencil"></i></span>
+                                                <textarea class="form-control" name="comment" placeholder="Комментарий"
+                                                          th:field="*{comment}"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- Button -->
                                     <div class="form-group">
                                         <!--                 <label class="col-md-4 control-label"></label> -->
@@ -208,7 +228,7 @@
                                         <label class="col-md-4 control-label">Заказать пропуск?</label>
                                         <div class="col-md-4 inputGroupContainer">
                                             <div class="checkbox">
-                                                <label><input type="checkbox" value=""></label>
+                                                <label><input type="checkbox" name="passForAuto"></label>
                                             </div>
                                         </div>
                                     </div>
@@ -324,6 +344,15 @@
                                 </div>
                                 <input type="hidden" name="id">
                                 <input type="hidden" name="statusId">
+                                <!-- radio checks -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Заказать пропуск?</label>
+                                    <div class="col-md-4 inputGroupContainer">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" name="passForAuto"></label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- Button -->
                                 <div class="form-group">
                                     <!--                 <label class="col-md-4 control-label"></label> -->

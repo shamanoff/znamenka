@@ -1,6 +1,7 @@
 package ru.znamenka.controller.page;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -56,7 +57,7 @@ public class ScheduleController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<TrainingApi>changeStatus(@PathVariable Long id, Long statusId) {
+    public ResponseEntity<TrainingApi> changeStatus(@PathVariable Long id, Long statusId) {
         return ok(service.updateStatus(statusId, id));
     }
 
@@ -91,14 +92,10 @@ public class ScheduleController {
      */
     @PostMapping(path = "club-client")
     public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) {
-        try {
-            if (!bindingResult.hasErrors()) {
-                training = service.save(training);
-                eventService.postToCalendar(training);
-                return ok(training);
-            }
-        } catch (Exception e) {
-            // for transactional both method
+        if (!bindingResult.hasErrors()) {
+            training = service.save(training);
+            eventService.postToCalendar(training);
+            return ok(training);
         }
         return badRequest().body(training);
     }
@@ -106,18 +103,23 @@ public class ScheduleController {
     @PostMapping(path = "new-client")
     public ResponseEntity<TrainingApi> bookTraining(
             @Valid ClientApi client,
-            LocalDateTime startTraining,
-            Long trainerId,
+            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime start,
+            @RequestParam Long trainerId,
+            @RequestParam Boolean passForAuto,
+            @RequestParam String comment,
             BindingResult br
     ) {
         if (br.hasErrors()) return badRequest().body(TrainingApi.empty());
-        client = clientService.store().save(ClientApi.class, client);
+        Long clientId = clientService.store().save(ClientApi.class, client);
         TrainingApi training = new TrainingApi();
-        training.setClientId(client.getId());
-        training.setStart(startTraining);
+        training.setClientId(clientId);
+        training.setStart(start);
         training.setTrainerId(trainerId);
         training.setStatusId(1L);
-
+        training.setComment(comment);
+        training.setPassForAuto(passForAuto);
+        service.save(training);
+        eventService.postToCalendar(training);
         return ok(training);
     }
 

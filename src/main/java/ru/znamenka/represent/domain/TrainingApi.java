@@ -23,35 +23,28 @@ public class TrainingApi implements DomainApi, UpdatableApi<Long> {
     public static TrainingApi empty() {
         return new TrainingApi();
     }
-
     
     private Long id;
 
-    
     private Long trainerId;
 
-    
     private String trainerName;
 
-    
     @NotNull
     private LocalDateTime start;
 
-    
     @NotNull
     private Long clientId;
 
-    
     private String clientName;
 
-    
     private Long purchaseId;
 
-    
     private Long statusId;
 
-    
     private String statusName;
 
     private String comment;
+
+    private Boolean passForAuto;
 }

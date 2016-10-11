@@ -39,6 +39,10 @@ $(document).ready(function () {
         .submit(function (e) {
             submitForm(e);
         });
+    trainingFormForNew
+        .submit(function (e) {
+            submitForm(e);
+        });
 
     writeOffTrainingBtn.click(function () {
         var data = {};
@@ -103,6 +107,7 @@ $(document).ready(function () {
                     .find('[name="trainer"]').val(response.trainerName).end()
                     .find('[name="status"]').val(response.statusName).end()
                     .find('[name="comment"]').val(response.comment).end()
+                    .find('[name="passForAuto"]').prop('checked', response.passForAuto).end()
                     .find('[name="statusId"]').val(response.statusId).end();
                 if (response.statusId != 1) {
                     writeOffTrainingBtn.prop('disabled', true);

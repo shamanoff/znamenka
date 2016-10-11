@@ -31,6 +31,7 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
         training.setStart(source.getStart());
         training.setStatusId(source.getStatusId());
         training.setComment(source.getComment());
+        training.setPassForAuto(source.getPassForAuto());
         return training;
     }
 
@@ -42,11 +43,12 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
         api.setTrainerId(training.getTrainerId());
         api.setTrainerName(training.getTrainer().getName());
         api.setId(training.getId());
-        api.setPurchaseId(training.getPurchase().getId());
+        api.setPurchaseId(training.getPurchase() == null ? null : training.getPurchase().getId());
         api.setStatusId(training.getStatus().getId());
         api.setStatusName(training.getStatus().getName());
         api.setStart(training.getStart());
         api.setComment(training.getComment());
+        api.setPassForAuto(training.getPassForAuto());
         return api;
     }
 
@@ -69,6 +71,7 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
         if (comment != null) {
             entity.setComment(comment);
         }
+        entity.setPassForAuto(source.getPassForAuto());
 
         return entity;
     }
