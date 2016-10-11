@@ -62,7 +62,7 @@ $(document).ready(function () {
                         var statusName = $(e.target).attr('name');
                         var id = String(statusName).match(/\d+(?=\])/g)[0];
                         var trStatus = $('#tr' + id);
-                        if (statusId > 2) {
+                        if (statusId > 2 || statusId=='') {
                             $('textarea[name="comment[' + id + ']"]').prop('required', true);
                             trStatus.removeClass("success").addClass('danger')
                         } else {
