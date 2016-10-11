@@ -36,9 +36,9 @@ public class EndOfDayPageService {
     }
 
     public List<TrainingApi> getTrainings(LocalDate date, Long trainerId) {
-        Predicate predicate = training.status.id.eq(1L)
-                .and(training.start.between(LocalDateTime.of(date, MIN), LocalDateTime.of(date, MAX))
-                .and(training.trainer.id.eq(trainerId)));
+        Predicate predicate = training
+                .start.between(LocalDateTime.of(date, MIN), LocalDateTime.of(date, MAX))
+                .and(training.trainer.id.eq(trainerId));
         return apiStore.findAll(TrainingApi.class, predicate);
     }
 
