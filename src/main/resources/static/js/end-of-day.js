@@ -64,10 +64,8 @@ $(document).ready(function () {
                         var trStatus = $('#tr' + id);
                         if (statusId > 2 || statusId=='') {
                             $('textarea[name="comment[' + id + ']"]').prop('required', true);
-                            trStatus.removeClass("success").addClass('danger')
                         } else {
                             $('textarea[name="comment[' + id + ']"]').prop('required', false);
-                            trStatus.removeClass("danger").addClass('success')
                         }
                     });
                 });
