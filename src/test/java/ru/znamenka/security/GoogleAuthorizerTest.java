@@ -1,15 +1,19 @@
 package ru.znamenka.security;
 
-import com.google.api.services.calendar.Calendar;
-import org.junit.Before;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import ru.znamenka.config.SecurityConfig;
 
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.mock;
 
 
 /**
@@ -20,22 +24,25 @@ import static org.mockito.Mockito.verify;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
+@TestConfiguration
+@ContextConfiguration(classes = {SecurityConfig.class, GoogleAuthorizerTest.class})
+@Slf4j
 public class GoogleAuthorizerTest {
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+    @Bean
+    @Primary
+    public UserDetailsService userDetailsService() {
+        return mock(UserDetailsService.class);
     }
 
-    @Mock
-    private ApplicationContext mockCtx;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
     public void getCalendar() throws Exception {
-        GoogleAuthorizer authorizer = new GoogleAuthorizer(mockCtx);
-        Calendar calendar = authorizer.getCalendar();
-        verify(mockCtx).getApplicationName();
+        String pass = "q";
+        log.info(passwordEncoder.encode(pass));
     }
 
 }
