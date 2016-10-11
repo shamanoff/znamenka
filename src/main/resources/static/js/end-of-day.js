@@ -64,10 +64,10 @@ $(document).ready(function () {
                         var trStatus = $('#tr' + id);
                         if (statusId > 2) {
                             $('textarea[name="comment[' + id + ']"]').prop('required', true);
-                            trStatus.toggleClass('danger')
+                            trStatus.removeClass("success").addClass('danger')
                         } else {
                             $('textarea[name="comment[' + id + ']"]').prop('required', false);
-                            trStatus.toggleClass('success')
+                            trStatus.removeClass("danger").addClass('success')
                         }
                     });
                 });
