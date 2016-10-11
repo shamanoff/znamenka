@@ -60,13 +60,15 @@ $(document).ready(function () {
                     $(select).on('change', function (e) {
                         var statusId = $(e.target).val();
                         var statusName = $(e.target).attr('name');
+                        var id = String(statusName).match(/\d+(?=\])/g)[0];
                         if (statusId > 2) {
-                            var id = String(statusName).match(/\d+(?=\])/g)[0];
                             $('textarea[name="comment[' + id + ']"]').prop('required', true);
-                            trainingForm.validator('update');
+                        } else {
+                            $('textarea[name="comment[' + id + ']"]').prop('required', false);
                         }
                     });
                 });
+                trainingForm.validator('update');
             }
         });
     }
