@@ -40,7 +40,11 @@ public class UserDao implements UserDetailsService {
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            return repo.findOne(username);
+            User user = repo.findOne(username);
+            if (user.getTrainer() != null && user.getName() == null) {
+                user.setName(user.getTrainer().getName());
+            }
+            return user;
         } catch (Exception e) {
             throw new UsernameNotFoundException(e.getMessage(), e);
         }
