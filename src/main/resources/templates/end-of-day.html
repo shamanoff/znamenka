@@ -62,7 +62,7 @@
                                 </tr>
                                 </thead>
                                 <tbody th:fragment="training-table" id="training-tbody">
-                                <tr th:each="training: ${trainings}" th:classappend="${training.statusId == 1} ? danger : success">
+                                <tr th:each="training: ${trainings}" th:classappend="${training.statusId == 1} ? danger : success" th:id="'tr' + ${training.id}" >
                                     <td th:text="${training.clientName}"></td>
                                     <td th:text="${#temporals.format(training.start, 'hh:mm')}"></td>
                                     <td>

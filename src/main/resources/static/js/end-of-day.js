@@ -61,10 +61,13 @@ $(document).ready(function () {
                         var statusId = $(e.target).val();
                         var statusName = $(e.target).attr('name');
                         var id = String(statusName).match(/\d+(?=\])/g)[0];
+                        var trStatus = $('#tr' + id);
                         if (statusId > 2) {
                             $('textarea[name="comment[' + id + ']"]').prop('required', true);
+                            trStatus.toggleClass('danger')
                         } else {
                             $('textarea[name="comment[' + id + ']"]').prop('required', false);
+                            trStatus.toggleClass('success')
                         }
                     });
                 });
