@@ -76,7 +76,6 @@ public class Training implements BaseModel<Long> {
     @Column(name = "comment")
     private String comment;
 
-    @Transient
-    //@Column(name = "pass_for_auto")
+    @Column(name = "pass_for_auto")
     private Boolean passForAuto;
 }
