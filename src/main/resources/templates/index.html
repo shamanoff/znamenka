@@ -2,37 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
     <title>Рабочий стол</title>
+    <link rel="stylesheet" th:href="@{/css/fullcalendar.min.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
-<th:block th:include="~{fragment/imports :: import_script(~{})}" th:remove="tag"></th:block>
+<th:block th:include="~{fragment/imports :: import_script(~{::script})}">
+    <script th:src="@{/js/calendar/fullcalendar.min.js}"></script>
+    <script th:src="@{/js/jquery-ui.min.js}"></script>
+    <script th:src="@{/js/calendar/ru.js}"></script>
+    <script th:src="@{/js/calendar/gcal.js}"></script>
+    <script th:src="@{/js/index.js}"></script>
+</th:block>
 <div th:include="header"></div>
 <div class="container">
     <div class="row">
         <div class="col-md-6 top-buffer">
-            <form class="well form-horizontal" action=" " method="post" id="contact_form">
-
+            <form class="well form-horizontal" action="" method="post">
                 <div class="panel panel-default panel-table">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col col-xs-6">
                                 <h3 class="panel-title">Расписание</h3>
                             </div>
-
                         </div>
                     </div>
                     <div class="panel-body">
-                        <iframe th:src="@{|https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;mode=AGENDA&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=${serviceEmail}&amp;color=%2328754E&amp;ctz=Europe%2FMoscow|}"
-                                style="border-width:0" width="400" height="600" frameborder="0" scrolling="no"></iframe>
-
+                        <div id="calendar" class="well bg-white"></div>
                     </div>
                 </div>
             </form>
         </div>
-        <div class="col-md-6 top-buffer">
-            <form class="well form-horizontal" action=" " method="post" id="contact_form">
-
-
+        <div class="col-md-6 top-buffer hidden">
+            <form class="well form-horizontal" action="#" method="post">
                 <div class="panel panel-default panel-table">
                     <div class="panel-heading">
                         <div class="row">
@@ -55,19 +56,10 @@
                     </div>
 
                 </div>
-
             </form>
         </div>
         <!-- /.container -->
-
-        <div class='col-md-6'>
-
-
-        </div>
-        <!-- /.container -->
-
     </div>
-
 </div>
 <!-- /.container -->
 
