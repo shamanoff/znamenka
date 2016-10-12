@@ -5,14 +5,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.znamenka.jpa.model.User;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.domain.TrainingStatusApi;
 import ru.znamenka.represent.page.endofday.Status;
@@ -54,10 +49,13 @@ public class EndOfTheDayReportController {
 
     @PreAuthorize("hasRole('ROLE_TRAINER')")
     @GetMapping
-    public ModelAndView index(@RequestParam(value = "date", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date) {
+    public ModelAndView index(
+            @RequestParam(value = "date", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date,
+            @ModelAttribute Long trainerId
+    ) {
         if (date == null) date = now();
         ModelAndView mv = new ModelAndView();
-        List<TrainingApi> trainings = pageService.getTrainings(date, getTrainerId());
+        List<TrainingApi> trainings = pageService.getTrainings(date, trainerId);
         List<TrainingStatusApi> statuses = apiStore.findAll(TrainingStatusApi.class, trainingStatus.id.eq(1L).not());
 
         mv.addObject("trainings", trainings);
@@ -67,10 +65,13 @@ public class EndOfTheDayReportController {
     }
 
     @GetMapping("/trainings")
-    public ModelAndView trainingsTable(@RequestParam(value = "date", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date) {
+    public ModelAndView trainingsTable(
+            @RequestParam(value = "date", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date,
+            @ModelAttribute Long trainerId
+    ) {
         ModelAndView mv = new ModelAndView("end-of-day :: training-table");
         if (date == null) date = now();
-        List<TrainingApi> trainings = pageService.getTrainings(date, getTrainerId());
+        List<TrainingApi> trainings = pageService.getTrainings(date, trainerId);
         List<TrainingStatusApi> statuses = apiStore.findAll(TrainingStatusApi.class, trainingStatus.id.eq(1L).not());
 
         mv.addObject("trainings", trainings);
@@ -90,10 +91,5 @@ public class EndOfTheDayReportController {
         return ResponseEntity.ok("{}");
     }
 
-
-    private Long getTrainerId() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getTrainer().getId();
-    }
 
 }

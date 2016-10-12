@@ -3,7 +3,6 @@ package ru.znamenka.controller.page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -12,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.znamenka.annotation.ActionLogged;
-import ru.znamenka.jpa.model.User;
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.page.client.ClientPurchaseApi;
@@ -79,9 +77,9 @@ public class ClientController {
      *
      * @return страницу templates/client.html
      */
+    // TODO: 12.10.2016 ограничение для тренеров
     @GetMapping
-    public ModelAndView index() {
-        Long trainerId = getTrainerIdIfExists();
+    public ModelAndView index(@ModelAttribute Long trainerId) {
         List<ClientApi> clients = clientService.store().findAll(ClientApi.class); //.clientsByTrainerId(trainerId);
         ModelAndView mv = new ModelAndView("client");
         mv.addObject("clientNew", new ClientApi());
@@ -208,11 +206,6 @@ public class ClientController {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity handleValidationEx() {
         return badRequest().build();
-    }
-
-    private Long getTrainerIdIfExists() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getTrainer().getId();
     }
 
 }

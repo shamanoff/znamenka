@@ -3,11 +3,15 @@ package ru.znamenka.controller;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import ru.znamenka.jpa.model.Trainer;
+import ru.znamenka.jpa.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,19 +21,20 @@ import javax.servlet.http.HttpServletRequest;
  *     Служит для маппинга ошибок и отдаче их клиенту в стандартизированном виде
  * <p>
  * Создан 10.06.2016
- * <p>
- * Изменения:
- * <p>
- * 20.06.2016 - Евгений Уткин (Eugene Utkin)
- * <ul>
- *     <li>
- *         Добавлено описание класса
- *     </li>
- * </ul>
  * @author Евгений Уткин (Eugene Utkin)
  */
 @ControllerAdvice
 class GlobalDefaultExceptionHandler {
+
+    @ModelAttribute
+    public Long extractTrainerIdIfExists(Authentication auth) {
+        User user = (User) auth.getPrincipal();
+        Trainer trainer = user.getTrainer();
+        if (trainer != null) {
+            return trainer.getId();
+        }
+        return null;
+    }
 
 
     /**
