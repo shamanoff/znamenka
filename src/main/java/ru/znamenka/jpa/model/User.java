@@ -15,25 +15,21 @@ import static javax.persistence.FetchType.EAGER;
                 @NamedAttributeNode("authorities"),
                 @NamedAttributeNode("trainer")
         })
+@Getter
+@Setter
 public class User implements UserDetails {
 
     private static final long serialVersionUID = -8376436720803866112L;
 
     @Id
     @Column(name = "username", nullable = false, unique = true)
-    @Getter
-    @Setter
     private String username;
 
     @Column(name = "password", nullable = false)
-    @Getter
-    @Setter
     private String password;
 
     @OneToOne(fetch = EAGER)
     @JoinColumn(name = "trainer_id")
-    @Getter
-    @Setter
     private Trainer trainer;
 
     @ManyToMany(fetch = EAGER)
@@ -42,9 +38,10 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     )
-    @Getter
-    @Setter
     private List<Role> authorities;
+
+    @Column(name = "name")
+    private String name;
 
 
     @Override
