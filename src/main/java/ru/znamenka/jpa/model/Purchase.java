@@ -34,7 +34,7 @@ public class Purchase implements BaseModel<Long> {
     @Getter @Setter
     private Date purchaseDate;
 
-    @Column(name = "expired")
+    @Column(name = "expired", nullable = false)
     @Getter @Setter
     private Boolean expired;
 
