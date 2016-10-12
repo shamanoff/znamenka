@@ -35,8 +35,8 @@ public class Purchase implements BaseModel<Long> {
     private Date purchaseDate;
 
     @Column(name = "expired", nullable = false)
-    @Getter @Setter
-    private Boolean expired;
+    @Getter
+    private boolean expired;
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "client_id", insertable = false, updatable = false)
@@ -81,6 +81,10 @@ public class Purchase implements BaseModel<Long> {
     @OneToMany(mappedBy = "purchase",fetch = LAZY)
     @Getter @Setter
     private List<Payment> payments;
+
+    private void setExpired(Boolean expired) {
+        this.expired = expired != null && expired;
+    }
 
 
 }
