@@ -131,6 +131,7 @@ $(document).ready(function () {
                 if (response.statusId != 1) {
                     writeOffTrainingBtn.prop('disabled', true);
                     writeOnTrainingBtn.prop('disabled', true);
+                    changeTrainerInput.prop('disabled', true);
                 }
             });
         },
