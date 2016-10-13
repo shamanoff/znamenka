@@ -7,23 +7,23 @@
 
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{::script})}">
+    <script th:src="@{/js/form-validator/validator.min.js}"></script>
     <script th:src="@{/js/sale.js}"></script>
 </th:block>
 <div th:include="header"></div>
 <div class="container">
 
 
-    <form class="well form-horizontal" action="#" th:action="@{/sale}" th:object="${purchase}" method="post"
-          id="contact_form">
+    <form class="well form-horizontal" th:action="@{/sale}" th:object="${purchase}" method="post"
+          id="purchase-form" data-toggle="validator">
         <fieldset>
-
             <div class="form-group">
-                <label class="col-md-4 control-label">Клиент</label>
+                <label class="col-md-4 control-label" for="select-client">Клиент</label>
                 <div class="col-md-4 selectContainer">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                         <select th:field="*{clientId}" name="client" class="form-control selectpicker"
-                                id="select-client">
+                                id="select-client" required>
                             <option value="">Выберите клиента</option>
                             <option th:each="client: ${clients}" th:value="${client.id}"
                                     th:text="${client.name}"></option>
@@ -37,7 +37,7 @@
                 <div class="col-md-4 selectContainer">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                        <select th:field="*{productId}" name="product" class="form-control selectpicker">
+                        <select th:field="*{productId}" name="product" class="form-control selectpicker" required>
                             <option value="">Выберите продукт</option>
                             <option th:each="product: ${products}" th:value="${product.id}"
                                     th:text="${product.name}"></option>
@@ -51,7 +51,7 @@
                 <div class="col-md-4 selectContainer">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-                        <select th:field="*{trainerId}" name="saler" class="form-control selectpicker">
+                        <select th:field="*{trainerId}" name="saler" class="form-control selectpicker" required>
                             <option value="">Выберите продавца</option>
                             <option th:each="trainer: ${trainers}" th:value="${trainer.id}"
                                     th:text="${trainer.name}"></option>
@@ -115,13 +115,14 @@
                                 <td th:text="${payd.paid}"></td>
                                 <td th:text="${payd.remain}"></td>
                                 <td>
-                                    <form class="form-inline" action="#"
+                                    <form class="form-inline"
                                           th:action="@{/sale/payment}"
                                           th:object="${payment}"
                                           method="post"
                                           id="payd-form"
+                                          data-toggle="validator"
                                     >
-                                        <input type="text" id="payment" name="payment" th:field="*{amount}"/>
+                                        <input type="number" min="0" th:max="${payd.remain}" id="payment" name="payment" th:field="*{amount}"/>
                                         <input type="hidden" th:attr="name='purchaseId'" th:value="${payd.purchaseId}"/>
                                         <input type="hidden" name="remain" th:value="${payd.remain}"/>
                                         <button type="submit" class="btn btn-sm btn-success btn-create"

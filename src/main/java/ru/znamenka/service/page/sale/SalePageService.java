@@ -2,6 +2,7 @@ package ru.znamenka.service.page.sale;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,9 @@ import ru.znamenka.service.BaseExecutor;
 
 import java.util.List;
 
+import static com.querydsl.core.types.dsl.Expressions.ONE;
+import static com.querydsl.core.types.dsl.Expressions.ZERO;
+import static ru.znamenka.jpa.model.QDiscount.discount;
 import static ru.znamenka.jpa.model.QPayment.payment;
 import static ru.znamenka.jpa.model.QProduct.product;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
@@ -46,20 +50,26 @@ public class SalePageService extends BaseExecutor<Tuple, ClientDebtApi> {
      */
     private JPAQuery<Tuple> initQuery(Long clientId) {
         Expression<Long> alreadyPaid = JPAExpressions
-                .select(payment.paymentAmount.sum().coalesce(0L))
+                .select(payment.paymentAmount.sum().coalesce(ZERO))
                 .from(payment)
                 .where(payment.purchase.id.eq(purchase.id));
+
+        NumberExpression<Double> priceWithDiscount = product
+                .price
+                .multiply(ONE.doubleValue().subtract(discount.discountAmount.coalesce(ZERO).asNumber().doubleValue().divide(100)));
 
         return getQuery()
                 .select(
                         purchase.id, // id продажи
                         product.productName, // имя товара
                         alreadyPaid, // сумма, уже заплаченная клиентом за товар
-                        product.price.subtract(alreadyPaid) // осталось заплатить
+                        priceWithDiscount.subtract(alreadyPaid) // осталось заплатить
                 )
                 .from(purchase)
                 .leftJoin(purchase.product, product)
-                .where(product.price.gt(alreadyPaid) // брать продажи только те, за которых необходимо доплатить
+                .leftJoin(purchase.discount, discount)
+                // брать продажи только те, за которых необходимо доплатить
+                .where(priceWithDiscount.gt(alreadyPaid)
                         .and(purchase.client.id.eq(clientId))); // по id клиенту
     }
 

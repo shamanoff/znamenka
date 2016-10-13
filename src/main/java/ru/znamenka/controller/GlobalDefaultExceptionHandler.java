@@ -28,6 +28,7 @@ class GlobalDefaultExceptionHandler {
 
     @ModelAttribute
     public Long extractTrainerIdIfExists(Authentication auth) {
+        if (auth == null) return null;
         User user = (User) auth.getPrincipal();
         Trainer trainer = user.getTrainer();
         if (trainer != null) {
