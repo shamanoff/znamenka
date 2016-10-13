@@ -180,6 +180,7 @@ $(document).ready(function () {
                     .append($("<td>" + purchase.price + "</td>"))
                     .append($("<td>" + purchase.paid + "</td>"))
                     .append($("<td>" + purchase.discountAmount + "</td>"))
+                    .append($("<td>" + purchase.priceDisc + "</td>"))
                     .append($("<td>" + purchase.trainerName + "</td>"));
                 $('#modal-purchases').find('tbody').append(row);
 

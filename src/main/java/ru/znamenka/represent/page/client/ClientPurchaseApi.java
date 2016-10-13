@@ -26,12 +26,13 @@ public class ClientPurchaseApi implements DomainApi {
     @Getter
     private final String paid;
     @Getter
+    private final String priceDisc;
+    @Getter
     private final Timestamp purchaseDate;
     @Getter
     private final String trainerName;
     @Getter
     private final String discountAmount;
-
     @Getter
     private final List<PaymentApi> payments;
 }
