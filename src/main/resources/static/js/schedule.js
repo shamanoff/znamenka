@@ -103,6 +103,8 @@ $(document).ready(function () {
         selectHelper: true,
         select: function (start) {
             myModal.modal("show");
+            trainingFormForClub.trigger('reset');
+            trainingFormForNew.trigger('reset');
             var startRU = start.format("DD/MM/YYYY hh:mm");
             trainingFormForClub.find('[name="start"]').val(startRU).end();
             trainingFormForNew.find('[name="start"]').val(startRU).end();
