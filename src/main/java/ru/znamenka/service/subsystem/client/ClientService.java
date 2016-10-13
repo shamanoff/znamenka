@@ -16,9 +16,11 @@ import ru.znamenka.service.Executor;
 
 import java.util.List;
 
+import static com.querydsl.core.types.dsl.Expressions.ZERO;
 import static org.springframework.util.Assert.notNull;
+import static ru.znamenka.jpa.model.QAbonement.abonement;
 import static ru.znamenka.jpa.model.QClient.client;
-import static ru.znamenka.jpa.model.QProduct.product;
+import static ru.znamenka.jpa.model.QClientAbonement.clientAbonement;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
 import static ru.znamenka.jpa.model.QTrainer.trainer;
 import static ru.znamenka.jpa.model.QTraining.training;
@@ -31,11 +33,6 @@ import static ru.znamenka.jpa.model.QTraining.training;
  */
 @Service
 public class ClientService implements IClientService {
-
-    /**
-     * Уникальные идентификаторы абонементов в таблице продуктов
-     */
-    private static final Number[] SUBSCRIPTIONS = new Long[]{1L, 2L, 3L};
 
     private final ApiStore service;
 
@@ -177,12 +174,11 @@ public class ClientService implements IClientService {
      */
     private JPAQuery<Tuple> initSubScrQuery(Long clientId) {
         return subscriptionExecutor.getQuery()
-                .select(purchase.id, product.productName)
-                .from(purchase)
-                .leftJoin(purchase.product, product)
-                .where(purchase.client.id.eq(clientId)
-                        .and(product.id.in(SUBSCRIPTIONS)))
-                        ;
+                .select(clientAbonement.purchaseId, abonement.productName)
+                .from(clientAbonement)
+                .innerJoin(clientAbonement.product, abonement)
+                .where(clientAbonement.trainingCount.gt(ZERO).and(clientAbonement.clientId.eq(clientId)));
+
     }
 
 }
