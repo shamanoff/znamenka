@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * <p>
@@ -17,6 +18,7 @@ import javax.persistence.Entity;
 @Getter @Setter
 public class AbonType implements BaseModel<Integer> {
 
+    @Id
     @Column(name = "id")
     private Integer id;
 

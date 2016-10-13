@@ -181,8 +181,8 @@ public class ClientService implements IClientService {
                 .from(purchase)
                 .leftJoin(purchase.product, product)
                 .where(purchase.client.id.eq(clientId)
-                        .and(product.id.in(SUBSCRIPTIONS))
-                        .and(product.expireDays.gt(0)));
+                        .and(product.id.in(SUBSCRIPTIONS)))
+                        ;
     }
 
 }

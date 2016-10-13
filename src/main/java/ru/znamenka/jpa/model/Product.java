@@ -1,40 +1,33 @@
 package ru.znamenka.jpa.model;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
+import static javax.persistence.DiscriminatorType.INTEGER;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
+import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 @Entity(name = "products")
-@Inheritance(strategy = TABLE_PER_CLASS)
+@Getter @Setter
+@Inheritance(strategy = SINGLE_TABLE)
+@DiscriminatorColumn(name = "is_abon", discriminatorType = INTEGER)
+@DiscriminatorValue(value = "0")
 public class Product implements BaseModel<Long> {
 
     @Id
     @Column(name = "product_id")
-    @Getter @Setter
     private Long id;
 
     @Column(name = "product_name", nullable = false)
-    @Getter @Setter
-    @NonNull
     private String productName;
 
-    @Column(name = "expire_days")
-    @Getter @Setter
-    private Integer expireDays;
-
     @Column(name = "price", nullable = false)
-    @Getter @Setter
-    @NonNull
     private Double price;
 
     @OneToMany(mappedBy = "product", fetch = LAZY)
-    @Getter @Setter
     private List<Purchase> purchases;
 
 }

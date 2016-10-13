@@ -37,12 +37,12 @@ import static ru.znamenka.util.BDFactory.bd;
 public class TrainerPurchaseReport {
 
     /**
-     * Уникальный идентификатор пробной тренеровки в таблице JF_PRODUCTS
+     * Уникальный идентификатор пробной тренеровки в таблице PRODUCTS
      * ({@link ru.znamenka.jpa.model.Product#id}
      */
     private static final Long testTrainingId = 1L;
     /**
-     * Список уникальных идентификаторов тренеровок в таблице JF_PRODUCTS
+     * Список уникальных идентификаторов тренеровок в таблице PRODUCTS
      * ({@link ru.znamenka.jpa.model.Product#id}
      */
     private static final List<Long> trainingIds = asList(2L);
