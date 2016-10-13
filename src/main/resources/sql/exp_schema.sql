@@ -4,28 +4,28 @@ CREATE SCHEMA exp
 COMMENT ON SCHEMA exp
 IS 'для экпериментов';
 
-CREATE TABLE exp.jf_abon_type (
+CREATE TABLE exp.abon_type (
   id   INT PRIMARY KEY NOT NULL,
   type VARCHAR(30)     NOT NULL
 );
-CREATE TABLE exp.jf_products
+CREATE TABLE exp.products
 (
   product_id   BIGINT                 NOT NULL PRIMARY KEY,
   product_name CHARACTER VARYING(100) NOT NULL,
   price        DOUBLE PRECISION       NOT NULL
 );
 
-CREATE TABLE exp.jf_abonements (
+CREATE TABLE exp.abonements (
   training_count INT                                  NOT NULL,
   expire_days    INT,
-  abon_type      INT REFERENCES exp.jf_abon_type (id) NOT NULL
+  abon_type      INT REFERENCES exp.abon_type (id) NOT NULL
 )
-  INHERITS (exp.jf_products);
+  INHERITS (exp.products);
 
 
 CREATE TABLE exp.clients_abonements (
   id             BIGSERIAL PRIMARY KEY NOT NULL,
-  product_id     BIGINT                NOT NULL REFERENCES exp.jf_abonements (product_id),
+  product_id     BIGINT                NOT NULL REFERENCES exp.abonements (product_id),
   client_id      BIGINT                NOT NULL REFERENCES public.jf_clients (client_id),
   purchase_id    BIGINT                NOT NULL REFERENCES public.jf_purchase (purchase_id),
   training_count INT                   NOT NULL
@@ -36,10 +36,10 @@ CREATE OR REPLACE FUNCTION ins_abon_for_client_after_purchase()
 DECLARE t_count INT;
 BEGIN
   IF (SELECT count(1)
-      FROM exp.jf_abonements a
+      FROM exp.abonements a
       WHERE a.product_id = new.product_id) > 0
   THEN t_count := (SELECT training_count
-                   FROM exp.jf_abonements a
+                   FROM exp.abonements a
                    WHERE a.product_id = new.product_id);
     INSERT INTO exp.clients_abonements (product_id, client_id, training_count, purchase_id)
     VALUES (new.product_id, new.client_id, t_count, new.purchase_id);
@@ -82,28 +82,28 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER tr_upd_for_decrement_training_count BEFORE UPDATE ON jf_trainings
 FOR EACH ROW EXECUTE PROCEDURE decrement_training_for_client_abon();
-CREATE TABLE exp.jf_abon_type (
+CREATE TABLE exp.abon_type (
   id   INT PRIMARY KEY NOT NULL,
   type VARCHAR(30)     NOT NULL
 );
-CREATE TABLE exp.jf_products
+CREATE TABLE exp.products
 (
   product_id   BIGINT                 NOT NULL PRIMARY KEY,
   product_name CHARACTER VARYING(100) NOT NULL,
   price        DOUBLE PRECISION       NOT NULL
 );
 
-CREATE TABLE exp.jf_abonements (
+CREATE TABLE exp.abonements (
   training_count INT                                  NOT NULL,
   expire_days    INT,
-  abon_type      INT REFERENCES exp.jf_abon_type (id) NOT NULL
+  abon_type      INT REFERENCES exp.abon_type (id) NOT NULL
 )
-  INHERITS (exp.jf_products);
+  INHERITS (exp.products);
 
 
 CREATE TABLE exp.clients_abonements (
   id             BIGSERIAL PRIMARY KEY NOT NULL,
-  product_id     BIGINT                NOT NULL REFERENCES exp.jf_abonements (product_id),
+  product_id     BIGINT                NOT NULL REFERENCES exp.abonements (product_id),
   client_id      BIGINT                NOT NULL REFERENCES public.jf_clients (client_id),
   purchase_id    BIGINT                NOT NULL REFERENCES public.jf_purchase (purchase_id),
   training_count INT                   NOT NULL
@@ -114,10 +114,10 @@ CREATE OR REPLACE FUNCTION ins_abon_for_client_after_purchase()
 DECLARE t_count INT;
 BEGIN
   IF (SELECT count(1)
-      FROM exp.jf_abonements a
+      FROM exp.abonements a
       WHERE a.product_id = new.product_id) > 0
   THEN t_count := (SELECT training_count
-                   FROM exp.jf_abonements a
+                   FROM exp.abonements a
                    WHERE a.product_id = new.product_id);
     INSERT INTO exp.clients_abonements (product_id, client_id, training_count, purchase_id)
     VALUES (new.product_id, new.client_id, t_count, new.purchase_id);

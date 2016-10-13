@@ -4,15 +4,14 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 
 @Entity(name = "JF_products")
+@Inheritance(strategy = TABLE_PER_CLASS)
 public class Product implements BaseModel<Long> {
 
     @Id
