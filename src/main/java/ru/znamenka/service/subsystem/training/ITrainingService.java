@@ -12,5 +12,5 @@ public interface ITrainingService {
 
     TrainingApi save(TrainingApi api);
 
-    TrainingApi updateStatus(Long status, Long trainingId);
+    TrainingApi updateTraining(Long status, Long trainingId, Long trainerId);
 }

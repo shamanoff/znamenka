@@ -102,7 +102,8 @@
                                         <label class="col-md-4 control-label">Заказать пропуск?</label>
                                         <div class="col-md-4 inputGroupContainer">
                                             <div class="checkbox">
-                                                <label><input type="checkbox" name="passForAuto" th:field="*{passForAuto}" ></label>
+                                                <label><input type="checkbox" name="passForAuto"
+                                                              th:field="*{passForAuto}"></label>
                                             </div>
                                         </div>
                                     </div>
@@ -288,7 +289,8 @@
                                     <label class="col-md-4 control-label" for="ec">Клиент</label>
                                     <div class="col-md-4 inputGroupContainer">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-user"></i></span>
                                             <input name="client" class="form-control" id="ec"
                                                    type="text" readonly>
                                         </div>
@@ -302,18 +304,6 @@
                                         <span class="input-group-addon"><i
                                                 class="glyphicon glyphicon-calendar"></i></span>
                                             <input name="start" class="form-control" id="eds"
-                                                   type="text" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Text input-->
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label" for="et">Тренер</label>
-                                    <div class="col-md-4 inputGroupContainer">
-                                        <div class="input-group">
-                                        <span class="input-group-addon"><i
-                                                class="glyphicon glyphicon-user"></i></span>
-                                            <input name="trainer" class="form-control" id="et"
                                                    type="text" readonly>
                                         </div>
                                     </div>
@@ -344,27 +334,53 @@
                                 </div>
                                 <input type="hidden" name="id">
                                 <input type="hidden" name="statusId">
+                                <input type="hidden" name="trainerId">
                                 <!-- radio checks -->
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Пропусу</label>
+                                    <label class="col-md-4 control-label">Пропуск</label>
                                     <div class="col-md-4 inputGroupContainer">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" name="passForAuto" readonly></label>
+                                            <label><input type="checkbox" name="passForAuto" disabled></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label"
+                                           for="et">Тренер</label>
+                                    <div class="col-md-4 selectContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-list"></i></span>
+                                            <select id="et" name="trainer"
+                                                    class="form-control selectpicker">
+                                                <option th:each="trainer: ${trainers}" th:value="${trainer.id}"
+                                                        th:text="${trainer.name}">
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Button -->
                                 <div class="form-group">
-                                    <!--                 <label class="col-md-4 control-label"></label> -->
-                                    <div class="col-md-4 col-md-offset-3">
-                                        <button type="button" class="btn btn-default" id="status-write-off">
-                                            Отменить со списанием
-                                            <span class="glyphicon glyphicon-send"></span></button>
+                                    <div class="row">
+                                        <div class="col-md-4 col-md-offset-3">
+                                            <button type="button" class="btn btn-default" id="status-write-off">
+                                                Отменить со списанием
+                                                <span class="glyphicon glyphicon-send"></span></button>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-default" id="status-write-on">
+                                                Отменить без списания
+                                                <span class="glyphicon glyphicon-send"></span></button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4 ">
-                                        <button type="button" class="btn btn-default" id="status-write-on">
-                                            Отменить без списания
-                                            <span class="glyphicon glyphicon-send"></span></button>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-4 col-md-offset-5">
+                                            <button type="button" class="btn btn-default" id="change-trainer">
+                                                Изменить тренера
+                                                <span class="glyphicon glyphicon-send"></span></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

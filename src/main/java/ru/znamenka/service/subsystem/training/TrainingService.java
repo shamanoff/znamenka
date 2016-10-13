@@ -1,5 +1,6 @@
 package ru.znamenka.service.subsystem.training;
 
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,8 @@ import ru.znamenka.jpa.repository.domain.TrainingRepository;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.service.ApiStore;
 import ru.znamenka.service.BaseExecutor;
+
+import static org.springframework.util.Assert.notNull;
 
 /**
  * Создан 04.10.2016
@@ -18,12 +21,17 @@ import ru.znamenka.service.BaseExecutor;
 @Service
 public class TrainingService extends BaseExecutor<Training, TrainingApi> implements ITrainingService {
 
-    @Autowired
-    @Qualifier("dataService")
-    private ApiStore apiStore;
+    private final ApiStore apiStore;
+
+    private final TrainingRepository repo;
 
     @Autowired
-    private TrainingRepository repo;
+    public TrainingService(TrainingRepository repo, @Qualifier("dataService") ApiStore apiStore) {
+        notNull(repo);
+        notNull(apiStore);
+        this.repo = repo;
+        this.apiStore = apiStore;
+    }
 
     public TrainingApi save(TrainingApi api) {
         api.setStatusId(1L);
@@ -33,9 +41,15 @@ public class TrainingService extends BaseExecutor<Training, TrainingApi> impleme
     }
 
     @Override
-    public TrainingApi updateStatus(Long status, Long trainingId) {
-        TrainingApi api = apiStore.update(TrainingApi.class, new TrainingApi().setStatusId(status).setId(trainingId));
-        return api;
+    public TrainingApi updateTraining(Long status, Long trainingId, Long trainerId) {
+        val training = new TrainingApi().setId(trainingId);
+        if (status != null) {
+            training.setStatusId(status);
+        }
+        if (trainerId != null) {
+            training.setTrainerId(trainerId);
+        }
+        return apiStore.update(TrainingApi.class, training);
     }
 
 

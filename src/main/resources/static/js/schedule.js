@@ -5,8 +5,10 @@ $(document).ready(function () {
     var trainingFormForClub = $('#trainingForm'); // форма для записи на тренировку клиента с клубной картой
     var trainingFormForNew = $('#formCreate'); //форма для записи на тренировку нового клиента
     var formForExistsTraining = $('#exists-training-form');
+    var changeTrainerInput = $('#et');
     var writeOffTrainingBtn = $('#status-write-off');
     var writeOnTrainingBtn = $('#status-write-on');
+    var changeTrainerBtn = $('#change-trainer');
 
     var selectClientForClub = $("#select-client-for-club");
     var selectAbonForClub = $('#select-abonement-for-club');
@@ -43,6 +45,20 @@ $(document).ready(function () {
         .submit(function (e) {
             submitForm(e);
         });
+
+    changeTrainerInput.change(function (e) {
+        var trainerId = formForExistsTraining.find('[name="trainerId"]').val();
+        changeTrainerBtn.prop('disabled', trainerId == changeTrainerInput.val());
+    });
+
+    changeTrainerBtn.click(function () {
+        var data = {};
+        var id = formForExistsTraining.find('[name="id"]').val();
+        data.trainerId = formForExistsTraining.find('[name="trainer"]').val();
+        $.post("/training/" + id, data, function () {
+            modalForExists.modal('hide');
+        });
+    });
 
     writeOffTrainingBtn.click(function () {
         var data = {};
@@ -104,7 +120,8 @@ $(document).ready(function () {
                 formForExistsTraining
                     .find('[name="id"]').val(response.id).end()
                     .find('[name="client"]').val(response.clientName).end()
-                    .find('[name="trainer"]').val(response.trainerName).end()
+                    .find('[name="trainer"]').val(response.trainerId).end()
+                    .find('[name="trainerId"]').val(response.trainerId).end()
                     .find('[name="status"]').val(response.statusName).end()
                     .find('[name="comment"]').val(response.comment).end()
                     .find('[name="passForAuto"]').prop('checked', response.passForAuto).end()
@@ -112,6 +129,7 @@ $(document).ready(function () {
                 if (response.statusId != 1) {
                     writeOffTrainingBtn.prop('disabled', true);
                     writeOnTrainingBtn.prop('disabled', true);
+                    changeTrainerBtn.prop('disabled', true);
                 }
             });
         },

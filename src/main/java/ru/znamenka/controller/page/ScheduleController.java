@@ -57,8 +57,8 @@ public class ScheduleController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<TrainingApi> changeStatus(@PathVariable Long id, Long statusId) {
-        return ok(service.updateStatus(statusId, id));
+    public ResponseEntity<TrainingApi> updateTraining(@PathVariable Long id, Long statusId, Long trainerId) {
+        return ok(service.updateTraining(statusId, id, trainerId));
     }
 
     /**
@@ -120,15 +120,6 @@ public class ScheduleController {
         training.setPassForAuto(passForAuto);
         service.save(training);
         eventService.postToCalendar(training);
-        return ok(training);
-    }
-
-    @PutMapping
-    public ResponseEntity<TrainingApi> updateTraining(Long statusId, Long trainingId) {
-        TrainingApi training = service.updateStatus(statusId, trainingId);
-        if (training == null) {
-            return badRequest().body(TrainingApi.empty());
-        }
         return ok(training);
     }
 
