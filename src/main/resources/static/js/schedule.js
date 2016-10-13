@@ -48,7 +48,7 @@ $(document).ready(function () {
 
     changeTrainerInput.change(function (e) {
         var trainerId = formForExistsTraining.find('[name="trainerId"]').val();
-        var statusId = formForExistsTraining.find('[name="status"]').val();
+        var statusId = formForExistsTraining.find('[name="statusId"]').val();
         changeTrainerBtn.prop('disabled', trainerId == changeTrainerInput.val() || statusId != 1);
     });
 
