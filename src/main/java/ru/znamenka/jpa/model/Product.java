@@ -10,7 +10,7 @@ import java.util.List;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.InheritanceType.TABLE_PER_CLASS;
 
-@Entity(name = "JF_products")
+@Entity(name = "products")
 @Inheritance(strategy = TABLE_PER_CLASS)
 public class Product implements BaseModel<Long> {
 

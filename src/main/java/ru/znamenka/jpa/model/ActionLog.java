@@ -9,16 +9,16 @@ import java.sql.Timestamp;
 import static java.sql.Timestamp.valueOf;
 import static java.time.LocalDateTime.now;
 
-@Entity(name = "jf_user_action_log")
+@Entity(name = "user_action_log")
 @Getter @Setter
 public class ActionLog implements BaseModel<Long>, LogEntity {
 
     @Id
-    @SequenceGenerator(name="jf_user_action_log_id_seq",
-            sequenceName="jf_user_action_log_id_seq",
+    @SequenceGenerator(name="user_action_log_id_seq",
+            sequenceName="user_action_log_id_seq",
             allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator="jf_user_action_log_id_seq")
+            generator="user_action_log_id_seq")
     @Column(name = "id")
     private Long id;
 

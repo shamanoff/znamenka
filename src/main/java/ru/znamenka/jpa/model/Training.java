@@ -20,7 +20,7 @@ import static javax.persistence.GenerationType.IDENTITY;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Entity(name = "JF_trainings")
+@Entity(name = "trainings")
 @NamedEntityGraph(
         name = "Training.Graph",
         attributeNodes = {

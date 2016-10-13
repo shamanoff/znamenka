@@ -9,7 +9,7 @@ import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
 
-@Entity(name = "JF_users")
+@Entity(name = "users")
 @NamedEntityGraph(name = "user.graph",
         attributeNodes = {
                 @NamedAttributeNode("authorities"),
@@ -34,7 +34,7 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = EAGER)
     @JoinTable(
-            name = "JF_user_roles",
+            name = "user_roles",
             joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     )

@@ -15,7 +15,7 @@ import javax.persistence.Id;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Entity(name = "JF_training_status")
+@Entity(name = "training_status")
 public class TrainingStatus implements BaseModel<Long> {
 
     @Id

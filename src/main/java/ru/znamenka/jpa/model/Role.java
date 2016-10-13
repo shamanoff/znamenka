@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-@Entity(name = "JF_roles")
+@Entity(name = "roles")
 public class Role implements GrantedAuthority, BaseModel<Long> {
 
     @Id

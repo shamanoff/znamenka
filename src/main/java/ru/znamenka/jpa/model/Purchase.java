@@ -10,7 +10,7 @@ import java.util.List;
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
-@Entity(name = "JF_purchase")
+@Entity(name = "purchase")
 @NamedEntityGraph(
         name = "Purchase.Graph",
         attributeNodes = {

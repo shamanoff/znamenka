@@ -11,7 +11,7 @@ import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Getter @Setter
-@Entity(name = "JF_clients")
+@Entity(name = "clients")
 public class Client implements BaseModel<Long> {
 
     @Id

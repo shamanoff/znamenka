@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
-@Entity(name = "JF_payments")
+@Entity(name = "payments")
 public class Payment implements BaseModel<Long> {
 
     @Id

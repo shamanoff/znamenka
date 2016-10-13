@@ -21,7 +21,7 @@ import static javax.persistence.FetchType.LAZY;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Entity(name = "JF_trainers")
+@Entity(name = "trainers")
 public class Trainer implements BaseModel<Long> {
 
     @Id

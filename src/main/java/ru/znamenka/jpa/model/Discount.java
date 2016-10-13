@@ -11,7 +11,7 @@ import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
-@Entity(name = "JF_discounts")
+@Entity(name = "discounts")
 public class Discount implements BaseModel<Long> {
 
     @Id
