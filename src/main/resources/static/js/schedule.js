@@ -48,7 +48,8 @@ $(document).ready(function () {
 
     changeTrainerInput.change(function (e) {
         var trainerId = formForExistsTraining.find('[name="trainerId"]').val();
-        changeTrainerBtn.prop('disabled', trainerId == changeTrainerInput.val());
+        var statusId = formForExistsTraining.find('[name="status"]').val();
+        changeTrainerBtn.prop('disabled', trainerId == changeTrainerInput.val() || statusId != 1);
     });
 
     changeTrainerBtn.click(function () {
@@ -126,10 +127,10 @@ $(document).ready(function () {
                     .find('[name="comment"]').val(response.comment).end()
                     .find('[name="passForAuto"]').prop('checked', response.passForAuto).end()
                     .find('[name="statusId"]').val(response.statusId).end();
+                changeTrainerBtn.prop('disabled', true);
                 if (response.statusId != 1) {
                     writeOffTrainingBtn.prop('disabled', true);
                     writeOnTrainingBtn.prop('disabled', true);
-                    changeTrainerBtn.prop('disabled', true);
                 }
             });
         },
