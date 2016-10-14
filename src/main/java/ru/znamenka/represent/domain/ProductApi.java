@@ -24,8 +24,5 @@ public class ProductApi implements DomainApi {
     private String name;
 
     @Getter @Setter
-    private Integer expireDays;
-
-    @Getter @Setter
     private Double price;
 }

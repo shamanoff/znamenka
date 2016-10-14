@@ -3,6 +3,7 @@ package ru.znamenka.jpa.model;
 import lombok.Getter;
 import lombok.Setter;
 import ru.znamenka.jpa.converter.LocalDateTimeConverter;
+import ru.znamenka.jpa.listener.CreatedTrainingListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,6 +31,7 @@ import static javax.persistence.GenerationType.IDENTITY;
                 @NamedAttributeNode(value = "status")
         }
 )
+@EntityListeners({CreatedTrainingListener.class})
 @Getter @Setter
 public class Training implements BaseModel<Long> {
 
@@ -37,9 +39,6 @@ public class Training implements BaseModel<Long> {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "training_id")
     private Long id;
-
-    @Column(name = "training_plan")
-    private Long trainingPlan;
 
     @Column(name = "start")
     @Convert(converter = LocalDateTimeConverter.class)

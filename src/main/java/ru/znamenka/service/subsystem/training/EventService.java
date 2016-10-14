@@ -108,7 +108,7 @@ public class EventService implements IEventService {
         try {
             calendar.events().insert(calendarId, event).execute();
             CalendarEvent busyEvent = new CalendarEvent(training.getId(), "Занято", start, end);
-            mesTemplate.convertAndSend("/calendar/event", busyEvent);
+           // mesTemplate.convertAndSend("/calendar/event", busyEvent);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

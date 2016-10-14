@@ -3,14 +3,14 @@ package ru.znamenka.jpa.model;
 import javax.persistence.*;
 import java.util.List;
 
-import static javax.persistence.DiscriminatorType.INTEGER;
+import static javax.persistence.DiscriminatorType.CHAR;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 @Entity(name = "products")
 @Inheritance(strategy = SINGLE_TABLE)
-@DiscriminatorColumn(name = "is_abon", discriminatorType = INTEGER)
-@DiscriminatorValue(value = "0")
+@DiscriminatorColumn(name = "is_abon", discriminatorType = CHAR)
+@DiscriminatorValue(value = "f")
 public class Product implements BaseModel<Long> {
 
     @Id

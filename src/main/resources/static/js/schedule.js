@@ -30,11 +30,7 @@ $(document).ready(function () {
     myModal
         .on('shown.bs.modal', function () {
             selectClientForClub.val("");
-            selectAbonForClub.children('option').remove();
-            selectAbonForClub
-                .append($("<option></option>")
-                    .attr("value", "")
-                    .text("Выберите абонемент"));
+            clearAbonSelect();
         });
 
     trainingFormForClub
@@ -156,6 +152,9 @@ $(document).ready(function () {
             type: 'GET',
             error: function () {
                 console.log('there was an error while fetching events!');
+            },
+            success: function (data) {
+                console.log(data);
             }
         },
         annotations: [{
@@ -177,6 +176,7 @@ $(document).ready(function () {
                 "clientId": clientId
             },
             success: function (data) {
+                clearAbonSelect();
                 $.each(data, function (i, subscription) {
                     $select
                         .append($("<option></option>")
@@ -185,6 +185,14 @@ $(document).ready(function () {
                 });
             }
         });
+    }
+
+    function clearAbonSelect() {
+        selectAbonForClub.children('option').remove();
+        selectAbonForClub
+            .append($("<option></option>")
+                .attr("value", "")
+                .text("Выберите абонемент"));
     }
 
 });

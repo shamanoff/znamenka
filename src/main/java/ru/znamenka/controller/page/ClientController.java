@@ -20,13 +20,9 @@ import ru.znamenka.service.subsystem.client.ClientService;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
-import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.toList;
 import static org.springframework.http.ResponseEntity.*;
 import static org.springframework.util.Assert.notNull;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -142,13 +138,7 @@ public class ClientController {
     public ResponseEntity<?> getTrainingsByClient(@PathVariable Long id) {
         List<TrainingApi> trainings = clientService.trainings(id);
         if (trainings == null) return noContent().build();
-        List<Map<String, Object>> result = trainings.stream().map(t -> {
-            Map<String, Object> map = new HashMap<>();
-            map.put("trainerName", t.getTrainerName());
-            map.put("start", Timestamp.valueOf(t.getStart()));
-            return map;
-        }).collect(toList());
-        return ok(result);
+        return ok(trainings);
     }
 
     /**

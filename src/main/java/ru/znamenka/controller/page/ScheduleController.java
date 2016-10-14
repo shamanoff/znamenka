@@ -94,7 +94,6 @@ public class ScheduleController {
     public ResponseEntity<TrainingApi> bookTraining(@Valid TrainingApi training, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             training = service.save(training);
-            eventService.postToCalendar(training);
             return ok(training);
         }
         return badRequest().body(training);
@@ -119,7 +118,6 @@ public class ScheduleController {
         training.setComment(comment);
         training.setPassForAuto(passForAuto);
         service.save(training);
-        eventService.postToCalendar(training);
         return ok(training);
     }
 

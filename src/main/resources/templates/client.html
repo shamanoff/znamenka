@@ -11,7 +11,7 @@
 </th:block>
 <div th:include="header"></div>
 <div class="container">
-    <form class="well form-horizontal formCreate" action="#" th:action="@{/client}" method="post"
+    <form class="well form-horizontal formCreate" th:action="@{/client}" method="post"
           th:object="${clientNew}" data-toggle="validator" data-delay="100" id="formCreate">
         <fieldset>
             <div class="panel-body">
@@ -44,7 +44,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
                             <input th:field="*{email}" placeholder="ivanov@gmail.com" class="form-control" type="email"
-                                   data-error="Неверный email адрес" required/>
+                                   data-error="Неверный email адрес"/>
                         </div>
                     </div>
                     <div class="help-block with-errors"></div>
@@ -347,6 +347,7 @@
                                 <tr>
                                     <th>Начало</th>
                                     <th>Тренер</th>
+                                    <th>Статус</th>
                                 </tr>
                                 </thead>
                                 <tbody>

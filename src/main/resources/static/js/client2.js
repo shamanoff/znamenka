@@ -89,7 +89,7 @@ $(document).ready(function () {
             // Show the dialog
             myModal
                 .on('shown.bs.modal', function () {
-                    aboutClient.reset(); // Reset form
+                    aboutClient.trigger('reset'); // Reset form
                 })
                 .on('hide.bs.modal', function (e) {
                     // Bootbox will remove the modal (including the body which contains the login form)
@@ -105,7 +105,7 @@ $(document).ready(function () {
     $(".search").keyup(function () {
         var searchTerm = $(".search").val();
         var listItem = $('.clientsTable tbody').children('tr');
-        var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+        var searchSplit = searchTerm.replace(/ /g, "'):containsi('");
 
         $.extend($.expr[':'], {
             'containsi': function (elem, i, match, array) {
@@ -150,19 +150,21 @@ $(document).ready(function () {
     /// createNew
     $("a[href='#menu1']").on('shown.bs.tab', function (event) {
         var id = aboutClient.find('[name="id"]').val();
+        var tabTraining = $('#modal-trainings');
         $.ajax({
             url: '/client/' + id + '/trainings',
             method: 'GET'
         }).success(function (data) {
-            $('#modal-trainings').find('tbody').children('tr').remove();
+            tabTraining.find('tbody').children('tr').remove();
             $.each(data, function (i, training) {
                 var row = $("<tr>");
-                row.append($("<td>" + moment.unix(training.start / 1000).format("DD/MM/YYYY HH:mm") + "</td>"))
-                    .append($("<td>" + training.trainerName + "</td>"));
-                $('#modal-trainings').find('tbody').append(row);
+                row.append($("<td>" + training.start + "</td>"))
+                    .append($("<td>" + training.trainerName + "</td>"))
+                    .append($("<td>" + training.statusName + "</td>"));
+                tabTraining.find('tbody').append(row);
             })
         }).error(function () {
-            $('#modal-trainings').find('tbody').children('tr').remove();
+            tabTraining.find('tbody').children('tr').remove();
         });
     });
 
@@ -175,7 +177,7 @@ $(document).ready(function () {
             $('#modal-purchases').find('tbody').children('tr').remove();
             $.each(data, function (i, purchase) {
                 var row = $("<tr>");
-                row.append($("<td>" + moment.unix(purchase.purchaseDate / 1000).format("DD/MM/YYYY") + "</td>"))
+                row.append($("<td>" + purchase.purchaseDate + "</td>"))
                     .append($("<td>" + purchase.productName + "</td>"))
                     .append($("<td>" + purchase.price + "</td>"))
                     .append($("<td>" + purchase.paid + "</td>"))
@@ -186,7 +188,7 @@ $(document).ready(function () {
 
                 $.each(purchase.payments, function (i, payment) {
                     row = $("<tr>");
-                    row.append($("<td>" + moment.unix(payment.paymentDate / 1000).format("DD/MM/YYYY") + "</td>"))
+                    row.append($("<td>" + payment.paymentDate + "</td>"))
                         .append($("<td></td>"))
                         .append($("<td></td>"))
                         .append($("<td>" + payment.amount + "</td>"))

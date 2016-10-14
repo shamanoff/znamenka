@@ -1,5 +1,6 @@
 package ru.znamenka.represent.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -31,6 +32,7 @@ public class TrainingApi implements DomainApi, UpdatableApi<Long> {
     private String trainerName;
 
     @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime start;
 
     @NotNull

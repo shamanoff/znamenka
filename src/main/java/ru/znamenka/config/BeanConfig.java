@@ -14,6 +14,7 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import ru.znamenka.security.GoogleAuthorizer;
+import ru.znamenka.util.AutowireHelper;
 import ru.znamenka.util.locale.ExtResourceBundleSource;
 
 import java.io.IOException;
@@ -73,6 +74,11 @@ public class BeanConfig {
     @Bean
     public TaskExecutor taskExecutor() {
         return new ThreadPoolTaskExecutor();
+    }
+
+    @Bean
+    public AutowireHelper autowireHelper() {
+        return AutowireHelper.getInstance();
     }
 
 }

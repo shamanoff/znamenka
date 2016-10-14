@@ -7,8 +7,8 @@
 </head>
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{::script})}">
-    <script th:src="@{/js/sockjs/sockjs.min.js}"></script>
-    <script th:src="@{/js/sockjs/stomp.js}"></script>
+    <script th:src="@{/webjars/sockjs-client/1.0.2/sockjs.min.js}"></script>
+    <script th:src="@{/webjars/stomp-websocket/2.3.3/stomp.min.js}"></script>
     <script th:src="@{/js/calendar/fullcalendar.min.js}"></script>
     <script th:src="@{/js/jquery-ui.min.js}"></script>
     <script th:src="@{/js/calendar/ru.js}"></script>
