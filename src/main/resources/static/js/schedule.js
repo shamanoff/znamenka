@@ -150,6 +150,9 @@ $(document).ready(function () {
             type: 'GET',
             error: function () {
                 console.log('there was an error while fetching events!');
+            },
+            success: function (data) {
+                console.log(data);
             }
         },
         annotations: [{
