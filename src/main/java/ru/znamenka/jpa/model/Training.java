@@ -38,9 +38,6 @@ public class Training implements BaseModel<Long> {
     @Column(name = "training_id")
     private Long id;
 
-    @Column(name = "training_plan")
-    private Long trainingPlan;
-
     @Column(name = "start")
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime start;

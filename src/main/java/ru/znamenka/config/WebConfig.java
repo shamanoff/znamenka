@@ -1,9 +1,11 @@
 package ru.znamenka.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.SpringDataWebConfiguration;
 import org.springframework.format.FormatterRegistry;
@@ -20,6 +22,7 @@ import ru.znamenka.config.formatter.LocalDateTimeConverter;
 import ru.znamenka.config.formatter.LocalDateTimeFormatter;
 import ru.znamenka.config.formatter.TimestampFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -127,6 +130,15 @@ public class WebConfig extends SpringDataWebConfiguration {
         registry.addFormatter(new LocalDateTimeFormatter());
 
         registry.addConverter(new LocalDateTimeConverter());
+    }
+
+    @Bean
+    @Primary
+    public ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setDateFormat(new SimpleDateFormat("dd/MM/yyyy HH:mm"));
+        mapper.findAndRegisterModules();
+        return mapper;
     }
 
 }
