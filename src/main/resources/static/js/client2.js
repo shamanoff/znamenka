@@ -150,19 +150,21 @@ $(document).ready(function () {
     /// createNew
     $("a[href='#menu1']").on('shown.bs.tab', function (event) {
         var id = aboutClient.find('[name="id"]').val();
+        var tabTraining = $('#modal-trainings');
         $.ajax({
             url: '/client/' + id + '/trainings',
             method: 'GET'
         }).success(function (data) {
-            $('#modal-trainings').find('tbody').children('tr').remove();
+            tabTraining.find('tbody').children('tr').remove();
             $.each(data, function (i, training) {
                 var row = $("<tr>");
                 row.append($("<td>" + moment.unix(training.start / 1000).format("DD/MM/YYYY HH:mm") + "</td>"))
-                    .append($("<td>" + training.trainerName + "</td>"));
-                $('#modal-trainings').find('tbody').append(row);
+                    .append($("<td>" + training.trainerName + "</td>"))
+                    .append($("<td>" + training.statusName + "</td>"));
+                tabTraining.find('tbody').append(row);
             })
         }).error(function () {
-            $('#modal-trainings').find('tbody').children('tr').remove();
+            tabTraining.find('tbody').children('tr').remove();
         });
     });
 
