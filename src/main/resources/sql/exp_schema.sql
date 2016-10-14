@@ -2,11 +2,11 @@ CREATE OR REPLACE FUNCTION ins_abon_for_client_after_purchase()
   RETURNS TRIGGER AS '
 DECLARE t_count INT;
 BEGIN
-  IF (SELECT count(1)
-      FROM abonements a
-      WHERE a.product_id = new.product_id) > 0
+  IF (SELECT is_abon
+      FROM products a
+      WHERE a.product_id = new.product_id)
   THEN t_count := (SELECT training_count
-                   FROM abonements a
+                   FROM products a
                    WHERE a.product_id = new.product_id);
     INSERT INTO clients_abonements (product_id, client_id, training_count, purchase_id)
     VALUES (new.product_id, new.client_id, t_count, new.purchase_id);
@@ -16,7 +16,7 @@ END;'
 LANGUAGE plpgsql;
 
 CREATE TRIGGER tr_ins_abon_for_client
-AFTER INSERT ON public.jf_purchase
+AFTER INSERT ON purchase
 FOR EACH ROW EXECUTE PROCEDURE ins_abon_for_client_after_purchase();
 
 CREATE OR REPLACE FUNCTION decrement_training_for_client_abon()
@@ -26,7 +26,7 @@ DECLARE prod_id BIGINT;
         t_count INT;
 BEGIN
   prod_id := (SELECT min(product_id)
-              FROM jf_purchase p
+              FROM purchase p
               WHERE p.purchase_id = old.purchase_id);
   ca_id:= (SELECT min(id)
            FROM clients_abonements ca
@@ -34,35 +34,31 @@ BEGIN
   t_count:=(SELECT training_count
             FROM clients_abonements
             WHERE id = ca_id);
-  IF new.status_id IN (2, 3) AND t_count > 0 AND old.status_id IN (1, 4)
+  IF new.status_id IN (2, 4) AND t_count > 0 AND old.status_id IN (1, 3)
   THEN
     UPDATE clients_abonements
     SET training_count = training_count - 1
     WHERE id = ca_id;
   END IF;
-  IF old.status_id IN (2, 3)
+  IF old.status_id IN (2, 4)
   THEN RETURN old;
   END IF;
   RETURN new;
 END;'
 LANGUAGE plpgsql;
 
-CREATE TRIGGER tr_upd_for_decrement_training_count BEFORE UPDATE ON jf_trainings
+CREATE TRIGGER tr_upd_for_decrement_training_count BEFORE UPDATE ON trainings
 FOR EACH ROW EXECUTE PROCEDURE decrement_training_for_client_abon();
-CREATE TABLE abon_type (
-  id   INT PRIMARY KEY NOT NULL,
-  type VARCHAR(30)     NOT NULL
-);
 
 CREATE OR REPLACE FUNCTION ins_abon_for_client_after_purchase()
   RETURNS TRIGGER AS '
 DECLARE t_count INT;
 BEGIN
-  IF (SELECT count(1)
-      FROM abonements a
-      WHERE a.product_id = new.product_id) > 0
+  IF (SELECT is_abon
+      FROM products a
+      WHERE a.product_id = new.product_id)
   THEN t_count := (SELECT training_count
-                   FROM abonements a
+                   FROM products a
                    WHERE a.product_id = new.product_id);
     INSERT INTO clients_abonements (product_id, client_id, training_count, purchase_id)
     VALUES (new.product_id, new.client_id, t_count, new.purchase_id);
@@ -72,7 +68,7 @@ END;'
 LANGUAGE plpgsql;
 
 CREATE TRIGGER tr_ins_abon_for_client
-AFTER INSERT ON public.jf_purchase
+AFTER INSERT ON purchase
 FOR EACH ROW EXECUTE PROCEDURE ins_abon_for_client_after_purchase();
 
 CREATE OR REPLACE FUNCTION decrement_training_for_client_abon()
@@ -82,7 +78,7 @@ DECLARE prod_id BIGINT;
         t_count INT;
 BEGIN
   prod_id := (SELECT min(product_id)
-              FROM jf_purchase p
+              FROM purchase p
               WHERE p.purchase_id = old.purchase_id);
   ca_id:= (SELECT min(id)
            FROM clients_abonements ca
@@ -90,20 +86,20 @@ BEGIN
   t_count:=(SELECT training_count
             FROM clients_abonements
             WHERE id = ca_id);
-  IF new.status_id IN (2, 3) AND t_count > 0 AND old.status_id IN (1, 4)
+  IF new.status_id IN (2, 4) AND t_count > 0 AND old.status_id IN (1, 3)
   THEN
     UPDATE clients_abonements
     SET training_count = training_count - 1
     WHERE id = ca_id;
   END IF;
-  IF old.status_id IN (2, 3)
+  IF old.status_id IN (2, 4)
   THEN RETURN old;
   END IF;
   RETURN new;
 END;'
 LANGUAGE plpgsql;
 
-CREATE TRIGGER tr_upd_for_decrement_training_count BEFORE UPDATE ON jf_trainings
+CREATE TRIGGER tr_upd_for_decrement_training_count BEFORE UPDATE ON trainings
 FOR EACH ROW EXECUTE PROCEDURE decrement_training_for_client_abon();
 
 
@@ -117,5 +113,5 @@ END;'
 LANGUAGE plpgsql;
 
 CREATE TRIGGER tr_upd_client
-AFTER UPDATE OR DELETE ON public.jf_clients
+AFTER UPDATE OR DELETE ON clients
 FOR EACH ROW EXECUTE PROCEDURE upd_client();
