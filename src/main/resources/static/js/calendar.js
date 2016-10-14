@@ -42,6 +42,8 @@ $(document).ready(function () {
 
 
     var socket = new SockJS('/calendar');
+    var recInterval = null;
+
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
@@ -50,10 +52,17 @@ $(document).ready(function () {
         });
     });
 
+    socket.onopen = function () {
+        clearInterval(recInterval);
+    };
 
-    function sendColor(color) {
-        stompClient.send("/color", {}, JSON.stringify({'colorString': color}));
-    }
+    socket.onclose = function () {
+        socket = null;
+        recInterval = setInterval(function () {
+            new_conn();
+        }, 1000);
+    };
+
 
     function addEvent(event) {
         calendar.fullCalendar('renderEvent', event);

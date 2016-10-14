@@ -22,7 +22,6 @@ import ru.znamenka.config.formatter.LocalDateTimeConverter;
 import ru.znamenka.config.formatter.LocalDateTimeFormatter;
 import ru.znamenka.config.formatter.TimestampFormatter;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -136,7 +135,6 @@ public class WebConfig extends SpringDataWebConfiguration {
     @Primary
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.setDateFormat(new SimpleDateFormat("dd/MM/yyyy HH:mm"));
         mapper.findAndRegisterModules();
         return mapper;
     }
