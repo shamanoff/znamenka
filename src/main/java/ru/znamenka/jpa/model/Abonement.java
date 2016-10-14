@@ -15,7 +15,7 @@ import static javax.persistence.FetchType.EAGER;
  * @author Евгений Уткин (Eugene Utkin)
  */
 @Entity(name = "abonements")
-@DiscriminatorValue("1")
+@DiscriminatorValue("t")
 @Getter @Setter
 public class Abonement extends Product {
 
