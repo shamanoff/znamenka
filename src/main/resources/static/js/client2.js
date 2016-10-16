@@ -5,19 +5,13 @@ $(document).ready(function () {
     var $createClient = $('#formCreate');
     var $myModal = $('#myModal');
 
-    $('#startTime').datetimepicker({
-        defaultDate: '05/09/2016',
-        format: 'DD/MM/YYYY'
-    });
-    $('#startTime-edit').datetimepicker({
-        format: 'DD/MM/YYYY'
-    });
-
     $('#loading-image').bind('ajaxStart', function () {
         $(this).hide();
     }).bind('ajaxStop', function () {
         $(this).show();
     });
+
+    $createClient.hide();
 
     $editButton.click(function () {
         $('li > a[href="' + "#home" + '"]').tab("show");

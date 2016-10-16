@@ -125,21 +125,37 @@
         <th:block th:replace="${inputs}"/>
     </fieldset>
 </form>
-<!-- Client Form -->
-<th:block th:fragment="client-form(action, id)">
-<div th:replace="~{element/element :: form(@{/client}, 'formCreate', ~{::#inputs})}">
-    <div id="inputs" class="panel-body">
-        <div th:replace="~{element/element :: text-input('fname', 'Иван', 'Имя', 'user', true, '^[А-я]+')}"></div>
-        <div th:replace="~{element/element :: text-input('sname', 'Иванов', 'Фамилия', 'user', true, '^[А-я]+')}"></div>
-        <div th:replace="~{element/element :: email-input('email', 'ivanov@gmail.com', 'E-Mail', 'envelope', false)}"></div>
-        <div th:replace="~{element/element :: text-input('phone', '79151234567', 'Мобильный телефон', 'earphone', true, '^7[0-9]{10}')}"></div>
-        <div th:replace="~{element/element :: date-input('birthDate', 'Дата рождения', 'calendar', false)}"></div>
-        <div th:replace="~{element/element :: radio-male('male')}"></div>
-        <div th:replace="~{element/element :: text-input('carNumber', 'A1001AA77', 'Номер автомобиля', 'user', false, _)}"></div>
-        <div th:replace="~{element/element :: text-area('comment', 'Комментарий', 'Комментарий', 'pencil')}"></div>
-        <div th:replace="~{element/element :: submit-btn('createNew', 'Создать запись о клиенте ')}"></div>
+<!-- Create Client Form -->
+<th:block th:fragment="create-client-form(action, id)">
+    <div th:replace="~{element/element :: form(@{/client}, 'formCreate', ~{::#create-inputs})}">
+        <div id="create-inputs" class="panel-body">
+            <div th:replace="~{element/element :: text-input('fname', 'Иван', 'Имя', 'user', true, '^[А-я]+')}"></div>
+            <div th:replace="~{element/element :: text-input('sname', 'Иванов', 'Фамилия', 'user', true, '^[А-я]+')}"></div>
+            <div th:replace="~{element/element :: email-input('email', 'ivanov@gmail.com', 'E-Mail', 'envelope', false)}"></div>
+            <div th:replace="~{element/element :: text-input('phone', '79151234567', 'Мобильный телефон', 'earphone', true, '^7[0-9]{10}')}"></div>
+            <div th:replace="~{element/element :: date-input('birthDate', 'Дата рождения', 'calendar', false)}"></div>
+            <div th:replace="~{element/element :: radio-male('male')}"></div>
+            <div th:replace="~{element/element :: text-input('carNumber', 'A1001AA77', 'Номер автомобиля', 'user', false, _)}"></div>
+            <div th:replace="~{element/element :: text-area('comment', 'Комментарий', 'Комментарий', 'pencil')}"></div>
+            <div th:replace="~{element/element :: submit-btn('createNew', 'Создать запись о клиенте ')}"></div>
+        </div>
     </div>
-</div>
+</th:block>
+<!-- Edit Client Form -->
+<th:block th:fragment="create-client-form(action, id)">
+    <div th:replace="~{element/element :: form(@{/client}, 'formCreate', ~{::#edit-inputs})}">
+        <div id="edit-inputs" class="panel-body">
+            <div th:replace="~{element/element :: text-input('fname', 'Иван', 'Имя', 'user', true, '^[А-я]+')}"></div>
+            <div th:replace="~{element/element :: text-input('sname', 'Иванов', 'Фамилия', 'user', true, '^[А-я]+')}"></div>
+            <div th:replace="~{element/element :: email-input('email', 'ivanov@gmail.com', 'E-Mail', 'envelope', false)}"></div>
+            <div th:replace="~{element/element :: text-input('phone', '79151234567', 'Мобильный телефон', 'earphone', true, '^7[0-9]{10}')}"></div>
+            <div th:replace="~{element/element :: date-input('birthDate', 'Дата рождения', 'calendar', false)}"></div>
+            <div th:replace="~{element/element :: radio-male('male')}"></div>
+            <div th:replace="~{element/element :: text-input('carNumber', 'A1001AA77', 'Номер автомобиля', 'user', false, _)}"></div>
+            <div th:replace="~{element/element :: text-area('comment', 'Комментарий', 'Комментарий', 'pencil')}"></div>
+            <div th:replace="~{element/element :: submit-btn('createNew', 'Сохранить запись о клиенте ')}"></div>
+        </div>
+    </div>
 </th:block>
 </body>
 </html>
