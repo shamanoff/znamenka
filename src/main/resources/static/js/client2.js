@@ -1,9 +1,9 @@
 $(document).ready(function () {
 
-    var editButton = $(".editButton");
-    var aboutClient = $('#aboutClient');
-    var createClient = $('#formCreate');
-    var myModal = $('#myModal');
+    var $editButton = $(".editButton");
+    var $aboutClient = $('#aboutClient');
+    var $createClient = $('#formCreate');
+    var $myModal = $('#myModal');
 
     $('#startTime').datetimepicker({
         defaultDate: '05/09/2016',
@@ -19,13 +19,13 @@ $(document).ready(function () {
         $(this).show();
     });
 
-    editButton.click(function () {
+    $editButton.click(function () {
         $('li > a[href="' + "#home" + '"]').tab("show");
 
     });
 
 
-    aboutClient.validator().on('submit', function (e) {
+    $aboutClient.validator().on('submit', function (e) {
 
         if (!e.isDefaultPrevented()) {
             var $form = $(e.target),
@@ -44,24 +44,24 @@ $(document).ready(function () {
                     .eq(1).html(response.fname + ' ' + response.sname).end()
                     .eq(2).html(response.phone).end();
                 // Hide the dialog
-                myModal.modal('hide');
+                $myModal.modal('hide');
                 // You can inform the user that the data is updated successfully
                 // by highlighting the row or showing a message box
             });
         }
     });
 
-    createClient.validator().on('submit', function (e) {
+    $createClient.validator().on('submit', function (e) {
         if (!e.isDefaultPrevented()) {
             $(e.target).submit();
         }
     });
 
 
-    editButton.on('click', function () {
+    $editButton.on('click', function () {
         // Get the record's ID via attribute
         var id = $(this).attr('data-id');
-        aboutClient
+        $aboutClient
             .find('[name="id"]').val("response.id").end();
 
         $.ajax({
@@ -70,7 +70,7 @@ $(document).ready(function () {
         }).success(function (response) {
             // Populate the form fields with the data returned from server
             //ДОБАВИТЬ ОБНУЛЕНИЕ ВСЕХ 4 ФОРМ НА ТАБАХ
-            aboutClient
+            $aboutClient
                 .find('[name="id"]').val(response.id).end()
                 .find('[name="fname"]').val(response.fname).end()
                 .find('[name="sname"]').val(response.sname).end()
@@ -80,16 +80,16 @@ $(document).ready(function () {
                 .find('[name="comment"]').val(response.comment).end()
                 .find('[name="carNumber"]').val(response.carNumber).end();
             if (response.male == true) {
-                aboutClient
+                $aboutClient
                     .find('[name="male"][value="true"]').attr('checked', true).end()
             } else {
-                aboutClient
+                $aboutClient
                     .find('[name="male"][value="false"]').attr('checked', true).end()
             }
             // Show the dialog
-            myModal
+            $myModal
                 .on('shown.bs.modal', function () {
-                    aboutClient.trigger('reset'); // Reset form
+                    $aboutClient.trigger('reset'); // Reset form
                 })
                 .on('hide.bs.modal', function (e) {
                     // Bootbox will remove the modal (including the body which contains the login form)
@@ -143,13 +143,13 @@ $(document).ready(function () {
     ////////////////// showCreate
 
     /// createNew
-    $(".createNew").on('click', function () {
+    $("#createNew").on('click', function () {
         $(".formCreate").hide(500);
 
     });
     /// createNew
     $("a[href='#menu1']").on('shown.bs.tab', function (event) {
-        var id = aboutClient.find('[name="id"]').val();
+        var id = $aboutClient.find('[name="id"]').val();
         var tabTraining = $('#modal-trainings');
         $.ajax({
             url: '/client/' + id + '/trainings',
@@ -169,32 +169,33 @@ $(document).ready(function () {
     });
 
     $("a[href='#menu2']").on('shown.bs.tab', function (event) {
-        var id = aboutClient.find('[name="id"]').val();
+        var id = $aboutClient.find('[name="id"]').val();
+        var $modal = $('#modal-purchases');
         $.ajax({
             url: '/client/' + id + '/purchases',
             method: 'GET'
         }).success(function (data) {
-            $('#modal-purchases').find('tbody').children('tr').remove();
+            $modal.find('tbody').children('tr').remove();
             $.each(data, function (i, purchase) {
-                var row = $("<tr>");
-                row.append($("<td>" + purchase.purchaseDate + "</td>"))
+                var $row = $("<tr>");
+                $row.append($("<td>" + purchase.purchaseDate + "</td>"))
                     .append($("<td>" + purchase.productName + "</td>"))
                     .append($("<td>" + purchase.price + "</td>"))
                     .append($("<td>" + purchase.paid + "</td>"))
                     .append($("<td>" + purchase.discountAmount + "</td>"))
                     .append($("<td>" + purchase.priceDisc + "</td>"))
                     .append($("<td>" + purchase.trainerName + "</td>"));
-                $('#modal-purchases').find('tbody').append(row);
+                $modal.find('tbody').append($row);
 
                 $.each(purchase.payments, function (i, payment) {
-                    row = $("<tr>");
-                    row.append($("<td>" + payment.paymentDate + "</td>"))
+                    $row = $("<tr>");
+                    $row.append($("<td>" + payment.paymentDate + "</td>"))
                         .append($("<td></td>"))
                         .append($("<td></td>"))
                         .append($("<td>" + payment.amount + "</td>"))
                         .append($("<td></td>"))
                         .append($("<td></td>"));
-                    $('#modal-purchases').find('tbody').append(row);
+                    $modal.find('tbody').append($row);
                 })
 
             })

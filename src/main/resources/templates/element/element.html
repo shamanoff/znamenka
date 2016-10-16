@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:data="http://www.thymeleaf.org/extras/data">
+<body>
+<!-- Form Inputs -->
+<!-- Submit Btn -->
+<div th:fragment="submit-btn(id, label)" class="form-group">
+    <label class="col-md-4 control-label" th:for="${label}"></label>
+    <div class="col-md-4">
+        <button type="submit" th:id="${id}" class="btn btn-primary" >[[${label}]]<span
+                class="glyphicon glyphicon-send"></span></button>
+    </div>
+</div>
+
+<!-- Text Input -->
+<th:block th:fragment="text-input(field, placeholder, label, glyph, isRequired, pattern)">
+    <div th:replace="~{::common-input(${field}, 'text', ${label}, ${glyph}, ${isRequired}, ${pattern}, ${placeholder})}"></div>
+</th:block>
+<!-- Email Input -->
+<th:block th:fragment="email-input(field, placeholder, label, glyph, isRequired)">
+    <div th:replace="~{::common-input(${field}, 'email', ${label}, ${glyph}, ${isRequired}, _, ${placeholder})}"></div>
+</th:block>
+<!-- Date Input -->
+<th:block th:fragment="date-input(field, label, glyph, isRequired)">
+    <div th:replace="~{::common-input(${field}, 'date', ${label}, ${glyph}, ${isRequired}, _, _)}"></div>
+</th:block>
+<!-- Common Input -->
+<div class="form-group" th:classappend="${pattern != null} ? 'has-feedback'"
+     th:fragment="common-input(field, type, label, glyph, isRequired, pattern, placeholder)">
+    <label class="col-md-4 control-label" th:for="${field}" th:text="${label}"></label>
+    <th:block th:with="id=${#strings.equals(type, 'date')} ? ${#strings.append(field,'-div')}">
+        <div class="col-md-4 inputGroupContainer">
+            <div class="input-group" th:classappend="${#strings.equals(type, 'date')} ? ${type}" th:id="${id}">
+            <span class="input-group-addon"><i class="glyphicon"
+                                               th:classappend="${#strings.append('glyphicon-',glyph)}"></i></span>
+                <th:block>
+                    <input th:id="${field}"
+                           th:name="${field}"
+                           th:placeholder="${placeholder}"
+                           class="form-control"
+                           th:type="${#strings.equals(type, 'date')} ? 'text' : ${type}"
+                           th:required="${isRequired}"
+                           th:pattern="${#strings.equals(type, 'text')} ? ${pattern}"
+                           data:pattern-error="${pattern != null} ? ${#messages.msg(#strings.append(field,'.pattern.error'))}"
+                    />
+                </th:block>
+            </div>
+            <div th:replace="~{::enable-date-input(${id})}"></div>
+            <div th:replace="~{::error-message-block}"></div>
+        </div>
+    </th:block>
+</div>
+<!-- TextArea Input -->
+<div class="form-group" th:fragment="text-area(field, label, placeholder, glyph)">
+    <label class="col-md-4 control-label" th:for="${field}" th:text="${label}"></label>
+    <div class="col-md-4 inputGroupContainer">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon"
+                                               th:classappend="${#strings.append('glyphicon-', glyph)}"></i></span>
+            <th:block>
+                    <textarea class="form-control"
+                              th:placeholder="${placeholder}"
+                              th:id="${field}"
+                              th:name="${field}"
+                    ></textarea>
+            </th:block>
+        </div>
+    </div>
+</div>
+<!-- Radio Input -->
+<div class="form-group" th:fragment="radio-male(field)">
+    <label class="col-md-4 control-label">Пол</label>
+    <div class="col-md-4">
+        <div class="radio">
+            <label>
+                <input type="radio" value="true" required th:id="${field}" th:name="${field}"/> мужской
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" value="false" required th:id="${field}" th:name="${field}"/> женский
+            </label>
+        </div>
+    </div>
+</div>
+<!-- Block with error message -->
+<div th:fragment="error-message-block" class="help-block with-errors"></div>
+<th:block th:fragment="enable-date-input(id)">
+    <script th:inline="javascript">
+        var inputDateId = [[${id}]];
+        $('#' + inputDateId).datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    </script>
+</th:block>
+</body>
+</html>

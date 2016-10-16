@@ -27,6 +27,7 @@
         <thymeleaf.version>3.0.0.RELEASE</thymeleaf.version>
         <thymeleaf-layout-dialect.version>2.0.1</thymeleaf-layout-dialect.version>
         <thymeleaf-ext.version>2.1.2.RELEASE</thymeleaf-ext.version>
+        <thymeleaf-data-attr.version>2.0.1</thymeleaf-data-attr.version>
         <hibernate.version>5.2.3.Final</hibernate.version>
 	</properties>
 
@@ -138,14 +139,12 @@
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
-            <version>${querydsl.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
-            <version>${querydsl.version}</version>
         </dependency>
 
 		<!-- Cache -->
@@ -170,7 +169,7 @@
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
-			<version>3.2.4</version>
+            <version>3.2.1</version>
 		</dependency>
 
 		<dependency>
@@ -196,6 +195,12 @@
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-java8time</artifactId>
             <version>${thymeleaf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.mxab.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-data-attribute</artifactId>
+            <version>${thymeleaf-data-attr.version}</version>
         </dependency>
 
         <dependency>
