@@ -2,6 +2,8 @@ package ru.znamenka.represent.converter.domain;
 
 import lombok.val;
 import org.springframework.stereotype.Component;
+import ru.znamenka.jpa.model.Product;
+import ru.znamenka.jpa.model.Purchase;
 import ru.znamenka.jpa.model.Training;
 import ru.znamenka.represent.converter.UpdatableApiConverter;
 import ru.znamenka.represent.domain.TrainingApi;
@@ -49,6 +51,14 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
         api.setStart(training.getStart());
         api.setComment(training.getComment());
         api.setPassForAuto(training.getPassForAuto());
+
+        Purchase purchase = training.getPurchase();
+        if (purchase != null) {
+            Product product = purchase.getProduct();
+            if (product != null) {
+                api.setAbonement(product.getProductName());
+            }
+        }
         return api;
     }
 

@@ -47,6 +47,9 @@ BEGIN
 END;'
 LANGUAGE plpgsql;
 
+CREATE TRIGGER tr_dec_abon_for_client
+AFTER UPDATE ON trainings
+FOR EACH ROW EXECUTE PROCEDURE decrement_training_for_client_abon();
 
 CREATE OR REPLACE FUNCTION upd_client()
   RETURNS TRIGGER AS '

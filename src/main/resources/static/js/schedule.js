@@ -124,7 +124,8 @@ $(document).ready(function () {
                     .find('[name="status"]').val(response.statusName).end()
                     .find('[name="comment"]').val(response.comment).end()
                     .find('[name="passForAuto"]').prop('checked', response.passForAuto).end()
-                    .find('[name="statusId"]').val(response.statusId).end();
+                    .find('[name="statusId"]').val(response.statusId).end()
+                    .find('[name="abonement"]').val(response.abonement).end();
                 changeTrainerBtn.prop('disabled', true);
                 if (response.statusId != 1) {
                     writeOffTrainingBtn.prop('disabled', true);
