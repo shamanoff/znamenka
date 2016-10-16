@@ -7,7 +7,7 @@
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{::script})}">
     <script th:src="@{/js/form-validator/validator.min.js}"></script>
-    <script th:src="@{/js/client2.js}"></script>
+    <script th:src="@{/js/client.js}"></script>
 </th:block>
 <div th:include="header"></div>
 <div class="container">
@@ -103,6 +103,7 @@
                         <div id="home" class="tab-pane fade in active">
                             <div th:replace="~{element/element :: form(@{/client}, 'aboutClient', ~{::#edit-inputs})}">
                                 <div id="edit-inputs" class="panel-body">
+                                    <input name="id" id="id" class="form-control" type="hidden"/>
                                     <div th:replace="~{element/element :: text-input('fname', 'Иван', 'Имя', 'user', true, '^[А-я]+')}"></div>
                                     <div th:replace="~{element/element :: text-input('sname', 'Иванов', 'Фамилия', 'user', true, '^[А-я]+')}"></div>
                                     <div th:replace="~{element/element :: email-input('email', 'ivanov@gmail.com', 'E-Mail', 'envelope', false)}"></div>

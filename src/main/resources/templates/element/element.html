@@ -23,7 +23,7 @@
 <div class="form-group" th:classappend="${isRequired != null} ? 'has-feedback'"
      th:fragment="date-input(field, label, isRequired, isReadonly)">
     <label class="col-md-4 control-label" th:for="${field}" th:text="${label}"></label>
-    <div class="col-md-4 inputGroupContainer" th:with="id=${#strings.append(field,'-div')}">
+    <div class="col-md-4 inputGroupContainer" th:with="id=${#ids.seq(#strings.append(field,'-div'))}">
         <div class="input-group date" th:id="${id}">
             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
             <th:block>
@@ -115,6 +115,7 @@
         th:action="${action}"
         method="post"
         th:id="${id}"
+        th:classappend="${id}"
         data-toggle="validator"
         data-delay="100"
 >

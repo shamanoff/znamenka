@@ -11,13 +11,10 @@ $(document).ready(function () {
         $(this).show();
     });
 
-    $createClient.hide();
-
     $editButton.click(function () {
         $('li > a[href="' + "#home" + '"]').tab("show");
 
     });
-
 
     $aboutClient.validator().on('submit', function (e) {
 
