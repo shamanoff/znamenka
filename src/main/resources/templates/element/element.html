@@ -57,8 +57,7 @@
                            th:type="${#strings.equals(type, 'date')} ? 'text' : ${type}"
                            th:required="${isRequired}"
                            th:pattern="${#strings.equals(type, 'text')} ? ${pattern}"
-                           data:pattern-error="${pattern != null} ? ${#messages.msg(#strings.append(field,'.pattern.error'))}"
-                    />
+                    /> <!-- data:pattern-error="${pattern != null} ? ${#messages.msg(#strings.append(field,'.pattern.error'))}"-->
                 </th:block>
             </div>
             <div th:replace="~{::error-message-block}"></div>
