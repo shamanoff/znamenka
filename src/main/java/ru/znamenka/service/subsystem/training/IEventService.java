@@ -18,5 +18,7 @@ public interface IEventService {
 
     List<CalendarEvent> loadEvents(Date startDate, Date endDate);
 
+    List<CalendarEvent> loadDutyEvents(Date startDate, Date endDate);
+
     void postToCalendar(TrainingApi training);
 }

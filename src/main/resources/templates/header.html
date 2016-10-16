@@ -31,6 +31,9 @@
                             <li><a th:href="@{/training}">Запись на тренировку</a></li>
                             <li><a th:href="@{/sale}">Продажи</a></li>
                             <li><a th:href="@{/events}">Расписание</a></li>
+                            <li sec:authorize="hasRole('ROLE_TRAINER')">
+                                <a th:href="@{/duty}">Дежурства</a>
+                            </li>
                         </ul>
                     </li>
                     <li sec:authorize="hasRole('ROLE_TRAINER')">

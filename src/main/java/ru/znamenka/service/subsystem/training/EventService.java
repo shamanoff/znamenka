@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 import ru.znamenka.jpa.model.Client;
+import ru.znamenka.jpa.model.DutySchedule;
 import ru.znamenka.jpa.model.Training;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.represent.CalendarEvent;
@@ -27,6 +28,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.util.Assert.notNull;
+import static ru.znamenka.jpa.model.QDutySchedule.dutySchedule;
 import static ru.znamenka.jpa.model.QTraining.training;
 import static ru.znamenka.util.Utils.*;
 
@@ -86,6 +88,20 @@ public class EventService implements IEventService {
             Client client = training.getClient();
             val summary = client.getName() + " " + client.getSurname();
             val calendarEvent = new CalendarEvent(training.getId(), summary, start, end);
+            calendarEvents.add(calendarEvent);
+        }
+        return calendarEvents;
+    }
+
+    @Override
+    public List<CalendarEvent> loadDutyEvents(Date startDate, Date endDate) {
+        List<DutySchedule> duties = repo.findAll(DutySchedule.class, dutySchedule.plannedStart.between(fromDate(startDate), fromDate(endDate)));
+        List<CalendarEvent> calendarEvents = new ArrayList<>(duties.size());
+        for (DutySchedule duty : duties) {
+            val start = duty.getPlannedStart();
+            val end = duty.getPlannedEnd();
+            val summary = duty.getTrainer().getName();
+            val calendarEvent = new CalendarEvent(duty.getId(), summary, start, end);
             calendarEvents.add(calendarEvent);
         }
         return calendarEvents;

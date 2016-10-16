@@ -159,7 +159,7 @@ CREATE TABLE clients_history (
 CREATE TABLE duty_plan_type
 (
   duty_plan_type_id BIGINT NOT NULL PRIMARY KEY,
-  duty_plan_name    BIGINT NOT NULL
+  duty_plan_name    VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE duty_schedule
@@ -168,8 +168,8 @@ CREATE TABLE duty_schedule
   trainer_id     BIGINT                NOT NULL REFERENCES trainers (trainer_id),
   planned_start  TIMESTAMP             NOT NULL,
   planned_end    TIMESTAMP             NOT NULL,
-  fact_start     TIMESTAMP             NOT NULL,
-  fact_end       TIMESTAMP             NOT NULL,
+  fact_start     TIMESTAMP            ,
+  fact_end       TIMESTAMP             ,
   duty_plan_type BIGINT                NOT NULL REFERENCES duty_plan_type (duty_plan_type_id),
   CHECK (planned_start < planned_end),
   CHECK (fact_start < fact_end)
