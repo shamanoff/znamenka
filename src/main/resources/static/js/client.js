@@ -50,6 +50,10 @@ $(document).ready(function () {
 
 
     $editButton.on('click', function () {
+        $myModal
+            .on('shown.bs.modal', function () {
+                $aboutClient.trigger('reset'); // Reset form
+            })
         // Get the record's ID via attribute
         var id = $(this).attr('data-id');
         $aboutClient
@@ -77,18 +81,6 @@ $(document).ready(function () {
                 $aboutClient
                     .find('[name="male"][value="false"]').attr('checked', true).end()
             }
-            // Show the dialog
-            $myModal
-                .on('shown.bs.modal', function () {
-                    $aboutClient.trigger('reset'); // Reset form
-                })
-                .on('hide.bs.modal', function (e) {
-                    // Bootbox will remove the modal (including the body which contains the login form)
-                    // after hiding the modal
-                    // Therefor, we need to backup the form
-                    ////$('#modal1').hide().appendTo('body');
-                })
-
         });
     });
     ////////////////// Поиск начало
@@ -132,8 +124,6 @@ $(document).ready(function () {
     $('#createNew').on('click', function () {
         $createClient.hide();
     });
-
-
 
 
     $("a[href='#menu1']").on('shown.bs.tab', function (event) {
