@@ -50,10 +50,7 @@ $(document).ready(function () {
 
 
     $editButton.on('click', function () {
-        $myModal
-            .on('shown.bs.modal', function () {
-                $aboutClient.trigger('reset'); // Reset form
-            })
+        $aboutClient.trigger('reset'); // Reset form
         // Get the record's ID via attribute
         var id = $(this).attr('data-id');
         $aboutClient
