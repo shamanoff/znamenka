@@ -10,7 +10,6 @@ import ru.znamenka.represent.domain.PaymentApi;
 import ru.znamenka.represent.page.client.ClientPurchaseApi;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +55,7 @@ public class ClientPurchaseApiConverter implements ApiConverter<Purchase, Client
                 .priceDisc(priceWithDiscount(source.getProduct().getPrice(), source.getDiscount() != null ? source.getDiscount().getDiscountAmount() : null))
                 .discountAmount(source.getDiscount() != null ? String.valueOf(source.getDiscount().getDiscountAmount()) : " - ")
                 .trainerName(source.getTrainer().getName())
-                .purchaseDate(Timestamp.valueOf(source.getPurchaseDate().toLocalDate().atStartOfDay()))
+                .purchaseDate(source.getPurchaseDate().toLocalDate())
                 .payments(payments(source.getPayments()))
                 .build();
     }

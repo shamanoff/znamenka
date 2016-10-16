@@ -1,11 +1,12 @@
 package ru.znamenka.represent.page.client;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import ru.znamenka.represent.DomainApi;
 import ru.znamenka.represent.domain.PaymentApi;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -28,7 +29,8 @@ public class ClientPurchaseApi implements DomainApi {
     @Getter
     private final String priceDisc;
     @Getter
-    private final Timestamp purchaseDate;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private final LocalDate purchaseDate;
     @Getter
     private final String trainerName;
     @Getter
