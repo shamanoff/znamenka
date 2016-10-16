@@ -142,7 +142,7 @@
     </div>
 </th:block>
 <!-- Edit Client Form -->
-<th:block th:fragment="create-client-form(action, id)">
+<th:block th:fragment="edit-client-form(action, id)">
     <div th:replace="~{element/element :: form(@{/client}, 'formCreate', ~{::#edit-inputs})}">
         <div id="edit-inputs" class="panel-body">
             <div th:replace="~{element/element :: text-input('fname', 'Иван', 'Имя', 'user', true, '^[А-я]+')}"></div>
