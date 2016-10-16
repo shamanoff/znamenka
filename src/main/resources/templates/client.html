@@ -11,29 +11,7 @@
 </th:block>
 <div th:include="header"></div>
 <div class="container">
-    <form class="well form-horizontal formCreate"
-          th:action="@{/client}"
-          method="post"
-          th:object="${clientNew}"
-          id="formCreate"
-          data-toggle="validator"
-          data-delay="100"
-          data-validate="true"
-    >
-        <fieldset>
-            <div class="panel-body">
-                <div th:replace="~{element/element :: text-input('fname', 'Иван', 'Имя', 'user', true, '^[А-я]+')}"></div>
-                <div th:replace="~{element/element :: text-input('sname', 'Иванов', 'Фамилия', 'user', true, '^[А-я]+')}"></div>
-                <div th:replace="~{element/element :: email-input('email', 'ivanov@gmail.com', 'E-Mail', 'envelope', false)}"></div>
-                <div th:replace="~{element/element :: text-input('phone', '79151234567', 'Мобильный телефон', 'earphone', true, '^7[0-9]{10}')}"></div>
-                <div th:replace="~{element/element :: date-input('birthDate', 'Дата рождения', 'calendar', false)}"></div>
-                <div th:replace="~{element/element :: radio-male('male')}"></div>
-                <div th:replace="~{element/element :: text-input('carNumber', 'A1001AA77', 'Номер автомобиля', 'user', false, _)}"></div>
-                <div th:replace="~{element/element :: text-area('comment', 'Комментарий', 'Комментарий', 'pencil')}"></div>
-                <div th:replace="~{element/element :: submit-btn('createNew', 'Создать запись о клиенте ')}"></div>
-            </div>
-        </fieldset>
-    </form>
+    <div th:replace="~{element/element :: client-form(@{/client}, 'formCreate')}"></div>
     <!--2nd form-->
     <form class="well form-horizontal" action=" " method="post" id="contact_form">
         <div class="form-group">
@@ -111,6 +89,7 @@
                     </ul>
                     <div class="tab-content">
                         <div id="home" class="tab-pane fade in active">
+                            <div th:replace="~{element/element :: client-form(@{/client}, 'aboutClient')}"></div>
                             <form id="aboutClient" class="well form-horizontal" th:action="@{/client}" method="post"
                                   data-toggle="validator">
                                 <fieldset>

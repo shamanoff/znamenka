@@ -6,7 +6,7 @@
 <div th:fragment="submit-btn(id, label)" class="form-group">
     <label class="col-md-4 control-label" th:for="${label}"></label>
     <div class="col-md-4">
-        <button type="submit" th:id="${id}" class="btn btn-primary" >[[${label}]]<span
+        <button type="submit" th:id="${id}" class="btn btn-primary">[[${label}]]<span
                 class="glyphicon glyphicon-send"></span></button>
     </div>
 </div>
@@ -20,11 +20,28 @@
     <div th:replace="~{::common-input(${field}, 'email', ${label}, ${glyph}, ${isRequired}, _, ${placeholder})}"></div>
 </th:block>
 <!-- Date Input -->
-<th:block th:fragment="date-input(field, label, glyph, isRequired)">
-    <div th:replace="~{::common-input(${field}, 'date', ${label}, ${glyph}, ${isRequired}, _, _)}"></div>
-</th:block>
+<div class="form-group" th:classappend="${isRequired != null} ? 'has-feedback'"
+     th:fragment="date-input(field, label, glyph, isRequired)">
+    <label class="col-md-4 control-label" th:for="${field}" th:text="${label}"></label>
+    <div class="col-md-4 inputGroupContainer" th:with="id=${#strings.append(field,'-div')}">
+        <div class="input-group date" th:id="${id}">
+            <span class="input-group-addon"><i class="glyphicon"
+                                               th:classappend="${#strings.append('glyphicon-',glyph)}"></i></span>
+            <th:block>
+                <input th:id="${field}"
+                       th:name="${field}"
+                       class="form-control"
+                       type="text"
+                       th:required="${isRequired}"
+                />
+            </th:block>
+        </div>
+        <div th:replace="~{::enable-date-input(${id})}"></div>
+        <div th:replace="~{::error-message-block}"></div>
+    </div>
+</div>
 <!-- Common Input -->
-<div class="form-group" th:classappend="${pattern != null} ? 'has-feedback'"
+<div class="form-group" th:classappend="${pattern != null or isRequired} ? 'has-feedback'"
      th:fragment="common-input(field, type, label, glyph, isRequired, pattern, placeholder)">
     <label class="col-md-4 control-label" th:for="${field}" th:text="${label}"></label>
     <th:block th:with="id=${#strings.equals(type, 'date')} ? ${#strings.append(field,'-div')}">
@@ -44,7 +61,6 @@
                     />
                 </th:block>
             </div>
-            <div th:replace="~{::enable-date-input(${id})}"></div>
             <div th:replace="~{::error-message-block}"></div>
         </div>
     </th:block>
@@ -84,6 +100,7 @@
 </div>
 <!-- Block with error message -->
 <div th:fragment="error-message-block" class="help-block with-errors"></div>
+<!-- Script for activate Date input -->
 <th:block th:fragment="enable-date-input(id)">
     <script th:inline="javascript">
         var inputDateId = [[${id}]];
@@ -91,6 +108,38 @@
             format: 'DD/MM/YYYY'
         });
     </script>
+</th:block>
+<!-- Form -->
+<form   th:fragment="form(action, id, inputs)"
+        class="well form-horizontal"
+        th:action="${action}"
+        method="post"
+        th:id="${id}"
+        data-toggle="validator"
+        data-delay="100"
+>
+    <fieldset>
+        <div class="col-md-6 alert alert-danger hidden" role="alert" th:id="${#strings.append(id,'-alert')}">
+            Произошла ошибка
+        </div>
+        <th:block th:replace="${inputs}"/>
+    </fieldset>
+</form>
+<!-- Client Form -->
+<th:block th:fragment="client-form(action, id)">
+<div th:replace="~{element/element :: form(@{/client}, 'formCreate', ~{::#inputs})}">
+    <div id="inputs" class="panel-body">
+        <div th:replace="~{element/element :: text-input('fname', 'Иван', 'Имя', 'user', true, '^[А-я]+')}"></div>
+        <div th:replace="~{element/element :: text-input('sname', 'Иванов', 'Фамилия', 'user', true, '^[А-я]+')}"></div>
+        <div th:replace="~{element/element :: email-input('email', 'ivanov@gmail.com', 'E-Mail', 'envelope', false)}"></div>
+        <div th:replace="~{element/element :: text-input('phone', '79151234567', 'Мобильный телефон', 'earphone', true, '^7[0-9]{10}')}"></div>
+        <div th:replace="~{element/element :: date-input('birthDate', 'Дата рождения', 'calendar', false)}"></div>
+        <div th:replace="~{element/element :: radio-male('male')}"></div>
+        <div th:replace="~{element/element :: text-input('carNumber', 'A1001AA77', 'Номер автомобиля', 'user', false, _)}"></div>
+        <div th:replace="~{element/element :: text-area('comment', 'Комментарий', 'Комментарий', 'pencil')}"></div>
+        <div th:replace="~{element/element :: submit-btn('createNew', 'Создать запись о клиенте ')}"></div>
+    </div>
+</div>
 </th:block>
 </body>
 </html>

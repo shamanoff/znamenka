@@ -1,27 +1,27 @@
 INSERT INTO public.abon_type (id, type) VALUES (1, 'ЭМС');
 INSERT INTO public.abon_type (id, type) VALUES (2, 'TRX');
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (4, 'Берг', '79151555543', 'a.berg@znamenka.team', '2016-05-09', 'Анастасия', true, '', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (7, 'Гоголь', '79255026915', 'mogolek@gmail.com', '1976-08-02', 'Максим', true, 'Мерседес 500', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (6, 'Палагина', '79262143841', 'kpalagina@mail.ru', '1977-08-24', 'Екатерина', false, 'БМВ 040', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (8, 'Волошина', '79162397068', 'eav7068@yandex.ru', '1978-07-29', 'Елена', false, 'Мерседес 562', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (9, 'Эдуард', '79091597813', 'Shcerbakov@mail.ru', '1981-07-16', 'Щербаков', true, 'Хендай 184
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Берг', '79151555543', 'a.berg@znamenka.team', '2016-05-09', 'Анастасия', true, '', null);
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Гоголь', '79255026915', 'mogolek@gmail.com', '1976-08-02', 'Максим', true, 'Мерседес 500', null);
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Палагина', '79262143841', 'kpalagina@mail.ru', '1977-08-24', 'Екатерина', false, 'БМВ 040', null);
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Волошина', '79162397068', 'eav7068@yandex.ru', '1978-07-29', 'Елена', false, 'Мерседес 562', null);
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Эдуард', '79091597813', 'Shcerbakov@mail.ru', '1981-07-16', 'Щербаков', true, 'Хендай 184
 почта фэйк', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (10, 'Лисица', '79853053025', 'ja-lisenok@mail.ru', '1979-06-17', 'Марина', false, 'Паспорт серия 4607 №948251
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Лисица', '79853053025', 'ja-lisenok@mail.ru', '1979-06-17', 'Марина', false, 'Паспорт серия 4607 №948251
 выдан отделом УФМС России по Московской области в Чеховском районе; адрес:  Москва, Мичуринский проспект, 29-1-87.', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (11, 'Соколов', '79688244084', 'sokolov@gmail.com', '1985-06-05', 'Алексей', true, 'почта фэйк', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (12, 'Полескова', '79266778225', 'poleskova@gmail.com', '1984-04-25', 'Людмила', false, 'Мерседес 007
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Соколов', '79688244084', 'sokolov@gmail.com', '1985-06-05', 'Алексей', true, 'почта фэйк', null);
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Полескова', '79266778225', 'poleskova@gmail.com', '1984-04-25', 'Людмила', false, 'Мерседес 007
 почта фэйк', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (5, 'Турчанинов', '79151130113', 'turello@rambler.ru', '2016-05-09', 'Сергей', true, '', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (13, 'Подлипская', '79253804369', 'podlipskaya@inbox.ru', '1976-08-31', 'Татьяна', false, 'Мерседес 443
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Турчанинов', '79151130113', 'turello@rambler.ru', '2016-05-09', 'Сергей', true, '', null);
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Подлипская', '79253804369', 'podlipskaya@inbox.ru', '1976-08-31', 'Татьяна', false, 'Мерседес 443
 Паспорт 4514 №721155
 выдан: ОУФМС России по гор. Москве по р-ну Басманный
 адрес: Яковоапостольский переулок, 11-13, стр. 1.
 ', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (14, 'Ионова', '79169608975', 'napishina@yandex.ru', '1981-09-11', 'Светлана', false, 'Инфинити 686', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (15, 'клиент', '71111111111', 'alsd@ad.ri', '2016-05-09', 'Пробный', true, '', null);
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (2, 'Уткин', '79850625123', 'utkinev2014@gmail.com', '2016-05-09', 'Евгений', true, 'тестовый юзер', 'А101АА77');
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (1, 'Касьяновф', '79850625575', 'asd@asd', '1990-02-23', 'Сергейй', true, 'комментарфывий', '');
-INSERT INTO public.clients (client_id, surname, phone, email, birth_date, name, male, comment, car_number) VALUES (16, 'Кашина', '79687037878', 'kashina.olga@gmail.com', '1974-04-15', 'Ольга', false, '', 'БМВ 858');
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Ионова', '79169608975', 'napishina@yandex.ru', '1981-09-11', 'Светлана', false, 'Инфинити 686', null);
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('клиент', '71111111111', 'alsd@ad.ri', '2016-05-09', 'Пробный', true, '', null);
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Уткин', '79850625123', 'utkinev2014@gmail.com', '2016-05-09', 'Евгений', true, 'тестовый юзер', 'А101АА77');
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Касьяновф', '79850625575', 'asd@asd', '1990-02-23', 'Сергейй', true, 'комментарфывий', '');
+INSERT INTO public.clients (surname, phone, email, birth_date, name, male, comment, car_number) VALUES ('Кашина', '79687037878', 'kashina.olga@gmail.com', '1974-04-15', 'Ольга', false, '', 'БМВ 858');
 
 INSERT INTO public.trainers (trainer_id, trainer_name) VALUES (1, 'ibichenkova');
 INSERT INTO public.trainers (trainer_id, trainer_name) VALUES (2, 'dgrossman');

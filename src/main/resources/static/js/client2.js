@@ -52,7 +52,7 @@ $(document).ready(function () {
     });
 
     $createClient.validator().on('submit', function (e) {
-        if (!e.isDefaultPrevented()) {
+        if (!e.isDefaultPrevented) {
             $(e.target).submit();
         }
     });
@@ -134,20 +134,17 @@ $(document).ready(function () {
 
     ////////////////// Поиск конец
 
-    ////////////////// showCreate
     $(".showCreate").on('click', function () {
-        $(".formCreate").toggle(500);
-
-        //$(".formCreate").hide(500);
+        $createClient.toggle(500);
     });
-    ////////////////// showCreate
 
-    /// createNew
-    $("#createNew").on('click', function () {
-        $(".formCreate").hide(500);
-
+    $('#createNew').on('click', function () {
+        $createClient.hide();
     });
-    /// createNew
+
+
+
+
     $("a[href='#menu1']").on('shown.bs.tab', function (event) {
         var id = $aboutClient.find('[name="id"]').val();
         var tabTraining = $('#modal-trainings');
