@@ -20,8 +20,6 @@ import static org.springframework.util.Assert.notNull;
 import static ru.znamenka.jpa.model.QAbonement.abonement;
 import static ru.znamenka.jpa.model.QClient.client;
 import static ru.znamenka.jpa.model.QClientAbonement.clientAbonement;
-import static ru.znamenka.jpa.model.QClientAbonement.clientAbonement;
-import static ru.znamenka.jpa.model.QProduct.product;
 import static ru.znamenka.jpa.model.QPurchase.purchase;
 import static ru.znamenka.jpa.model.QTrainer.trainer;
 import static ru.znamenka.jpa.model.QTraining.training;
@@ -85,9 +83,10 @@ public class ClientService implements IClientService {
     public List<ClientApi> activeClients() {
         JPAQuery<Client> query = clientExecutor.getQuery();
         query
+                .select(client).distinct()
                 .from(client)
                 .innerJoin(client.abonements, clientAbonement)
-                .where(clientAbonement.trainingCount.gt(0));
+                .where(clientAbonement.trainingCount.gt(ZERO));
 
         List<Client> clients = query.fetch();
         return clientExecutor.toApi(clients);
