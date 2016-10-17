@@ -104,8 +104,8 @@ public class ScheduleController {
             @Valid ClientApi client,
             @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime start,
             @RequestParam Long trainerId,
-            @RequestParam Boolean passForAuto,
-            @RequestParam String comment,
+            @RequestParam(required = false) Boolean passForAuto,
+            @RequestParam(required = false) String comment,
             BindingResult br
     ) {
         if (br.hasErrors()) return badRequest().body(TrainingApi.empty());
