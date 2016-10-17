@@ -11,7 +11,6 @@
     <script th:src="@{/js/jquery-ui.min.js}"></script>
     <script th:src="@{/js/calendar/ru.js}"></script>
     <script th:src="@{/js/calendar/gcal.js}"></script>
-    <script th:src="@{/js/form-validator/validator.min.js}"></script>
     <script th:src="@{/js/schedule.js}"></script>
 </th:block>
 <div th:include="header"></div>
@@ -36,7 +35,7 @@
                             <div class="panel-body" id="already-inputs">
                                 <!-- Select Basic -->
                                 <select id="client-a"
-                                        th:replace="~{element/element :: select-input('clientId', 'select-client-for-club', 'Клиент', ~{::#client-a/option})}">
+                                        th:replace="~{element/element :: select-input('clientId', 'select-client-for-club', 'Клиент', ~{::#client-a/option}, true)}">
                                     <option value="">Выберите клиента</option>
                                     <option th:each="client: ${clients}" th:value="${client.id}"
                                             th:text="${client.name}">
@@ -44,10 +43,10 @@
                                 </select>
                                 <!-- Select Basic -->
                                 <select
-                                        th:replace="~{element/element :: select-input('purchaseId', 'select-abonement-for-club', 'Абонемент', ~{})}">
+                                        th:replace="~{element/element :: select-input('purchaseId', 'select-abonement-for-club', 'Абонемент', ~{}, true)}">
                                 </select>
                                 <select id="trainer-a"
-                                        th:replace="~{element/element :: select-input('trainerId', 'select-trainer-for-club', 'Тренер', ~{::#trainer-a/option})}">
+                                        th:replace="~{element/element :: select-input('trainerId', 'select-trainer-for-club', 'Тренер', ~{::#trainer-a/option}, true)}">
                                     <option value="">Выберите тренера</option>
                                     <option th:each="trainer: ${trainers}" th:value="${trainer.id}"
                                             th:text="${trainer.name}">
@@ -78,8 +77,9 @@
                                 <div th:replace="~{element/element :: text-input('sname', 'Иванов', 'Фамилия', 'user', true, '^[А-я]+')}"></div>
                                 <div th:replace="~{element/element :: text-input('phone', '79151234567', 'Мобильный телефон', 'earphone', true, '^7[0-9]{10}')}"></div>
                                 <div th:replace="~{element/element :: text-input('carNumber', 'A1001AA77', 'Номер автомобиля', 'user', false, _)}"></div>
+                                <div th:replace="~{element/element :: radio-male('male')}"></div>
                                 <select id="trainer-n"
-                                        th:replace="~{element/element :: select-input('trainerId', 'select-trainer-for-new', 'Тренер', ~{::#trainer-n/option})}">
+                                        th:replace="~{element/element :: select-input('trainerId', 'select-trainer-for-new', 'Тренер', ~{::#trainer-n/option}, true)}">
                                     <option value="">Выберите тренера</option>
                                     <option th:each="trainer: ${trainers}" th:value="${trainer.id}"
                                             th:text="${trainer.name}">
@@ -146,7 +146,7 @@
                                     </div>
                                 </div>
                                 <select id="trainer-e"
-                                        th:replace="~{element/element :: select-input('trainer', 'select-trainer-for-exists', 'Тренер', ~{::#trainer-e/option})}">
+                                        th:replace="~{element/element :: select-input('trainer', 'select-trainer-for-exists', 'Тренер', ~{::#trainer-e/option}, false)}">
                                     <option value="">Выберите тренера</option>
                                     <option th:each="trainer: ${trainers}" th:value="${trainer.id}"
                                             th:text="${trainer.name}">

@@ -27,6 +27,7 @@ public class TrainingApi implements DomainApi, UpdatableApi<Long> {
     
     private Long id;
 
+    @NotNull
     private Long trainerId;
 
     private String trainerName;

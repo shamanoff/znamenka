@@ -104,13 +104,13 @@
     </div>
 </div>
 <!-- Select Input -->
-<div class="form-group" th:fragment="select-input(field, id, label, options)">
+<div class="form-group" th:fragment="select-input(field, id, label, options, isRequired)">
     <label class="col-md-4 control-label"
            th:for="${id}" th:text="${label}"></label>
     <div class="col-md-4 selectContainer">
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-            <select th:id="${id}" th:name="${field}"
+            <select th:id="${id}" th:name="${field}" th:required="${isRequired}"
                     class="form-control selectpicker">
                 <th:block th:replace="${options}"></th:block>
             </select>

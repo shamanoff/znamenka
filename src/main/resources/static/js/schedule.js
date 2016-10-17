@@ -1,122 +1,107 @@
 $(document).ready(function () {
 
-    var calendar = $('#calendar');
+    var $calendar = $('#calendar');
 
-    var trainingFormForClub = $('#trainingForm'); // форма для записи на тренировку клиента с клубной картой
-    var trainingFormForNew = $('#formCreate'); //форма для записи на тренировку нового клиента
-    var formForExistsTraining = $('#exists-training-form');
-    var changeTrainerInput = $('#select-trainer-for-exists');
-    var writeOffTrainingBtn = $('#status-write-off');
-    var writeOnTrainingBtn = $('#status-write-on');
-    var changeTrainerBtn = $('#change-trainer');
+    var $trainingFormForClub = $('#trainingForm'); // форма для записи на тренировку клиента с клубной картой
+    var $trainingFormForNew = $('#formCreate'); //форма для записи на тренировку нового клиента
+    var $formForExistsTraining = $('#exists-training-form');
+    var $changeTrainerInput = $('#select-trainer-for-exists');
+    var $writeOffTrainingBtn = $('#status-write-off');
+    var $writeOnTrainingBtn = $('#status-write-on');
+    var $changeTrainerBtn = $('#change-trainer');
 
-    var selectClientForClub = $("#select-client-for-club");
-    var selectAbonForClub = $('#select-abonement-for-club');
+    var $selectClientForClub = $("#select-client-for-club");
+    var $selectAbonForClub = $('#select-abonement-for-club');
 
-    var myModal = $('#training-modal');
-    var modalForExists = $('#exists-training-modal');
-    var clientId = selectClientForClub.val();
+    var $trainingModal = $('#training-modal');
+    var $modalForExists = $('#exists-training-modal');
+    var clientId = $selectClientForClub.val();
 
     if (clientId != '') {
-        getAbon(clientId, selectAbonForClub);
+        getAbon(clientId, $selectAbonForClub);
     }
-    selectClientForClub.change(function () {
-        clientId = selectClientForClub.val();
+    $selectClientForClub.change(function () {
+        clientId = $selectClientForClub.val();
         if (clientId != '') {
-            getAbon(clientId, selectAbonForClub)
+            getAbon(clientId, $selectAbonForClub)
         }
     });
 
-    myModal
+    $trainingModal
         .on('shown.bs.modal', function () {
-            selectClientForClub.val("");
+            $selectClientForClub.val("");
             clearAbonSelect();
         });
 
-    trainingFormForClub
-        .submit(function (e) {
-            submitForm(e);
-        });
-    trainingFormForNew
-        .submit(function (e) {
-            submitForm(e);
-        });
-
-    changeTrainerInput.change(function (e) {
-        var trainerId = formForExistsTraining.find('[name="trainerId"]').val();
-        var statusId = formForExistsTraining.find('[name="statusId"]').val();
-        changeTrainerBtn.prop('disabled', trainerId == changeTrainerInput.val() || statusId != 1);
+    $changeTrainerInput.change(function (e) {
+        var trainerId = $formForExistsTraining.find('[name="trainerId"]').val();
+        var statusId = $formForExistsTraining.find('[name="statusId"]').val();
+        $changeTrainerBtn.prop('disabled', trainerId == $changeTrainerInput.val() || statusId != 1);
     });
 
-    changeTrainerBtn.click(function () {
-        var data = {};
-        var id = formForExistsTraining.find('[name="id"]').val();
-        data.trainerId = formForExistsTraining.find('[name="trainer"]').val();
+    $changeTrainerBtn.click(function () {
+        var id = $formForExistsTraining.find('[name="id"]').val();
+        var data = {
+            trainerId: $formForExistsTraining.find('[name="trainer"]').val()
+        };
         $.post("/training/" + id, data, function () {
-            modalForExists.modal('hide');
+            $modalForExists.modal('hide');
         });
     });
 
-    writeOffTrainingBtn.click(function () {
-        var data = {};
-        var id = formForExistsTraining.find('[name="id"]').val();
-        data.statusId = 4;
+    $writeOffTrainingBtn.click(function () {
+        changeStatusOfTraining(4);
+    });
+
+    $writeOnTrainingBtn.click(function () {
+        changeStatusOfTraining(3);
+    });
+
+    function changeStatusOfTraining(statusId) {
+        var id = $formForExistsTraining.find('[name="id"]').val();
+        var data = {
+            statusId: statusId
+        };
         $.post("/training/" + id, data, function () {
-            modalForExists.modal('hide');
+            $modalForExists.modal('hide');
         });
-    });
-
-    writeOnTrainingBtn.click(function () {
-        var data = {};
-        var id = formForExistsTraining.find('[name="id"]').val();
-        data.statusId = 3;
-        $.post("/training/" + id, data, function () {
-            modalForExists.modal('hide');
-        });
-    });
-
-    function submitForm(e) {
-        // Prevent form submission
-        e.preventDefault();
-        // Get the form instance
-        var $form = $(e.target);
-        // Use Ajax to submit form data
-
-        $.post($form.attr('action'), $form.serialize(), function (result) {
-            console.log('success ' + result);
-            calendar.fullCalendar('refetchEvents');
-        }, 'json');
-        myModal.modal("hide");
     }
+
+    var refetchEvents = function () {
+        $calendar.fullCalendar('refetchEvents');
+        $trainingModal.modal("hide");
+    };
+    Utils.submitAjax($trainingFormForClub, refetchEvents);
+    Utils.submitAjax($trainingFormForNew, refetchEvents);
 
     /* initialize the calendar
      -----------------------------------------------------------------*/
 
-    calendar.fullCalendar({
+    $calendar.fullCalendar({
         navLinks: true, // can click day/week names to navigate views
         selectable: true,
         minTime: "06:00:00",
         selectHelper: true,
         select: function (start) {
-            myModal.modal("show");
-            trainingFormForClub.trigger('reset');
-            trainingFormForNew.trigger('reset');
-            var startRU = start.format("DD/MM/YYYY hh:mm");
-            trainingFormForClub.find('[name="start"]').val(startRU).end();
-            trainingFormForNew.find('[name="start"]').val(startRU).end();
-            calendar.fullCalendar('unselect');
+            $trainingModal.modal("show");
+            $trainingFormForClub.trigger('reset');
+            $trainingFormForNew.trigger('reset');
+            var startRU = start.format("DD/MM/YYYY HH:mm");
+            $trainingFormForClub.find('[name="start"]').val(startRU).end();
+            $trainingFormForNew.find('[name="start"]').val(startRU).end();
+            $calendar.fullCalendar('unselect');
         },
         eventClick: function (calEvent, jsEvent, view) {
-            modalForExists.modal('show');
-            var startRU = calEvent.start.format("DD/MM/YYYY hh:mm");
-            formForExistsTraining.find('[name="start"]').val(startRU).end();
-            writeOffTrainingBtn.prop('disabled', false);
-            writeOnTrainingBtn.prop('disabled', false);
+            $modalForExists.modal('show');
+            var startRU = calEvent.start.format("DD/MM/YYYY HH:mm");
+            $formForExistsTraining.find('[name="start"]').val(startRU).end();
+            $writeOffTrainingBtn.prop('disabled', false);
+            $writeOnTrainingBtn.prop('disabled', false);
             $.ajax({
                 url: '/training/' + calEvent.id,
                 method: 'GET'
             }).success(function (response) {
-                formForExistsTraining
+                $formForExistsTraining
                     .find('[name="id"]').val(response.id).end()
                     .find('[name="client"]').val(response.clientName).end()
                     .find('[name="trainer"]').val(response.trainerId).end()
@@ -126,11 +111,11 @@ $(document).ready(function () {
                     .find('[name="passForAuto"]').prop('checked', response.passForAuto).end()
                     .find('[name="statusId"]').val(response.statusId).end()
                     .find('[name="abonement"]').val(response.abonement).end();
-                changeTrainerBtn.prop('disabled', true);
+                $changeTrainerBtn.prop('disabled', true);
                 if (response.statusId != 1) {
-                    writeOffTrainingBtn.prop('disabled', true);
-                    writeOnTrainingBtn.prop('disabled', true);
-                    changeTrainerInput.prop('disabled', true);
+                    $writeOffTrainingBtn.prop('disabled', true);
+                    $writeOnTrainingBtn.prop('disabled', true);
+                    $changeTrainerInput.prop('disabled', true);
                 }
             });
         },
@@ -189,8 +174,8 @@ $(document).ready(function () {
     }
 
     function clearAbonSelect() {
-        selectAbonForClub.children('option').remove();
-        selectAbonForClub
+        $selectAbonForClub.children('option').remove();
+        $selectAbonForClub
             .append($("<option></option>")
                 .attr("value", "")
                 .text("Выберите абонемент"));

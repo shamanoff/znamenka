@@ -4,11 +4,7 @@ $(document).ready(function () {
     var $dutyModal = $('#duty-modal');
     var $dutyForm = $('#create-duty-form');
 
-    $dutyForm.validator().on('submit', function (e) {
-        if (!e.isDefaultPrevented) {
-            $(e.target).submit();
-        }
-    });
+    Utils.submit($dutyForm)
 
     $calendar.fullCalendar({
         navLinks: true, // can click day/week names to navigate views
