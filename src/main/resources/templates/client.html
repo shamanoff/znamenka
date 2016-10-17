@@ -6,6 +6,7 @@
 </head>
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{::script})}">
+    <script th:src="@{/js/common-function.js}"></script>
     <script th:src="@{/js/form-validator/validator.min.js}"></script>
     <script th:src="@{/js/client.js}"></script>
 </th:block>

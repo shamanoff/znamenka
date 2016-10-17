@@ -42,11 +42,8 @@ $(document).ready(function () {
         }
     });
 
-    $createClient.validator().on('submit', function (e) {
-        if (!e.isDefaultPrevented) {
-            $(e.target).submit();
-        }
-    });
+
+    Utils.submit($createClient);
 
 
     $editButton.on('click', function () {
