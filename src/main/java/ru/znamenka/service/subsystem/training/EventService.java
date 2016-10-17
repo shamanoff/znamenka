@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 import ru.znamenka.jpa.model.Client;
 import ru.znamenka.jpa.model.DutySchedule;
@@ -17,6 +16,7 @@ import ru.znamenka.jpa.model.Training;
 import ru.znamenka.jpa.repository.EntityRepository;
 import ru.znamenka.represent.CalendarEvent;
 import ru.znamenka.represent.domain.TrainingApi;
+import ru.znamenka.util.DutyColor;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -55,26 +55,21 @@ public class EventService implements IEventService {
      */
     private final EntityRepository repo;
 
-    private final SimpMessageSendingOperations mesTemplate;
-
     @Autowired
     public EventService(
             Calendar calendar,
-            EntityRepository repo,
-            SimpMessageSendingOperations mesTemplate
+            EntityRepository repo
     ) {
         notNull(calendar);
         notNull(repo);
-        notNull(mesTemplate);
         this.calendar = calendar;
         this.repo = repo;
-        this.mesTemplate = mesTemplate;
     }
 
     @Override
     public List<CalendarEvent> loadEventsBusy(Date startDate, Date endDate) {
         List<CalendarEvent> events = loadEvents(startDate, endDate);
-        return events.stream().map(e -> e.setTitle("Занято")).collect(toList());
+        return events.stream().map(e -> e.title("Занято")).collect(toList());
     }
 
     @Override
@@ -86,8 +81,12 @@ public class EventService implements IEventService {
             // TODO: 05.10.2016 обязательно переделать, а то в разных местах прибавляется
             val end = start.plus(30L, MINUTES);
             Client client = training.getClient();
-            val summary = client.getName() + " " + client.getSurname();
-            val calendarEvent = new CalendarEvent(training.getId(), summary, start, end);
+            val calendarEvent = CalendarEvent
+                    .createEvent()
+                    .id(training.getId())
+                    .title(client.getFullName())
+                    .start(start)
+                    .end(end);
             calendarEvents.add(calendarEvent);
         }
         return calendarEvents;
@@ -98,10 +97,14 @@ public class EventService implements IEventService {
         List<DutySchedule> duties = repo.findAll(DutySchedule.class, dutySchedule.plannedStart.between(fromDate(startDate), fromDate(endDate)));
         List<CalendarEvent> calendarEvents = new ArrayList<>(duties.size());
         for (DutySchedule duty : duties) {
-            val start = duty.getPlannedStart();
-            val end = duty.getPlannedEnd();
-            val summary = duty.getTrainer().getName();
-            val calendarEvent = new CalendarEvent(duty.getId(), summary, start, end);
+            val color = DutyColor.get(duty.getPlanTypeId());
+            val calendarEvent = CalendarEvent
+                    .createEvent()
+                    .id(duty.getId())
+                    .title(duty.getTrainer().getName())
+                    .start(duty.getPlannedStart())
+                    .end(duty.getPlannedEnd())
+                    .color(color);
             calendarEvents.add(calendarEvent);
         }
         return calendarEvents;
@@ -123,8 +126,12 @@ public class EventService implements IEventService {
 
         try {
             calendar.events().insert(calendarId, event).execute();
-            CalendarEvent busyEvent = new CalendarEvent(training.getId(), "Занято", start, end);
-           // mesTemplate.convertAndSend("/calendar/event", busyEvent);
+            CalendarEvent busyEvent = CalendarEvent
+                    .createEvent()
+                    .id(training.getId())
+                    .title("Занято")
+                    .start(start)
+                    .end(end);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

@@ -1,9 +1,7 @@
 package ru.znamenka.represent;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import ru.znamenka.util.DutyColor;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -18,21 +16,48 @@ import static java.time.ZoneOffset.UTC;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Getter @Setter @Accessors(chain = true) @NoArgsConstructor
+@Getter
 public class CalendarEvent {
-    
+
     private Long id;
 
     private String title;
-    
+
     private Timestamp start;
-    
+
     private Timestamp end;
 
-    public CalendarEvent(Long id, String title, LocalDateTime start, LocalDateTime end) {
+    private String backgroundColor;
+
+    private String textColor;
+
+    public static CalendarEvent createEvent() {
+        return new CalendarEvent();
+    }
+
+    public CalendarEvent id(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public CalendarEvent title(String title) {
         this.title = title;
+        return this;
+    }
+
+    public CalendarEvent start(LocalDateTime start) {
         this.start = Timestamp.from(start.toInstant(UTC));
+        return this;
+    }
+
+    public CalendarEvent end(LocalDateTime end) {
         this.end = Timestamp.from(end.toInstant(UTC));
+        return this;
+    }
+
+    public CalendarEvent color(DutyColor color) {
+        this.backgroundColor = color.background();
+        this.textColor = color.text();
+        return this;
     }
 }

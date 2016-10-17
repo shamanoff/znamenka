@@ -27,7 +27,12 @@ public class CreatedTrainingListener {
         AutowireHelper.autowire(this, this.mesTemplate);
         LocalDateTime start = training.getStart();
         LocalDateTime end = start.plus(30L, MINUTES);
-        CalendarEvent busyEvent = new CalendarEvent(training.getId(), "Занято", start, end);
+        CalendarEvent busyEvent = CalendarEvent
+                .createEvent()
+                .id(training.getId())
+                .title("Занято")
+                .start(start)
+                .end(end);
         mesTemplate.convertAndSend("/calendar/event", busyEvent);
 
     }
