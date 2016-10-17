@@ -5,7 +5,7 @@ $(document).ready(function () {
     var trainingFormForClub = $('#trainingForm'); // форма для записи на тренировку клиента с клубной картой
     var trainingFormForNew = $('#formCreate'); //форма для записи на тренировку нового клиента
     var formForExistsTraining = $('#exists-training-form');
-    var changeTrainerInput = $('#et');
+    var changeTrainerInput = $('#select-trainer-for-exists');
     var writeOffTrainingBtn = $('#status-write-off');
     var writeOnTrainingBtn = $('#status-write-on');
     var changeTrainerBtn = $('#change-trainer');

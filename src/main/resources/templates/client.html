@@ -20,7 +20,7 @@
             <div th:replace="~{element/element :: date-input('birthDate', 'Дата рождения', false, false)}"></div>
             <div th:replace="~{element/element :: radio-male('male')}"></div>
             <div th:replace="~{element/element :: text-input('carNumber', 'A1001AA77', 'Номер автомобиля', 'user', false, _)}"></div>
-            <div th:replace="~{element/element :: text-area('comment', 'Комментарий', 'Комментарий', 'pencil')}"></div>
+            <div th:replace="~{element/element :: text-area('comment', 'Комментарий', 'Комментарий', 'pencil', false)}"></div>
             <div th:replace="~{element/element :: submit-btn('createNew', 'Создать запись о клиенте ')}"></div>
         </div>
     </div>
@@ -111,7 +111,7 @@
                                     <div th:replace="~{element/element :: date-input('birthDate', 'Дата рождения', false, false)}"></div>
                                     <div th:replace="~{element/element :: radio-male('male')}"></div>
                                     <div th:replace="~{element/element :: text-input('carNumber', 'A1001AA77', 'Номер автомобиля', 'user', false, _)}"></div>
-                                    <div th:replace="~{element/element :: text-area('comment', 'Комментарий', 'Комментарий', 'pencil')}"></div>
+                                    <div th:replace="~{element/element :: text-area('comment', 'Комментарий', 'Комментарий', 'pencil', false)}"></div>
                                     <div th:replace="~{element/element :: submit-btn('createNew', 'Сохранить запись о клиенте ')}"></div>
                                 </div>
                             </div>
