@@ -115,6 +115,7 @@ public class EventService implements IEventService {
      *
      * @param training тренеровка
      */
+    @Deprecated
     @Override
     public void postToCalendar(TrainingApi training) {
         LocalDateTime start = training.getStart();
@@ -137,6 +138,7 @@ public class EventService implements IEventService {
         }
     }
 
+    @Deprecated
     private Events getEvents(Date startDate, Date endDate) {
         try {
             return calendar
@@ -151,6 +153,7 @@ public class EventService implements IEventService {
         }
     }
 
+    @Deprecated
     private Event createEvent(LocalDateTime start, LocalDateTime end, String clientName, String clientEmail) {
         Event event = new Event();
 

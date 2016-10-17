@@ -72,10 +72,6 @@ public class ClientService implements IClientService {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * SELECT c.*
-     * FROM "таблица-клиентов" c
-     * WHERE EXISTS(SELECT * FROM "таблица-покупок" p WHERE c.client_id = p.client_id AND p.expired = false)
      *
      * @return список клиентов
      */
@@ -159,12 +155,6 @@ public class ClientService implements IClientService {
 
     /**
      * Инициализирует SQL запрос
-     * SELECT pur.id, pr.product_name
-     * FROM purchase pur
-     *   LEFT JOIN product pr ON pur.product_id = pr.id
-     * WHERE pur.client_id = ?
-     *   AND pr.id in (?)
-     *   AND pr.expire_days > 0
      * @param clientId уникальный идентификатор клиента
      * @return запрос
      */

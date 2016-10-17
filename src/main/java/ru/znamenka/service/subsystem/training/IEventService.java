@@ -20,5 +20,6 @@ public interface IEventService {
 
     List<CalendarEvent> loadDutyEvents(Date startDate, Date endDate);
 
+    @Deprecated
     void postToCalendar(TrainingApi training);
 }
