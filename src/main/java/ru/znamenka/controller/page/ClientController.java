@@ -15,7 +15,7 @@ import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.page.client.ClientPurchaseApi;
 import ru.znamenka.represent.page.schedule.SubscriptionApi;
-import ru.znamenka.service.subsystem.client.ClientService;
+import ru.znamenka.service.subsystem.client.IClientFacadeService;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -55,7 +55,7 @@ public class ClientController {
     /**
      * Сервис для операций с клиентами
      */
-    private final ClientService clientService;
+    private final IClientFacadeService clientService;
 
     /**
      * Конструктор для внедрения зависимостей
@@ -63,7 +63,7 @@ public class ClientController {
      * @param clientService сервис для операций с клиентами
      */
     @Autowired
-    public ClientController(ClientService clientService) {
+    public ClientController(IClientFacadeService clientService) {
         notNull(clientService);
         this.clientService = clientService;
     }
@@ -178,12 +178,12 @@ public class ClientController {
      * @param clientId уникальный идентификатор клиента
      * @return список абонементов
      */
-    @GetMapping("/subscriptions")
+    @GetMapping("/abonements")
     public ResponseEntity<List<SubscriptionApi>> getSubscriptions(@RequestParam("clientId") Long clientId) {
         if (clientId == null) {
             return badRequest().body(emptyList());
         }
-        List<SubscriptionApi> subscriptions = clientService.subscriptions(clientId);
+        List<SubscriptionApi> subscriptions = clientService.abonements(clientId);
         return ok(subscriptions);
     }
 

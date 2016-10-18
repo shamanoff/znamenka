@@ -3,7 +3,6 @@ package ru.znamenka.service.subsystem.client;
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.page.client.ClientPurchaseApi;
-import ru.znamenka.represent.page.schedule.SubscriptionApi;
 import ru.znamenka.service.ApiStore;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-public interface IClientService {
+public interface IClientFacadeService extends AbonementsService, ClientsQueryService {
 
     /**
      * Позволяет обращаться к хранилищу данных для простых методов,
@@ -30,23 +29,6 @@ public interface IClientService {
      * @return список клиентов
      */
     List<ClientApi> allClients();
-
-    /**
-     * Возвращает список клиентов, у которых есть
-     * активный абонемент
-     *
-     * @return список клиентов
-     */
-    List<ClientApi> activeClients();
-
-    /**
-     * Поиск клиентов по id тренера. Необходим для того,
-     * чтобы тренер имел доступ только к своим клиентам
-     *
-     * @param trainerId уникальный идентификатор тренера
-     * @return список клиентов
-     */
-    List<ClientApi> clientsByTrainerId(Long trainerId);
 
     /**
      * Обновляет информацию о клиенте
@@ -80,13 +62,6 @@ public interface IClientService {
      */
     ClientApi clientByPhone(String phone);
 
-    /**
-     * Возвращает список активных абонементов клиента
-     *
-     * @param clientId уникальный идентификатор клиента
-     * @return список абонементов
-     */
-    List<SubscriptionApi> subscriptions(Long clientId);
 
 
 }

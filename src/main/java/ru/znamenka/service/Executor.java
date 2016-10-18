@@ -1,7 +1,7 @@
 package ru.znamenka.service;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import ru.znamenka.represent.DomainApi;
+import ru.znamenka.represent.Api;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-public interface Executor<S, T extends DomainApi> {
+public interface Executor<S, T extends Api> {
 
     /**
      * Возвращает запрос. Если графа присутствует, то запрос будет осведомлен.

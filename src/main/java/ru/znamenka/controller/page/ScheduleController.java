@@ -11,7 +11,7 @@ import ru.znamenka.represent.CalendarEvent;
 import ru.znamenka.represent.domain.ClientApi;
 import ru.znamenka.represent.domain.TrainerApi;
 import ru.znamenka.represent.domain.TrainingApi;
-import ru.znamenka.service.subsystem.client.ClientService;
+import ru.znamenka.service.subsystem.client.IClientFacadeService;
 import ru.znamenka.service.subsystem.training.EventService;
 import ru.znamenka.service.subsystem.training.ITrainingService;
 
@@ -32,13 +32,13 @@ public class ScheduleController {
 
     private final EventService eventService;
 
-    private final ClientService clientService;
+    private final IClientFacadeService clientService;
 
     @Autowired
     public ScheduleController(
             EventService eventService,
             ITrainingService service,
-            ClientService clientService) {
+            IClientFacadeService clientService) {
         notNull(eventService);
         notNull(service);
         notNull(clientService);

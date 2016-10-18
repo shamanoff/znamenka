@@ -8,5 +8,5 @@ package ru.znamenka.represent;
  * <p>
  * @author Евгений Уткин (Eugene Utkin)
  */
-public interface DomainApi {
+public interface DomainApi extends Api {
 }
