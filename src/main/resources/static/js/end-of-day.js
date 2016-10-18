@@ -1,17 +1,37 @@
 $(document).ready(function () {
-    var startTime = $('#startTime');
-    var trainingForm = $('#training-form');
+    var $startTime = $('#startTime');
+    var $trainingForm = $('#training-form');
+    var $startDutyTime = $('#startDutyTime');
+    var $endDutyTime = $('#endDutyTime');
 
-    startTime.datetimepicker({
+    $startTime.datetimepicker({
         defaultDate: new Date(),
         format: 'DD/MM/YYYY'
     });
-    startTime.on('dp.change', function (e) {
+    $startTime.on('dp.change', function (e) {
         getTraining(e.date);
     });
 
-    trainingForm.validator().on('submit', function (e) {
-        trainingForm.validator('validate');
+    $startDutyTime.clockpicker({
+        placement: 'top',
+        align: 'left',
+        autoclose: true,
+        'default': '08:00'
+    });
+    var $start = $('#start-duty');
+    $start.val('08:00');
+
+    $endDutyTime.clockpicker({
+        placement: 'top',
+        align: 'left',
+        autoclose: true,
+        'default': '20:00'
+    });
+    var $end = $('#end-duty');
+    $end.val('20:00');
+
+    $trainingForm.validator().on('submit', function (e) {
+        $trainingForm.validator('validate');
         if (!e.isDefaultPrevented()) {
             // Get the form instance
             var $form = $(e.target);
@@ -20,8 +40,8 @@ $(document).ready(function () {
                 type: "POST",
                 url: $form.attr('action'),
                 data: JSON.stringify(data),
-                success: function (result) {
-                    getTraining(startTime.data("DateTimePicker").date());
+                success: function () {
+                    getTraining($startTime.data("DateTimePicker").date());
                 },
                 contentType: 'application/json',
                 dataType: "json"
@@ -30,8 +50,20 @@ $(document).ready(function () {
     });
 
     function toData($form) {
+
+        function extracted(time, date) {
+            time.set('year', date.get('year'));
+            time.set('month', date.get('month'));
+            time.set('date', date.get('date'));
+            return time.format('DD/MM/YYYY HH:mm');
+        }
+
         var statuses = [];
         var trainings = $form.find('[name="trainingId"]').toArray();
+        var startTime = moment($start.val(), 'HH:mm');
+        var endTime = moment($end.val(), 'HH:mm');
+        var date = $startTime.data("DateTimePicker").date();
+
         $.each(trainings, function (index) {
             var id, status, obj = {};
             id = $(this).val();
@@ -44,7 +76,12 @@ $(document).ready(function () {
                 statuses.push(obj)
             }
         });
-        return statuses;
+        return {
+            factStart: extracted(startTime, date),
+            factEnd: extracted(endTime, date),
+            statuses: statuses
+        };
+
     }
 
     function getTraining(date) {
@@ -56,20 +93,20 @@ $(document).ready(function () {
             },
             success: function (data) {
                 $('#training-tbody').replaceWith(data);
-                $('.select-status').each(function (indx, select) {
+                $('.select-statuses').each(function (indx, select) {
                     $(select).on('change', function (e) {
                         var statusId = $(e.target).val();
                         var statusName = $(e.target).attr('name');
                         var id = String(statusName).match(/\d+(?=\])/g)[0];
                         var trStatus = $('#tr' + id);
-                        if (statusId > 2 || statusId=='') {
+                        if (statusId > 2 || statusId == '') {
                             $('textarea[name="comment[' + id + ']"]').prop('required', true);
                         } else {
                             $('textarea[name="comment[' + id + ']"]').prop('required', false);
                         }
                     });
                 });
-                trainingForm.validator('update');
+                $trainingForm.validator('update');
             }
         });
     }

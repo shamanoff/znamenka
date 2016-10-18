@@ -6,8 +6,8 @@ $(document).ready(function () {
     var $trainingFormForNew = $('#formCreate'); //форма для записи на тренировку нового клиента
     var $formForExistsTraining = $('#exists-training-form');
     var $changeTrainerInput = $('#select-trainer-for-exists');
-    var $writeOffTrainingBtn = $('#status-write-off');
-    var $writeOnTrainingBtn = $('#status-write-on');
+    var $writeOffTrainingBtn = $('#statuses-write-off');
+    var $writeOnTrainingBtn = $('#statuses-write-on');
     var $changeTrainerBtn = $('#change-trainer');
 
     var $selectClientForClub = $("#select-client-for-club");
@@ -106,7 +106,7 @@ $(document).ready(function () {
                     .find('[name="client"]').val(response.clientName).end()
                     .find('[name="trainer"]').val(response.trainerId).end()
                     .find('[name="trainerId"]').val(response.trainerId).end()
-                    .find('[name="status"]').val(response.statusName).end()
+                    .find('[name="statuses"]').val(response.statusName).end()
                     .find('[name="comment"]').val(response.comment).end()
                     .find('[name="passForAuto"]').prop('checked', response.passForAuto).end()
                     .find('[name="statusId"]').val(response.statusId).end()

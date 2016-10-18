@@ -23,7 +23,7 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
-                            <input type='text' class="form-control" />
+                            <input type='text' class="form-control"/>
                         </div>
                     </div>
                 </div>
@@ -50,38 +50,38 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-body"  >
-<!--                    Часы дежурства -->
-                                  <div class="form-group">
-                <label class="col-md-4 control-label">Начало дежурства </label>
-                <div class='col-md-4'>
-                    <div class="input-group">
-                        <div class='input-group date' id='startDutyTime'>
+                        <div class="panel-body">
+                            <!--                    Часы дежурства -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Начало дежурства </label>
+                                <div class='col-md-4'>
+                                    <div class="input-group">
+                                        <div class='input-group date' id='startDutyTime'>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
-                            <input type='text' class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                                    
-            </div>
-<!--                           2 -->
-                                                 <div class="form-group">
-                <label class="col-md-4 control-label">Окончание дежурства </label>
-                <div class='col-md-4'>
-                    <div class="input-group">
-                        <div class='input-group date' id='endDutyTime'>
+                                            <input type='text' class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--                           2 -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Окончание дежурства </label>
+                                <div class='col-md-4'>
+                                    <div class="input-group">
+                                        <div class='input-group date' id='endDutyTime'>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
-                            <input type='text' class="form-control" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-<!--                           Часы дежурства -->
-                          <table class="table table-striped table-bordered table-list">
+                                            <input type='text' class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                           Часы дежурства -->
+                            <table class="table table-striped table-bordered table-list">
                                 <thead>
                                 <tr>
                                     <th>Клиент</th>
@@ -99,12 +99,13 @@
                                             <input type="hidden" name="trainingId" th:value="${training.id}"/>
                                             <div class="col-md-12 inputGroupContainer">
                                                 <div class="input-group">
-                                                    <select th:name="'trainingStatus[' + ${training.id} + ']'" class="form-control selectpicker">
+                                                    <select th:name="'trainingStatus[' + ${training.id} + ']'"
+                                                            class="form-control selectpicker">
                                                         <option value="">Выберите статус</option>
                                                         <option
-                                                                th:each="status : ${statuses}"
-                                                                th:value="${status.id}"
-                                                                th:text="${status.name}">
+                                                                th:each="statuses : ${statuses}"
+                                                                th:value="${statuses.id}"
+                                                                th:text="${statuses.name}">
                                                         </option>
                                                     </select>
                                                 </div>
@@ -115,8 +116,9 @@
                                         <div class="form-group">
                                             <div class="col-md-4 inputGroupContainer">
                                                 <div class="input-group">
-                                                    <textarea th:name="'comment[' + ${training.id} + ']'" class="form-control" id="es"
-                                                           type="text"></textarea>
+                                                    <textarea th:name="'comment[' + ${training.id} + ']'"
+                                                              class="form-control" id="es"
+                                                              type="text"></textarea>
                                                 </div>
                                             </div>
                                         </div>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.znamenka.represent.domain.TrainingApi;
 import ru.znamenka.represent.domain.TrainingStatusApi;
+import ru.znamenka.represent.page.endofday.Report;
 import ru.znamenka.represent.page.endofday.Status;
 import ru.znamenka.service.ApiStore;
 import ru.znamenka.service.page.endofday.EndOfDayPageService;
@@ -81,8 +82,9 @@ public class EndOfTheDayReportController {
 
 
     @RequestMapping(method = POST, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> post(@RequestBody List<Status> statuses) {
-        for (Status status : statuses) {
+    // TODO: 18.10.2016 перенести в сервис и добавить Transactional
+    public ResponseEntity<String> post(@RequestBody Report report) {
+        for (Status status : report.getStatuses()) {
             TrainingApi api = apiStore.findOne(TrainingApi.class, status.getTrainingId());
             api.setStatusId(status.getStatus());
             api.setComment(status.getComment());

@@ -2,18 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/imports :: import_header(~{::title},~{::link})}">
     <title>Отчет за смену</title>
+    <link rel="stylesheet" th:href="@{/css/timepicker/bootstrap-clockpicker.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/report.css}"/>
 </head>
 
 <body>
 <th:block th:include="~{fragment/imports :: import_script(~{::script})}">
+    <script th:src="@{/js/timepicker/bootstrap-clockpicker.min.js}"></script>
     <script th:src="@{/js/form-validator/validator.min.js}"></script>
     <script th:src="@{/js/end-of-day.js}"></script>
 </th:block>
 <div th:include="header"></div>
 <div class="container">
 
-    <form class="well form-horizontal" th:action="@{/end-of-day}" method="post" id="training-form" data-toggle="validator">
+    <form class="well form-horizontal" th:action="@{/end-of-day}" method="post" id="training-form"
+          data-toggle="validator">
         <fieldset>
             <!-- Select Basic -->
             <div class="form-group">
@@ -24,7 +27,7 @@
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
-                            <input type='text' class="form-control" />
+                            <input type='text' class="form-control"/>
                         </div>
                     </div>
                 </div>
@@ -52,6 +55,33 @@
                             </div>
                         </div>
                         <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="start-duty">Начало дежурства </label>
+                                <div class='col-md-4'>
+                                    <div class="input-group">
+                                        <div class='input-group date' id='startDutyTime'>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                            <input type='text' class="form-control" id="start-duty"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="end-duty">Окончание дежурства </label>
+                                <div class='col-md-4'>
+                                    <div class="input-group">
+                                        <div class='input-group date' id='endDutyTime'>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                            <input type='text' class="form-control" id="end-duty"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <table class="table table-striped table-bordered table-list">
                                 <thead>
                                 <tr>
@@ -62,7 +92,9 @@
                                 </tr>
                                 </thead>
                                 <tbody th:fragment="training-table" id="training-tbody">
-                                <tr th:each="training: ${trainings}" th:classappend="${training.statusId == 1} ? danger : success" th:id="'tr' + ${training.id}" >
+                                <tr th:each="training: ${trainings}"
+                                    th:classappend="${training.statusId == 1} ? danger : success"
+                                    th:id="'tr' + ${training.id}">
                                     <td th:text="${training.clientName}"></td>
                                     <td th:text="${#temporals.format(training.start, 'HH:mm')}"></td>
                                     <td>
@@ -70,15 +102,18 @@
                                             <input type="hidden" name="trainingId" th:value="${training.id}"/>
                                             <div class="col-md-12 inputGroupContainer">
                                                 <div class="input-group">
-                                                    <select required th:if="${training.statusId == 1}" th:name="'trainingStatus[' + ${training.id} + ']'" class="form-control selectpicker select-status">
+                                                    <select required th:if="${training.statusId == 1}"
+                                                            th:name="'trainingStatus[' + ${training.id} + ']'"
+                                                            class="form-control selectpicker select-status">
                                                         <option value="">Выберите статус</option>
                                                         <option
-                                                                th:each="status : ${statuses}"
-                                                                th:value="${status.id}"
-                                                                th:text="${status.name}">
+                                                                th:each="statuses : ${statuses}"
+                                                                th:value="${statuses.id}"
+                                                                th:text="${statuses.name}">
                                                         </option>
                                                     </select>
-                                                    <span th:if="${training.statusId != 1}" th:text="${training.statusName}"></span>
+                                                    <span th:if="${training.statusId != 1}"
+                                                          th:text="${training.statusName}"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -87,8 +122,10 @@
                                         <div class="form-group">
                                             <div class="col-md-12 inputGroupContainer">
                                                 <div class="input-group">
-                                                    <textarea  th:if="${training.statusId == 1}" th:name="'comment[' + ${training.id} + ']'" class="form-control" id="es"
-                                                           type="text"></textarea>
+                                                    <textarea th:if="${training.statusId == 1}"
+                                                              th:name="'comment[' + ${training.id} + ']'"
+                                                              class="form-control" id="es"
+                                                              type="text"></textarea>
                                                 </div>
                                             </div>
                                         </div>
