@@ -55,7 +55,7 @@ public class DutyController {
     }
 
     @PostMapping
-    public View createClient(@Valid DutyApi duty, @ModelAttribute Long trainerId, BindingResult bindingResult) {
+    public View createDuty(@Valid DutyApi duty, @ModelAttribute Long trainerId, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             service.save(DutyApi.class, duty.setTrainerId(trainerId));
         }

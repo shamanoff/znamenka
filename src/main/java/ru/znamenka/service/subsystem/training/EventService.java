@@ -87,6 +87,10 @@ public class EventService implements IEventService {
                     .title(client.getFullName())
                     .start(start)
                     .end(end);
+
+            if (training.getPassForAuto()) {
+                calendarEvent.color("#48D1CC", "#FFFFFF");
+            }
             calendarEvents.add(calendarEvent);
         }
         return calendarEvents;

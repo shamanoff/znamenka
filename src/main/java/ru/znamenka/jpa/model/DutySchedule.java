@@ -19,7 +19,7 @@ public class DutySchedule implements BaseModel<Long> {
     @Id
     @Column(name = "duty_id")
     @GeneratedValue(strategy = IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "planned_start")
     @Convert(converter = ru.znamenka.jpa.converter.LocalDateTimeConverter.class)

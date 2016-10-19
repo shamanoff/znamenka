@@ -156,18 +156,18 @@ $(document).ready(function () {
 
     function getAbon(clientId, $select) {
         $.ajax({
-            url: "/client/subscriptions",
+            url: "/client/abonements",
             type: "get",
             data: {
                 "clientId": clientId
             },
             success: function (data) {
                 clearAbonSelect();
-                $.each(data, function (i, subscription) {
+                $.each(data, function (i, abonements) {
                     $select
                         .append($("<option></option>")
-                            .attr("value", subscription.purchaseId)
-                            .text(subscription.productName));
+                            .attr("value", abonements.purchaseId)
+                            .text(abonements.productName));
                 });
             }
         });

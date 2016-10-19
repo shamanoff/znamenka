@@ -2,6 +2,7 @@ package ru.znamenka.jpa.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import ru.znamenka.jpa.converter.BooleanConverter;
 import ru.znamenka.jpa.converter.LocalDateTimeConverter;
 import ru.znamenka.jpa.listener.CreatedTrainingListener;
 
@@ -75,6 +76,7 @@ public class Training implements BaseModel<Long> {
     @Column(name = "comment")
     private String comment;
 
+    @Convert(converter = BooleanConverter.class)
     @Column(name = "pass_for_auto")
     private Boolean passForAuto;
 }

@@ -60,4 +60,10 @@ public class CalendarEvent {
         this.textColor = color.text();
         return this;
     }
+
+    public CalendarEvent color(String background, String text) {
+        this.backgroundColor = background;
+        this.textColor = text;
+        return this;
+    }
 }

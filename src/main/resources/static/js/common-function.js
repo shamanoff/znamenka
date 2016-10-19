@@ -6,23 +6,24 @@ var Utils = {
     submitAjax: function ($form, success) {
         $form.validator().on('submit', function (e) {
             if (!e.isDefaultPrevented()) {
-                e.preventDefault();
                 $.post($form.attr('action'), $form.serialize(), success, 'json');
+                return false;
             }
         });
     },
     submitWithData: function ($form, data, success) {
         $form.validator().on('submit', function (e) {
             if (!e.isDefaultPrevented()) {
-                e.preventDefault();
                 $.post($form.attr('action'), data, success, 'json');
+                return false;
             }
         });
     },
 
     submitForm: function (e) {
         if (!e.isDefaultPrevented()) {
-            $(e.target).submit();
+            $(e.target).unbind('submit').submit();
+            return false;
         }
     }
 };

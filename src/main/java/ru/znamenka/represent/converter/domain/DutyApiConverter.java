@@ -34,13 +34,14 @@ public class DutyApiConverter implements UpdatableApiConverter<DutySchedule, Dut
     @Override
     public DutySchedule convertTo(DutyApi source, DutySchedule entity) {
         entity.setFactStart(source.getFactStart());
-        entity.setFactEnd(source.getFactStart());
+        entity.setFactEnd(source.getFactEnd());
 
         return entity;
     }
 
     @Override
     public DutyApi convert(DutySchedule entity) {
+        if (entity == null) return null;
         return new DutyApi()
                 .setId(entity.getId())
                 .setTrainerId(entity.getTrainerId())

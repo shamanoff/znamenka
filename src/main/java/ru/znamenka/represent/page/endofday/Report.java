@@ -25,4 +25,6 @@ public class Report {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime factEnd;
 
+    private Long dutyId;
+
 }

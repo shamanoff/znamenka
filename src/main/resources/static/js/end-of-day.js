@@ -1,8 +1,6 @@
 $(document).ready(function () {
     var $startTime = $('#startTime');
     var $trainingForm = $('#training-form');
-    var $startDutyTime = $('#startDutyTime');
-    var $endDutyTime = $('#endDutyTime');
 
     $startTime.datetimepicker({
         defaultDate: new Date(),
@@ -12,26 +10,7 @@ $(document).ready(function () {
         getTraining(e.date);
     });
 
-    $startDutyTime.clockpicker({
-        placement: 'top',
-        align: 'left',
-        autoclose: true,
-        'default': '08:00'
-    });
-    var $start = $('#start-duty');
-    $start.val('08:00');
-
-    $endDutyTime.clockpicker({
-        placement: 'top',
-        align: 'left',
-        autoclose: true,
-        'default': '20:00'
-    });
-    var $end = $('#end-duty');
-    $end.val('20:00');
-
     $trainingForm.validator().on('submit', function (e) {
-        $trainingForm.validator('validate');
         if (!e.isDefaultPrevented()) {
             // Get the form instance
             var $form = $(e.target);
@@ -46,6 +25,7 @@ $(document).ready(function () {
                 contentType: 'application/json',
                 dataType: "json"
             });
+            return false;
         }
     });
 
@@ -60,9 +40,6 @@ $(document).ready(function () {
 
         var statuses = [];
         var trainings = $form.find('[name="trainingId"]').toArray();
-        var startTime = moment($start.val(), 'HH:mm');
-        var endTime = moment($end.val(), 'HH:mm');
-        var date = $startTime.data("DateTimePicker").date();
 
         $.each(trainings, function (index) {
             var id, status, obj = {};
@@ -76,11 +53,19 @@ $(document).ready(function () {
                 statuses.push(obj)
             }
         });
-        return {
-            factStart: extracted(startTime, date),
-            factEnd: extracted(endTime, date),
-            statuses: statuses
-        };
+        var dutyId = $('#duty').val();
+        if (dutyId != '') {
+            var startTime = moment($('#start-duty').val(), 'HH:mm');
+            var endTime = moment($('#end-duty').val(), 'HH:mm');
+            var date = $startTime.data("DateTimePicker").date();
+            return {
+                factStart: extracted(startTime, date),
+                factEnd: extracted(endTime, date),
+                statuses: statuses,
+                dutyId: dutyId
+            };
+        }
+        return {statuses: statuses}
 
     }
 
