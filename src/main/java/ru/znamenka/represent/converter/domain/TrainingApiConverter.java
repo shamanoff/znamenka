@@ -42,6 +42,7 @@ public class TrainingApiConverter implements UpdatableApiConverter<Training, Tra
         TrainingApi api = new TrainingApi();
         api.setClientId(training.getClientId());
         api.setClientName(training.getClient().getName() + " " + training.getClient().getSurname());
+        api.setCarNumber(training.getClient().getCarNumber());
         api.setTrainerId(training.getTrainerId());
         api.setTrainerName(training.getTrainer().getName());
         api.setId(training.getId());

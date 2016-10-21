@@ -106,6 +106,7 @@ $(document).ready(function () {
                     .find('[name="client"]').val(response.clientName).end()
                     .find('[name="trainer"]').val(response.trainerId).end()
                     .find('[name="trainerId"]').val(response.trainerId).end()
+                    .find('[name="carNumber"]').val(response.carNumber).end()
                     .find('[name="statuses"]').val(response.statusName).end()
                     .find('[name="comment"]').val(response.comment).end()
                     .find('[name="passForAuto"]').prop('checked', response.passForAuto).end()

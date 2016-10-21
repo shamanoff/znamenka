@@ -51,5 +51,7 @@ public class TrainingApi implements DomainApi, UpdatableApi<Long> {
 
     private Boolean passForAuto;
 
+    private String carNumber;
+
     private String abonement;
 }
