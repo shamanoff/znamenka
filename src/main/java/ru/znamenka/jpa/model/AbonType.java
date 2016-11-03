@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * <p>
@@ -14,7 +15,8 @@ import javax.persistence.Id;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Entity(name = "abon_type")
+@Entity
+@Table(name = "abon_type", schema = "common")
 @Getter @Setter
 public class AbonType implements BaseModel<Integer> {
 

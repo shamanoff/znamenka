@@ -7,8 +7,9 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
-import static javax.persistence.FetchType.*;
-import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "purchase")
 @NamedEntityGraph(
@@ -18,66 +19,61 @@ import static javax.persistence.GenerationType.IDENTITY;
                 @NamedAttributeNode(value = "client")
         }
 )
+@Getter
+@Setter
 public class Purchase implements BaseModel<Long> {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = SEQUENCE, generator = "purchase_seq")
+    @SequenceGenerator(name = "purchase_seq", sequenceName = "purchase_purchase_id_seq", allocationSize = 1)
     @Column(name = "purchase_id")
-    @Getter @Setter
     private Long id;
 
     @Column(name = "is_provided")
-    @Getter @Setter
     private Boolean isProvided;
 
     @Column(name = "purchase_date")
-    @Getter @Setter
     private Date purchaseDate;
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "client_id", insertable = false, updatable = false)
-    @Getter @Setter
     private Client client;
 
     @Column(name = "client_id")
-    @Getter @Setter
+
     private Long clientId;
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "product_id", nullable = false, insertable = false, updatable = false)
-    @Getter @Setter
+
     private Product product;
 
     @Column(name = "product_id", nullable = false)
-    @Getter @Setter
+
     private Long productId;
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "trainer_id", insertable = false, updatable = false)
-    @Getter @Setter
+
     private Trainer trainer;
 
     @Column(name = "trainer_id")
-    @Getter @Setter
+
     private Long trainerId;
 
     @OneToMany(fetch = LAZY)
-    @Getter @Setter
+
     private List<Training> trainings;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "discount_id", insertable = false, updatable = false)
-    @Getter @Setter
     private Discount discount;
 
     @Column(name = "discount_id")
-    @Getter @Setter
     private Long discountId;
 
-    @OneToMany(mappedBy = "purchase",fetch = LAZY)
-    @Getter @Setter
+    @OneToMany(mappedBy = "purchase", fetch = LAZY)
     private List<Payment> payments;
-
 
 
 }

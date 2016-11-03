@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "duty_schedule")
 @EntityListeners({DutyListener.class})
@@ -18,7 +18,8 @@ public class DutySchedule implements BaseModel<Long> {
 
     @Id
     @Column(name = "duty_id")
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = SEQUENCE, generator = "duty_schedule_seq")
+    @SequenceGenerator(name = "duty_schedule_seq", sequenceName = "duty_schedule_duty_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "planned_start")

@@ -7,7 +7,8 @@ import static javax.persistence.DiscriminatorType.CHAR;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
-@Entity(name = "products")
+@Entity
+@Table(name = "products", schema = "common")
 @Inheritance(strategy = SINGLE_TABLE)
 @DiscriminatorColumn(name = "is_abon", discriminatorType = CHAR)
 @DiscriminatorValue(value = "f")

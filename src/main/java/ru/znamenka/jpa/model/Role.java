@@ -8,17 +8,17 @@ import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-@Entity(name = "roles")
+@Entity
+@Table(name = "roles", schema = "common")
+@Getter @Setter
 public class Role implements GrantedAuthority, BaseModel<Long> {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "role_id", nullable = false, unique = true)
-    @Getter @Setter
     private Long id;
 
     @Column(name = "role_name", nullable = false, unique = true)
-    @Getter @Setter
     private String roleName;
 
     @Override

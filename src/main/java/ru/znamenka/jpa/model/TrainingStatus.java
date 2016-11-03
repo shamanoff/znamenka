@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * <p>
@@ -15,16 +16,16 @@ import javax.persistence.Id;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Entity(name = "training_status")
+@Entity
+@Table(name = "training_status", schema = "common")
+@Getter @Setter
 public class TrainingStatus implements BaseModel<Long> {
 
     @Id
     @Column(name = "status_id", nullable = false, unique = true)
-    @Getter @Setter
     private Long id;
 
     @Column(name = "status_name", nullable = false, unique = true)
-    @Getter @Setter
     private String name;
 
     @Override

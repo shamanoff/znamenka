@@ -8,11 +8,12 @@ import javax.persistence.*;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity(name = "clients_abonements")
-@Getter @Setter
+@Getter
 public class ClientAbonement implements BaseModel<Long> {
 
     @Id
     @Column(name = "id", insertable = false)
+    @Setter
     private Long id;
 
     @Column(name = "product_id", insertable = false)

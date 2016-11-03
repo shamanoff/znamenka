@@ -10,8 +10,10 @@ import java.util.List;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
+
+@Entity
+@Table(name = "clients", schema = "common")
 @Getter @Setter
-@Entity(name = "clients")
 public class Client implements BaseModel<Long> {
 
     @Id

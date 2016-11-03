@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
  * <p>
@@ -37,7 +37,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Training implements BaseModel<Long> {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = SEQUENCE, generator="trainings_seq")
+    @SequenceGenerator(name = "trainings_seq", sequenceName = "trainings_training_id_seq", allocationSize = 1)
     @Column(name = "training_id")
     private Long id;
 

@@ -3,10 +3,7 @@ package ru.znamenka.jpa.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -21,24 +18,22 @@ import static javax.persistence.FetchType.LAZY;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Entity(name = "trainers")
+@Entity
+@Table(name = "trainers", schema = "common")
+@Getter @Setter
 public class Trainer implements BaseModel<Long> {
 
     @Id
     @Column(name = "trainer_id")
-    @Getter @Setter
     private Long id;
 
     @Column(name = "trainer_name")
-    @Getter @Setter
     private String name;
 
     @OneToMany(mappedBy = "trainer", fetch = LAZY)
-    @Getter @Setter
     private List<Training> trainings;
 
     @OneToMany(mappedBy = "trainer", fetch = LAZY)
-    @Getter @Setter
     private List<Purchase> purchases;
 
 }

@@ -7,31 +7,28 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "payments")
+@Getter @Setter
 public class Payment implements BaseModel<Long> {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = SEQUENCE, generator = "payments_seq")
+    @SequenceGenerator(name = "payments_seq", sequenceName = "payments_payment_id_seq", allocationSize = 1)
     @Column(name = "payment_id")
-    @Getter @Setter
     private Long id;
 
     @Column(name = "payment_amount")
-    @Getter @Setter
     private Long paymentAmount;
 
     @Column(name = "payment_date")
-    @Getter @Setter
     private Timestamp paymentDate;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "purchase_id", insertable = false, updatable = false)
-    @Getter @Setter
     private Purchase purchase;
 
     @Column(name = "purchase_id")
-    @Getter @Setter
     private Long purchaseId;
 }

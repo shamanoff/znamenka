@@ -9,7 +9,8 @@ import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
 
-@Entity(name = "users")
+@Entity
+@Table(name = "users", schema = "znamenka")
 @NamedEntityGraph(name = "user.graph",
         attributeNodes = {
                 @NamedAttributeNode("authorities"),

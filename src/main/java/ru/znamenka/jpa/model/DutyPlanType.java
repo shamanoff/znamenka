@@ -6,8 +6,10 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity(name = "duty_plan_type")
+@Entity
+@Table(name = "duty_plan_type", schema = "common")
 @Getter @Setter
 public class DutyPlanType implements BaseModel<Long> {
 
