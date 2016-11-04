@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+<body>
+<div class="container">
+
+    <form class="well form-horizontal" action=" " method="post" id="header">
+
+        <!-- Form Name -->
+
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+                        class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Znamenka CRM</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a th:href="@{/index}">Рабочий стол</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Работа с клиентами
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/client}">Заведение клиентов</a></li>
+                            <li><a th:href="@{/training}">Запись на тренировку</a></li>
+                            <li><a th:href="@{/sale}">Продажи</a></li>
+                            <li><a th:href="@{/events}">Расписание</a></li>
+                            <li><a th:href="@{/duty}">Дежурства</a></li>
+                        </ul>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_TRAINER')">
+                        <a th:href="@{/end-of-day}">Отчет за смену</a>
+                    </li>
+
+                </ul>
+                <th:block th:include="~{fragment/user}">
+                </th:block>
+            </div>
+        </nav>
+    </form>
+</div>
+</body>
+</html>
