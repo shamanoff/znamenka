@@ -14,7 +14,7 @@
     <modules>
         <module>jpa</module>
         <module>crm</module>
-        <module>persons</module>
+        <module>cabinet</module>
     </modules>
 
 	<parent>

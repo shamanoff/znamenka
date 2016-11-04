@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "facebook.login",
+      "type": "java.lang.String",
+      "description": "Description for facebook.login."
+    },
+    {
+      "name": "google.login",
+      "type": "java.lang.String",
+      "description": "Description for google.login."
+    }
+  ]
+}
