@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.znamenka.crm.represent.converter.ApiConverter;
 import ru.znamenka.crm.represent.converter.UpdatableApiConverter;
-import ru.znamenka.jpa.repository.QueryDslRepository;
 
 import java.util.Collection;
 import java.util.Map;
@@ -30,20 +29,6 @@ public class BeanBucketConfig {
     private ListableBeanFactory ctx;
 
 
-    /**
-     * Корзинка, в которой хранятся ссылки на Созданные репозитории Spring Data JPA
-     * с доступом по типу модели
-     * @return корзинка репозиториев
-     */
-    @Bean(destroyMethod = "clear")
-    public Map<Class, QueryDslRepository> repositoryBucket() {
-        final Collection<QueryDslRepository> repositories = ctx.getBeansOfType(QueryDslRepository.class).values();
-        Map<Class, QueryDslRepository> map = new ConcurrentHashMap<>(repositories.size());
-        for (QueryDslRepository repository : repositories) {
-            map.put(repository.getJavaType(), repository);
-        }
-        return map;
-    }
 
     /**
      * Корзинка, в которой хранятся ссылки на Созданные конвертеры моделей в представления {@link ApiConverter}

@@ -3,6 +3,7 @@ package ru.znamenka.jpa.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import ru.znamenka.jpa.model.User;
 import ru.znamenka.jpa.repository.domain.UserRepository;
 
@@ -15,6 +16,7 @@ import static org.springframework.util.Assert.notNull;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
+@Component
 public class UserDao implements UserDetailsService {
 
     /**

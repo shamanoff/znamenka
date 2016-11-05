@@ -48,7 +48,7 @@ public class SecurityConfig {
         return filter;
     }
 
-    @Bean
+
     public List<Filter> filters() {
         return ssoFilters();
     }

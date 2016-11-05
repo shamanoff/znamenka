@@ -1,4 +1,4 @@
-package ru.znamenka;
+package ru.znamenka.crm;
 
 
 import org.junit.Test;
