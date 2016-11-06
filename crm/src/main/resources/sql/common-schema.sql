@@ -45,7 +45,7 @@ CREATE TABLE common.products
   price          DOUBLE PRECISION       NOT NULL,
   training_count INT,
   expire_days    INT,
-  abon_type      INT REFERENCES abon_type (id),
+  abon_type      INT REFERENCES common.abon_type (id),
   is_abon        BOOLEAN                NOT NULL DEFAULT FALSE,
   CHECK ((is_abon = TRUE AND training_count IS NOT NULL AND training_count > 0 AND abon_type IS NOT NULL AND
           (expire_days IS NULL OR products.expire_days > 0)) OR
@@ -93,7 +93,7 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER tr_upd_client
 AFTER UPDATE OR DELETE ON common.clients
-FOR EACH ROW EXECUTE PROCEDURE upd_client();
+FOR EACH ROW EXECUTE PROCEDURE common.upd_client();
 
 END TRANSACTION;
 COMMIT;
