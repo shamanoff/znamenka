@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar crm/target/crm.jar
+web: java $JAVA_OPTS -jar -Dserver.port=$PORT crm/target/crm.jar
