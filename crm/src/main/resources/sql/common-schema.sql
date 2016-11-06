@@ -1,4 +1,5 @@
 BEGIN TRANSACTION;
+CREATE SCHEMA common;
 CREATE TABLE common.discounts
 (
   discount_id     BIGINT PRIMARY KEY NOT NULL,

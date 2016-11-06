@@ -1,5 +1,5 @@
 BEGIN TRANSACTION;
-
+CREATE SCHEMA znamenka;
 CREATE TABLE znamenka.purchase
 (
   purchase_id   BIGSERIAL PRIMARY KEY NOT NULL,
