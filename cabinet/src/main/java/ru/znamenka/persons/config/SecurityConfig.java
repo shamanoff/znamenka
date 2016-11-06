@@ -9,28 +9,50 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.CompositeFilter;
 import ru.znamenka.persons.config.oauth2.FacebookConfig;
 import ru.znamenka.persons.config.oauth2.GoogleConfig;
 import ru.znamenka.persons.config.oauth2.util.OAuth2Provider;
 
 import javax.servlet.Filter;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Configuration
 @Import({GoogleConfig.class, FacebookConfig.class})
 @EnableOAuth2Client
-public class SecurityConfig {
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private ListableBeanFactory factory;
+
+    @Autowired
+    OAuth2ClientContext oauth2ClientContext;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .antMatcher("/**")
+                .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
+                .authorizeRequests()
+                .antMatchers("/css/**", "/js/**", "/fonts/**", "/webjars/**").permitAll()
+                .antMatchers("/me").authenticated()
+
+                ;
+    }
 
     @Bean
     public FilterRegistrationBean oauth2ClientFilterRegistration(
@@ -49,12 +71,8 @@ public class SecurityConfig {
     }
 
 
-    public List<Filter> filters() {
-        return ssoFilters();
-    }
-
     private List<Filter> ssoFilters() {
-        Collection<OAuth2Provider> oauth2Providers = factory.getBeansOfType(OAuth2Provider.class).values();
+        val oauth2Providers = factory.getBeansOfType(OAuth2Provider.class).values();
         return oauth2Providers
                 .stream()
                 .map(p -> getFilter(p.getClient(), p.getResource(), p.getLogin()))

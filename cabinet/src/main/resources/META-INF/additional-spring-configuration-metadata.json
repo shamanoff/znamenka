@@ -9,6 +9,96 @@
       "name": "google.login",
       "type": "java.lang.String",
       "description": "Description for google.login."
+    },
+    {
+      "name": "facebook.client.clientId",
+      "type": "java.lang.String",
+      "description": "Description for facebook.client.clientId."
+    },
+    {
+      "name": "facebook.client.clientSecret",
+      "type": "java.lang.String",
+      "description": "Description for facebook.client.clientSecret."
+    },
+    {
+      "name": "facebook.client.accessTokenUri",
+      "type": "java.lang.String",
+      "description": "Description for facebook.client.accessTokenUri."
+    },
+    {
+      "name": "facebook.client.userAuthorizationUri",
+      "type": "java.lang.String",
+      "description": "Description for facebook.client.userAuthorizationUri."
+    },
+    {
+      "name": "facebook.client.tokenName",
+      "type": "java.lang.String",
+      "description": "Description for facebook.client.tokenName."
+    },
+    {
+      "name": "facebook.client.authenticationScheme",
+      "type": "java.lang.String",
+      "description": "Description for facebook.client.authenticationScheme."
+    },
+    {
+      "name": "facebook.client.clientAuthenticationScheme",
+      "type": "java.lang.String",
+      "description": "Description for facebook.client.clientAuthenticationScheme."
+    },
+    {
+      "name": "google.client.clientId",
+      "type": "java.lang.String",
+      "description": "Description for google.client.clientId."
+    },
+    {
+      "name": "google.client.clientSecret",
+      "type": "java.lang.String",
+      "description": "Description for google.client.clientSecret."
+    },
+    {
+      "name": "google.client.accessTokenUri",
+      "type": "java.lang.String",
+      "description": "Description for google.client.accessTokenUri."
+    },
+    {
+      "name": "google.client.userAuthorizationUri",
+      "type": "java.lang.String",
+      "description": "Description for google.client.userAuthorizationUri."
+    },
+    {
+      "name": "google.client.tokenName",
+      "type": "java.lang.String",
+      "description": "Description for google.client.tokenName."
+    },
+    {
+      "name": "google.client.authenticationScheme",
+      "type": "java.lang.String",
+      "description": "Description for google.client.authenticationScheme."
+    },
+    {
+      "name": "google.client.clientAuthenticationScheme",
+      "type": "java.lang.String",
+      "description": "Description for google.client.clientAuthenticationScheme."
+    },
+    {
+      "name": "google.client.preEstablishedRedirectUri",
+      "type": "java.lang.String",
+      "description": "Description for google.client.preEstablishedRedirectUri."
+    },
+    {
+      "name": "google.client.useCurrentUri",
+      "type": "java.lang.String",
+      "description": "Description for google.client.useCurrentUri."
+    },
+    {
+      "name": "facebook.client.preEstablishedRedirectUri",
+      "type": "java.lang.String",
+      "description": "Description for facebook.client.preEstablishedRedirectUri."
+    },
+    {
+      "name": "facebook.client.useCurrentUri",
+      "type": "java.lang.String",
+      "description": "Description for facebook.client.useCurrentUri."
     }
   ]
 }

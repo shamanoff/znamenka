@@ -1,13 +1,15 @@
 package ru.znamenka.persons.config.oauth2.util;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 
-@Getter
+@Getter @Setter
 public class OAuth2Provider {
+
 
     private String login;
 
