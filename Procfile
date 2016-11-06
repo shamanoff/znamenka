@@ -1,1 +1,1 @@
-java $JAVA_OPTS -jar crm/target/crm.jar
+web: java $JAVA_OPTS -jar crm/target/crm.jar
