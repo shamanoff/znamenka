@@ -20,9 +20,10 @@ var Utils = {
         });
     },
 
-    submitForm: function (e) {
+    submitForm: function (e, callback) {
         if (!e.isDefaultPrevented()) {
             $(e.target).unbind('submit').submit();
+            callback();
             return false;
         }
     }
