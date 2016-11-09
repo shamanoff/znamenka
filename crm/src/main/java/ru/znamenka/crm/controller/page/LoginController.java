@@ -37,7 +37,7 @@ public class LoginController {
         return "index";
     }
 
-    @GetMapping
+    @GetMapping("/")
     public View redirectToIndex() {
         return new RedirectView("/index");
     }
