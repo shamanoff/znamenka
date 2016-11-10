@@ -8,10 +8,6 @@ import ru.znamenka.persons.config.oauth2.util.OAuth2Provider;
 @Configuration
 public class GoogleConfig {
 
-    @Bean
-    @ConfigurationProperties("google")
-    public OAuth2Provider google() {
-        return new OAuth2Provider();
-    }
+
 
 }

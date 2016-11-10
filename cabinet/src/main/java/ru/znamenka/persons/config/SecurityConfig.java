@@ -5,10 +5,10 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,8 +22,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.CompositeFilter;
-import ru.znamenka.persons.config.oauth2.FacebookConfig;
-import ru.znamenka.persons.config.oauth2.GoogleConfig;
 import ru.znamenka.persons.config.oauth2.util.OAuth2Provider;
 
 import javax.servlet.Filter;
@@ -31,8 +29,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Configuration
-@Import({GoogleConfig.class, FacebookConfig.class})
 @EnableOAuth2Client
+@EnableAuthorizationServer
+@Order(6)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -45,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .antMatcher("/**")
                 .authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/fonts/**", "/webjars/**", "/", "/login/*").permitAll()
+                .antMatchers("/css/**", "/js/**", "/fonts/**", "/webjars/**", "/", "/login/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/"))
                 .and()
@@ -80,12 +79,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private OAuth2ClientAuthenticationProcessingFilter getFilter(OAuth2ProtectedResourceDetails details, ResourceServerProperties props, String loginUrl) {
         val filter = new OAuth2ClientAuthenticationProcessingFilter(loginUrl);
-        val googleTemplate = new OAuth2RestTemplate(details);
+        val googleTemplate = new OAuth2RestTemplate(details, oauth2ClientContext);
         filter.setRestTemplate(googleTemplate);
         val tokenServices = new UserInfoTokenServices(props.getUserInfoUri(), details.getClientId());
         filter.setTokenServices(tokenServices);
         return filter;
     }
 
+    @Bean
+    @ConfigurationProperties("google")
+    public OAuth2Provider google() {
+        return new OAuth2Provider();
+    }
+
+    @Bean
+    @ConfigurationProperties("facebook")
+    public OAuth2Provider facebook() {
+        return new OAuth2Provider();
+    }
 
 }
