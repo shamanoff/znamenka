@@ -3,7 +3,7 @@ package ru.znamenka.crm.represent.converter.page;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.znamenka.crm.represent.converter.ApiConverter;
+import ru.znamenka.jpa.represent.converter.ApiConverter;
 import ru.znamenka.crm.represent.page.ClientBalance;
 import ru.znamenka.jpa.model.Client;
 

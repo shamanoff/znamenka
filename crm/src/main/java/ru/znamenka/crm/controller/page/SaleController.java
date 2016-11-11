@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.znamenka.crm.represent.domain.*;
 import ru.znamenka.crm.represent.page.sale.ClientDebtApi;
-import ru.znamenka.crm.service.ApiStore;
+import ru.znamenka.jpa.represent.ApiStore;
 import ru.znamenka.crm.service.page.sale.SalePageService;
 
 import javax.validation.Valid;

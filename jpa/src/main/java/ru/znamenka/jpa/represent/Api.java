@@ -1,4 +1,4 @@
-package ru.znamenka.crm.represent;
+package ru.znamenka.jpa.represent;
 
 /**
  * <p>

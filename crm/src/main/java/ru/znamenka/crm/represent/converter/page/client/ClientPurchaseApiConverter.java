@@ -3,7 +3,7 @@ package ru.znamenka.crm.represent.converter.page.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.znamenka.crm.represent.converter.ApiConverter;
+import ru.znamenka.jpa.represent.converter.ApiConverter;
 import ru.znamenka.crm.represent.converter.domain.PaymentApiConverter;
 import ru.znamenka.crm.represent.domain.PaymentApi;
 import ru.znamenka.crm.represent.page.client.ClientPurchaseApi;

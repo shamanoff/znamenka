@@ -4,7 +4,7 @@ package ru.znamenka.crm.service.subsystem.client;
 import ru.znamenka.crm.represent.domain.ClientApi;
 import ru.znamenka.crm.represent.domain.TrainingApi;
 import ru.znamenka.crm.represent.page.client.ClientPurchaseApi;
-import ru.znamenka.crm.service.ApiStore;
+import ru.znamenka.jpa.represent.ApiStore;
 
 import java.util.List;
 

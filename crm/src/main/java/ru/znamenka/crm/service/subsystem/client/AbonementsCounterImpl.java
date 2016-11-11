@@ -3,7 +3,7 @@ package ru.znamenka.crm.service.subsystem.client;
 
 import com.querydsl.core.Tuple;
 import ru.znamenka.crm.represent.page.client.CountOfTraining;
-import ru.znamenka.crm.service.BaseExecutor;
+import ru.znamenka.jpa.represent.impl.BaseExecutor;
 
 import java.util.List;
 

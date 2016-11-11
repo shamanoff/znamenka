@@ -1,21 +1,20 @@
-package ru.znamenka.crm.service;
+package ru.znamenka.jpa.represent.impl;
 
 
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Service;
-import ru.znamenka.crm.represent.Api;
 import ru.znamenka.jpa.repository.QueryFactory;
+import ru.znamenka.jpa.represent.Api;
+import ru.znamenka.jpa.represent.Executor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * <p>
- *     Базовый класс для выполнения нестадндартных запросов.
- *     Содержит минимально необходимые зависимости, а так же
- *     обертки для стандартных методов.
+ * Базовый класс для выполнения нестадндартных запросов.
+ * Содержит минимально необходимые зависимости, а так же
+ * обертки для стандартных методов.
  * <p>
  * Создан 04.07.2016
  * <p>
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Service
 public abstract class BaseExecutor<S, T extends Api> implements Executor<S, T> {
 
     /**

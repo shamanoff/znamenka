@@ -1,8 +1,7 @@
-package ru.znamenka.crm.service;
+package ru.znamenka.jpa.represent;
 
 
 import com.querydsl.jpa.impl.JPAQuery;
-import ru.znamenka.crm.represent.Api;
 
 import java.util.List;
 

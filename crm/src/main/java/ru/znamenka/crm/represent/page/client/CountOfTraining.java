@@ -4,7 +4,7 @@ package ru.znamenka.crm.represent.page.client;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import ru.znamenka.crm.represent.Api;
+import ru.znamenka.jpa.represent.Api;
 
 /**
  * <p>

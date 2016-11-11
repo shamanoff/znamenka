@@ -1,8 +1,8 @@
-package ru.znamenka.crm.represent.converter;
+package ru.znamenka.jpa.represent.converter;
 
 
-import ru.znamenka.crm.represent.DomainApi;
-import ru.znamenka.crm.represent.UpdatableApi;
+import ru.znamenka.jpa.represent.DomainApi;
+import ru.znamenka.jpa.represent.UpdatableApi;
 import ru.znamenka.jpa.model.BaseModel;
 
 /**

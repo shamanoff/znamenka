@@ -2,7 +2,7 @@ package ru.znamenka.crm.represent.converter.domain;
 
 
 import org.springframework.stereotype.Component;
-import ru.znamenka.crm.represent.converter.ApiConverter;
+import ru.znamenka.jpa.represent.converter.ApiConverter;
 import ru.znamenka.crm.represent.domain.PurchaseApi;
 import ru.znamenka.jpa.model.Purchase;
 

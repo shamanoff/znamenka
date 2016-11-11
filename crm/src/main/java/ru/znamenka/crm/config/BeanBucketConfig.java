@@ -5,8 +5,11 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.znamenka.crm.represent.converter.ApiConverter;
-import ru.znamenka.crm.represent.converter.UpdatableApiConverter;
+import ru.znamenka.jpa.repository.EntityRepository;
+import ru.znamenka.jpa.represent.ApiStore;
+import ru.znamenka.jpa.represent.converter.ApiConverter;
+import ru.znamenka.jpa.represent.converter.UpdatableApiConverter;
+import ru.znamenka.jpa.represent.impl.ConvertEntityService;
 
 import java.util.Collection;
 import java.util.Map;
@@ -27,8 +30,6 @@ public class BeanBucketConfig {
      */
     @Autowired
     private ListableBeanFactory ctx;
-
-
 
     /**
      * Корзинка, в которой хранятся ссылки на Созданные конвертеры моделей в представления {@link ApiConverter}
@@ -52,5 +53,11 @@ public class BeanBucketConfig {
             map.put(converter.getApiType(), converter);
         }
         return map;
+    }
+
+    @Bean(name = "convertService")
+    @Autowired
+    public ApiStore convertService(EntityRepository repo) {
+        return new ConvertEntityService(repo, convertersBucket(), convertersBucketForUpdatable());
     }
 }

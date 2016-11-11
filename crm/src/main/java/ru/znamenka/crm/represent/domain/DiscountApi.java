@@ -3,7 +3,7 @@ package ru.znamenka.crm.represent.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import ru.znamenka.crm.represent.DomainApi;
+import ru.znamenka.jpa.represent.DomainApi;
 
 @Builder
 public class DiscountApi implements DomainApi {

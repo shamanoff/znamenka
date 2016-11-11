@@ -1,8 +1,8 @@
-package ru.znamenka.crm.represent.converter;
+package ru.znamenka.jpa.represent.converter;
 
 
 import org.springframework.core.convert.converter.Converter;
-import ru.znamenka.crm.represent.DomainApi;
+import ru.znamenka.jpa.represent.DomainApi;
 import ru.znamenka.jpa.model.BaseModel;
 
 /**

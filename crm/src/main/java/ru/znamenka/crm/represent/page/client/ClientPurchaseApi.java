@@ -4,7 +4,7 @@ package ru.znamenka.crm.represent.page.client;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
-import ru.znamenka.crm.represent.DomainApi;
+import ru.znamenka.jpa.represent.DomainApi;
 import ru.znamenka.crm.represent.domain.PaymentApi;
 
 import java.time.LocalDate;

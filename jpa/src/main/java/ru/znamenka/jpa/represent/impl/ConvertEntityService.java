@@ -1,19 +1,18 @@
-package ru.znamenka.crm.service;
+package ru.znamenka.jpa.represent.impl;
 
 
 import com.querydsl.core.types.Predicate;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import ru.znamenka.crm.represent.DomainApi;
-import ru.znamenka.crm.represent.UpdatableApi;
-import ru.znamenka.crm.represent.converter.ApiConverter;
-import ru.znamenka.crm.represent.converter.UpdatableApiConverter;
 import ru.znamenka.jpa.model.BaseModel;
 import ru.znamenka.jpa.repository.EntityRepository;
+import ru.znamenka.jpa.repository.FacadeDomainRepository;
+import ru.znamenka.jpa.represent.ApiStore;
+import ru.znamenka.jpa.represent.DomainApi;
+import ru.znamenka.jpa.represent.UpdatableApi;
+import ru.znamenka.jpa.represent.converter.ApiConverter;
+import ru.znamenka.jpa.represent.converter.UpdatableApiConverter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,16 +23,12 @@ import static org.springframework.util.Assert.notEmpty;
 import static org.springframework.util.Assert.notNull;
 
 /**
- * <p>
- * Класс, представляющий собой декоратор к классу
- * {@link FacadeDomainRepository}, добавляющий
+ * Класс, представляющий собой декоратор к классу {@link EntityRepository}, добавляющий
  * конвертацию сущностей ({@link BaseModel} в их представления ({@link DomainApi}),
  * а так же для оборачивания исключения в свои собственные
  *
  * @author Евгений Уткин (Eugene Utkin)
  */
-@Service("convertService")
-@Slf4j
 @SuppressWarnings("unchecked")
 public class ConvertEntityService implements ApiStore {
 
@@ -56,11 +51,11 @@ public class ConvertEntityService implements ApiStore {
 
     /**
      * Создает новый конверт сервис на основе декорируемого класс и хранилища бинов-конвертеров
-     *  @param facade          декорируемый класс
-     * @param converterBucket хранилище бинов-конвертеров
-     * @param upConverterBucket
+     *
+     * @param facade            декорируемый класс
+     * @param converterBucket   хранилище бинов-конвертеров
+     * @param upConverterBucket хранилище бинов-конвертеров для обновляемых сущностей
      */
-    @Autowired
     public ConvertEntityService(
             EntityRepository facade,
             Map<Class, ApiConverter> converterBucket,
@@ -197,7 +192,6 @@ public class ConvertEntityService implements ApiStore {
 
     /**
      * Декорирует метод фасада репозиториев
-     *
      */
     @Override
     public <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> ID saveAndFlush(Class<A> clazz, A api) throws RuntimeException {
@@ -243,7 +237,6 @@ public class ConvertEntityService implements ApiStore {
 
     /**
      * Декорирует метод фасада репозиториев
-     *
      */
     @Override
     public <E extends BaseModel<ID>, A extends DomainApi, ID extends Serializable> ID save(Class<A> clazz, A api) throws RuntimeException {

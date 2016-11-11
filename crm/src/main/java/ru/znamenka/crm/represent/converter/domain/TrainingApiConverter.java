@@ -3,7 +3,7 @@ package ru.znamenka.crm.represent.converter.domain;
 
 import lombok.val;
 import org.springframework.stereotype.Component;
-import ru.znamenka.crm.represent.converter.UpdatableApiConverter;
+import ru.znamenka.jpa.represent.converter.UpdatableApiConverter;
 import ru.znamenka.crm.represent.domain.TrainingApi;
 import ru.znamenka.jpa.model.Product;
 import ru.znamenka.jpa.model.Purchase;

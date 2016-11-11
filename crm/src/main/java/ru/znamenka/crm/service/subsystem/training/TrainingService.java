@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.znamenka.crm.represent.domain.TrainingApi;
-import ru.znamenka.crm.service.ApiStore;
-import ru.znamenka.crm.service.BaseExecutor;
+import ru.znamenka.jpa.represent.ApiStore;
+import ru.znamenka.jpa.represent.impl.BaseExecutor;
 import ru.znamenka.jpa.model.Training;
 import ru.znamenka.jpa.repository.domain.TrainingRepository;
 

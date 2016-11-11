@@ -3,7 +3,7 @@ package ru.znamenka.crm.represent.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import ru.znamenka.crm.represent.DomainApi;
+import ru.znamenka.jpa.represent.DomainApi;
 
 /**
  * <p>

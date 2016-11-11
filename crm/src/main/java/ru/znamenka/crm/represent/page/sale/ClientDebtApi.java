@@ -3,7 +3,7 @@ package ru.znamenka.crm.represent.page.sale;
 
 import lombok.Builder;
 import lombok.Getter;
-import ru.znamenka.crm.represent.DomainApi;
+import ru.znamenka.jpa.represent.DomainApi;
 
 /**
  * <p>Отображает информацию по платежам для

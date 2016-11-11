@@ -1,4 +1,4 @@
-package ru.znamenka.crm.service;
+package ru.znamenka.jpa.represent;
 
 
 import com.querydsl.core.types.Predicate;
@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
-import ru.znamenka.crm.represent.DomainApi;
-import ru.znamenka.crm.represent.UpdatableApi;
+import ru.znamenka.jpa.represent.DomainApi;
+import ru.znamenka.jpa.represent.UpdatableApi;
 import ru.znamenka.jpa.model.BaseModel;
 
 import java.io.Serializable;

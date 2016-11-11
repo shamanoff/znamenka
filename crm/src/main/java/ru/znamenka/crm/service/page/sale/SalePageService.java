@@ -8,7 +8,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.stereotype.Service;
 import ru.znamenka.crm.represent.page.sale.ClientDebtApi;
-import ru.znamenka.crm.service.BaseExecutor;
+import ru.znamenka.jpa.represent.impl.BaseExecutor;
 
 import java.util.List;
 

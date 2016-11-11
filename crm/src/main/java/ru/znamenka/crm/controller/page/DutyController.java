@@ -15,7 +15,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.znamenka.crm.represent.domain.DutyApi;
 import ru.znamenka.crm.represent.domain.PlanTypeApi;
-import ru.znamenka.crm.service.ApiStore;
+import ru.znamenka.jpa.represent.ApiStore;
 import ru.znamenka.crm.service.subsystem.training.EventService;
 import ru.znamenka.jpa.model.CalendarEvent;
 

@@ -18,7 +18,7 @@ import ru.znamenka.crm.represent.domain.TrainingApi;
 import ru.znamenka.crm.represent.domain.TrainingStatusApi;
 import ru.znamenka.crm.represent.page.endofday.Report;
 import ru.znamenka.crm.represent.page.endofday.Status;
-import ru.znamenka.crm.service.ApiStore;
+import ru.znamenka.jpa.represent.ApiStore;
 import ru.znamenka.crm.service.page.endofday.EndOfDayPageService;
 
 import java.time.LocalDate;

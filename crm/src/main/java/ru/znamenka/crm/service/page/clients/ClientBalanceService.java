@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.znamenka.crm.represent.page.ClientBalance;
-import ru.znamenka.crm.service.ApiStore;
+import ru.znamenka.jpa.represent.ApiStore;
 import ru.znamenka.jpa.model.Payment;
 import ru.znamenka.jpa.model.Purchase;
 import ru.znamenka.jpa.repository.EntityRepository;
