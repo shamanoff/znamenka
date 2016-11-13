@@ -43,7 +43,9 @@ $(document).ready(function () {
     });
 
 
-    Utils.submit($createClient);
+    Utils.submit($createClient, function () {
+        $createClient.hide();
+    });
 
 
     $editButton.on('click', function () {
@@ -113,10 +115,6 @@ $(document).ready(function () {
 
     $(".showCreate").on('click', function () {
         $createClient.toggle(500);
-    });
-
-    $('#createNew').on('click', function () {
-        $createClient.hide();
     });
 
 
