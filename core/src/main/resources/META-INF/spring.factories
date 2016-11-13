@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.znamenka.core.config.JpaSubSystemAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.click.core.config.JpaSubSystemAutoConfiguration

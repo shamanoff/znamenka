@@ -3,7 +3,6 @@ package ru.click.crm.config;
 
 import com.google.api.services.calendar.Calendar;
 import lombok.val;
-import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
 import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -32,7 +31,6 @@ import java.io.IOException;
  */
 @Configuration
 @EnableAsync
-@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Configuration.class))
 public class BeanConfig {
 
     /**
@@ -67,10 +65,6 @@ public class BeanConfig {
         return authorizer.getCalendar();
     }
 
-    @Bean
-    public FileChangedReloadingStrategy fileChangedStrategy() {
-        return new FileChangedReloadingStrategy();
-    }
 
     @Bean
     public TaskExecutor taskExecutor() {

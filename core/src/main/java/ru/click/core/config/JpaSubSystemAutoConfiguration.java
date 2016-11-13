@@ -72,7 +72,7 @@ public class JpaSubSystemAutoConfiguration {
         public EntityManagerFactory entityManagerFactory() {
             LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
             entityManagerFactoryBean.setDataSource(dataSource);
-            entityManagerFactoryBean.setPackagesToScan("ru.znamenka.jpa.model");
+            entityManagerFactoryBean.setPackagesToScan("ru.click.core.model");
             entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
             entityManagerFactoryBean.afterPropertiesSet();
             return entityManagerFactoryBean.getObject();
