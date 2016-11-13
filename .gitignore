@@ -59,7 +59,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-.gitignore
 .idea/
 cabinet/cabinet.iml
 cabinet/target/
@@ -71,3 +70,4 @@ log/
 znamenka-cloud.iml
 /znamenka.iml
 persons/
+/core/core.iml
