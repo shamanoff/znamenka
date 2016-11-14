@@ -78,4 +78,39 @@ public class Training implements BaseModel<Long> {
     @Convert(converter = BooleanConverter.class)
     @Column(name = "pass_for_auto")
     private Boolean passForAuto;
+
+    public Training setStart(LocalDateTime start) {
+        this.start = start;
+        return this;
+    }
+
+    public Training setTrainerId(Long trainerId) {
+        this.trainerId = trainerId;
+        return this;
+    }
+
+    public Training setClientId(Long clientId) {
+        this.clientId = clientId;
+        return this;
+    }
+
+    public Training setPurchaseId(Long purchaseId) {
+        this.purchaseId = purchaseId;
+        return this;
+    }
+
+    public Training setStatusId(Long statusId) {
+        this.statusId = statusId;
+        return this;
+    }
+
+    public Training setComment(String comment) {
+        this.comment = comment;
+        return this;
+    }
+
+    public Training setPassForAuto(Boolean passForAuto) {
+        this.passForAuto = passForAuto;
+        return this;
+    }
 }
