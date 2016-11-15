@@ -1,9 +1,10 @@
 $(document).ready(function () {
 
-    var $editButton = $(".editButton");
-    var $aboutClient = $('#aboutClient');
-    var $createClient = $('#formCreate');
-    var $myModal = $('#myModal');
+    var $editButton = $(".editButton"),
+        $aboutClient = $('#aboutClient'),
+        $createClient = $('#formCreate'),
+        $myModal = $('#myModal'),
+        $alert = $('.alert').hide();
 
     $('#loading-image').bind('ajaxStart', function () {
         $(this).hide();
@@ -30,14 +31,13 @@ $(document).ready(function () {
                 var $button = $('button[data-id="' + response.id + '"]'),
                     $tr = $button.closest('tr'),
                     $cells = $tr.find('td');
-                // Update the cell data
                 $cells
                     .eq(1).html(response.fname + ' ' + response.sname).end()
                     .eq(2).html(response.phone).end();
-                // Hide the dialog
                 $myModal.modal('hide');
-                // You can inform the user that the data is updated successfully
-                // by highlighting the row or showing a message box
+                Utils.showAlert($alert, 'Информация обновлена', 'success');
+            }).error(function () {
+                Utils.showAlert($alert, 'Произошла ошибка', 'danger');
             });
         }
     });
