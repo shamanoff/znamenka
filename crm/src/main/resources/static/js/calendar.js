@@ -44,13 +44,16 @@ $(document).ready(function () {
     var socket = new SockJS('/calendar');
     var recInterval = null;
 
-    var stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/calendar/event', function (message) {
-            addEvent(JSON.parse(message.body));
+    var new_conn = function () {
+        var stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/calendar/event', function (message) {
+                addEvent(JSON.parse(message.body));
+            });
         });
-    });
+    };
+
 
     socket.onopen = function () {
         clearInterval(recInterval);
