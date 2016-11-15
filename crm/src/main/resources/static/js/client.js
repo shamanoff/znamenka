@@ -3,7 +3,9 @@ $(document).ready(function () {
     var $editButton = $(".editButton"),
         $aboutClient = $('#aboutClient'),
         $createClient = $('#formCreate'),
-        $myModal = $('#myModal');
+        $myModal = $('#myModal'),
+        $clientsTable=$('#clients-table'),
+        $alert = $('.alert');
 
     $('#loading-image').bind('ajaxStart', function () {
         $(this).hide();
@@ -41,11 +43,25 @@ $(document).ready(function () {
         }
     });
 
-
-    Utils.submit($createClient, function () {
-       $createClient.hide();
-    });
-
+    $createClient.validator().on('submit', function (e) {
+        if (!e.isDefaultPrevented()) {
+            var $form = $(e.target);
+            e.preventDefault();
+            $.ajax({
+              url: '/client',
+                method: 'POST',
+                data: $form.serialize()
+            }).success(function (response) {
+                $createClient.hide();
+                var $cells = $clientsTable.find('tr').find('td');
+                $cells
+                    .eq(1).html(response.fname + ' ' + response.sname).end()
+                    .eq(2).html(response.phone).end();
+            }).error(function () {
+                Utils.showAlert($alert, 'Произошла ошибка', 'danger');
+            });
+        }
+    }) ;
 
     $editButton.on('click', function () {
         $aboutClient.trigger('reset'); // Reset form

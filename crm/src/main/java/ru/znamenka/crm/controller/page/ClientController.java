@@ -3,15 +3,12 @@ package ru.znamenka.crm.controller.page;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 import ru.znamenka.crm.annotation.ActionLogged;
 import ru.znamenka.crm.represent.domain.ClientApi;
 import ru.znamenka.crm.represent.domain.TrainingApi;
@@ -19,7 +16,6 @@ import ru.znamenka.crm.represent.page.client.ClientPurchaseApi;
 import ru.znamenka.crm.represent.page.schedule.SubscriptionApi;
 import ru.znamenka.crm.service.subsystem.client.IClientFacadeService;
 
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import java.util.List;
@@ -120,11 +116,13 @@ public class ClientController {
      */
     // TODO: 30.09.2016 если данные не валидны, то пользователю об этом не сообщается
     @PostMapping
-    public View createClient(@Valid ClientApi clientNew, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-                clientService.store().save(ClientApi.class, clientNew);
+    @ActionLogged(action = "добавил клиента")
+    public ResponseEntity<ClientApi> createClient(@Valid ClientApi clientNew, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+                return badRequest().body(clientNew);
         }
-        return new RedirectView("/client");
+        long id = clientService.store().save(ClientApi.class, clientNew);
+        return ok(clientNew.setId(id));
     }
 
     /**
@@ -193,7 +191,7 @@ public class ClientController {
      *
      * @return код ответа 400
      */
-    @ExceptionHandler({ConstraintViolationException.class, DataAccessException.class})
+    @ExceptionHandler({Exception.class})
     public ResponseEntity handleValidationEx() {
         return badRequest().build();
     }
