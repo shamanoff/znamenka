@@ -3,8 +3,7 @@ $(document).ready(function () {
     var $editButton = $(".editButton"),
         $aboutClient = $('#aboutClient'),
         $createClient = $('#formCreate'),
-        $myModal = $('#myModal'),
-        $alert = $('.alert').hide();
+        $myModal = $('#myModal');
 
     $('#loading-image').bind('ajaxStart', function () {
         $(this).hide();
@@ -18,10 +17,10 @@ $(document).ready(function () {
     });
 
     $aboutClient.validator().on('submit', function (e) {
-
         if (!e.isDefaultPrevented()) {
             var $form = $(e.target),
                 id = $form.find('[name="id"]').val();
+            e.preventDefault();
             $.ajax({
                 url: '/client',
                 method: 'PUT',
@@ -44,7 +43,7 @@ $(document).ready(function () {
 
 
     Utils.submit($createClient, function () {
-        $createClient.hide();
+       $createClient.hide();
     });
 
 

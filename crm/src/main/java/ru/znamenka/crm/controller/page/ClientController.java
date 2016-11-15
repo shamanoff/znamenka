@@ -122,7 +122,7 @@ public class ClientController {
     @PostMapping
     public View createClient(@Valid ClientApi clientNew, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            clientService.store().save(ClientApi.class, clientNew);
+                clientService.store().save(ClientApi.class, clientNew);
         }
         return new RedirectView("/client");
     }
