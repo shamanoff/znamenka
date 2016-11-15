@@ -3,6 +3,7 @@ package ru.znamenka.crm.controller.page;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -192,9 +193,8 @@ public class ClientController {
      *
      * @return код ответа 400
      */
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler({ConstraintViolationException.class, DataAccessException.class})
     public ResponseEntity handleValidationEx() {
         return badRequest().build();
     }
-
 }
