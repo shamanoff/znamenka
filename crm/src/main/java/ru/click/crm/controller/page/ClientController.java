@@ -18,7 +18,6 @@ import ru.click.crm.represent.page.schedule.SubscriptionApi;
 import ru.click.crm.service.subsystem.client.IClientFacadeService;
 import ru.click.crm.represent.domain.ClientApi;
 
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import java.util.List;
@@ -119,11 +118,13 @@ public class ClientController {
      */
     // TODO: 30.09.2016 если данные не валидны, то пользователю об этом не сообщается
     @PostMapping
-    public View createClient(@Valid ClientApi clientNew, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            clientService.store().save(ClientApi.class, clientNew);
+    @ActionLogged(action = "добавил клиента")
+    public ResponseEntity<ClientApi> createClient(@Valid ClientApi clientNew, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+                return badRequest().body(clientNew);
         }
-        return new RedirectView("/client");
+        long id = clientService.store().save(ClientApi.class, clientNew);
+        return ok(clientNew.setId(id));
     }
 
     /**
@@ -192,9 +193,8 @@ public class ClientController {
      *
      * @return код ответа 400
      */
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler({Exception.class})
     public ResponseEntity handleValidationEx() {
         return badRequest().build();
     }
-
 }

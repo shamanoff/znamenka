@@ -39,6 +39,7 @@ public class AbonementsExecutor extends BaseExecutor<Tuple, SubscriptionApi> imp
     private JPAQuery<Tuple> initSubScrQuery(Long clientId) {
         return getQuery()
                 .select(clientAbonement.purchaseId, abonement.productName)
+                .distinct()
                 .from(clientAbonement)
                 .innerJoin(clientAbonement.product, abonement)
                 .where(clientAbonement.trainingCount.gt(ZERO).and(clientAbonement.clientId.eq(clientId)));
