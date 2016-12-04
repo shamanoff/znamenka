@@ -1,8 +1,12 @@
 package ru.click.reporting.query;
 
+import org.springframework.stereotype.Service;
+import ru.click.reporting.model.ClientPayments;
+
 import static ru.click.reporting.util.IOUtils.fileToString;
 
-public class ClientPaymentsQueryHolder implements QueryHolder {
+@Service
+public class ClientPaymentsQueryHolder implements QueryHolder<ClientPayments> {
 
     @Override
     public String getQuery() {

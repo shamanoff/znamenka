@@ -33,7 +33,7 @@ public class ClientPaymentsService {
             .build();
 
     @Autowired
-    public ClientPaymentsService(NamedParameterJdbcOperations operations, QueryHolder clientPaymentsQueryHolder) {
+    public ClientPaymentsService(NamedParameterJdbcOperations operations, QueryHolder<ClientPayments> clientPaymentsQueryHolder) {
         notNull(operations, "Jdbc Operations must not be null");
         notNull(clientPaymentsQueryHolder, "Query holder must not be null");
         this.operations = operations;
