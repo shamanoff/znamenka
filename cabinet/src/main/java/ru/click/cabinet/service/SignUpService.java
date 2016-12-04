@@ -2,6 +2,8 @@ package ru.click.cabinet.service;
 
 import lombok.val;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.click.cabinet.exception.NoExistsClientSignUpException;
+import ru.click.cabinet.exception.WrongCodeSignUpException;
 import ru.click.core.model.Client;
 import ru.click.core.model.LkUser;
 import ru.click.core.model.QClient;
@@ -15,7 +17,7 @@ public class SignUpService {
 
     private SmsService smsService;
 
-    private LkUserRepository repository;
+    private LkUserRepository userRepository;
 
     private ClientRepository clientRepository;
 
@@ -28,15 +30,15 @@ public class SignUpService {
     }
 
     // TODO: 03.12.2016 replace boolean to exception
-    public boolean signUp(String phone, int code) {
+    public void signUp(String phone, int code) {
         if (!checkCode(phone, code)) {
             this.sendSms(phone);
-            return false;
+            throw new WrongCodeSignUpException();
         }
 
         Client client = clientRepository.findOne(QClient.client.phone.eq(phone));
         if (client == null) {
-            return false;
+            throw new NoExistsClientSignUpException();
         }
         String randomPassword = new BigInteger(130, ThreadLocalRandom.current()).toString(32);
         smsService.send(phone, "password: " + randomPassword);
@@ -44,13 +46,11 @@ public class SignUpService {
         user.setUsername(phone);
         user.setPassword(passwordEncoder.encode(randomPassword));
         user.setClient(client);
-        // TODO: 03.12.2016 add role
-        repository.save(user);
-        return true;
+        userRepository.save(user);
     }
 
 
-    public boolean checkCode(String phone, int code) {
+    private boolean checkCode(String phone, int code) {
         int earlyCode = SmsCodeHolder.getCode(phone);
         return earlyCode == code;
     }
