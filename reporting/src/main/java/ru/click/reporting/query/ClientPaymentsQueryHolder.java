@@ -8,7 +8,7 @@ import static ru.click.reporting.util.IOUtils.fileToString;
 @Service
 public class ClientPaymentsQueryHolder implements QueryHolder<ClientPayments> {
 
-    private final String query = fileToString("/sql/client-payments.sql");
+    private final String query = fileToString("/sql/client_payments.sql");
 
     @Override
     public String getQuery() {
